@@ -1,0 +1,19 @@
+<mat-form-field appearance="fill">
+  <mat-label>Optionen</mat-label>
+  <mat-select [(ngModel)]="selectedCategory" name="unterstuetzung">
+    <mat-option *ngFor="let schreibunterstuetzung of schreibunterstuetzungen" [value]="schreibunterstuetzung.value">
+      {{schreibunterstuetzung.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<input matInput type="text" [(ngModel)]="suchWort" style="border: 1px solid black">
+<!-- <input type="text" [(ngModel)]="suchWort"> -->
+<!--   <input type="text" matInput [formControl]="semantische_relationen_FormControl">
+  <mat-error *ngIf="semantische_relationen_FormControl.hasError('required')">
+    Username is required
+  </mat-error> -->
+<button mat-button (click)="startApi()">
+  Bestätigen
+</button>
+<li *ngFor="let item of resultWordList; index as i">{{item}}</li>
+<li *ngFor="let item of resultLiteratureSearch; index as i">{{item.titel}} {{item.doi}}</li>

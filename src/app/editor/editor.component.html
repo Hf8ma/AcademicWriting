@@ -1,0 +1,198 @@
+<iframe *ngIf="musikToggleActivelofi" width="0" height="0"
+  src="http://youtuberepeater.com/watch?v=5qap5aO4i9A&name=lofi+hip+hop+radio+beats+to+relax+study#gsc.tab=0"
+  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen></iframe>
+<iframe *ngIf="musikToggleActiveclassic" width="0" height="0"
+  src="http://youtuberepeater.com/watch?v=E7EOjkGVmyo&name=1HOUR+ORIGINAL+RELAXING+PIANO+Jacob+39+s#gsc.tab=0"
+  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen></iframe>
+<iframe *ngIf="musikToggleActiverain" width="0" height="0"
+  src="http://youtuberepeater.com/watch?v=gpmZjOQakbA&name=Leichte+Regentropfen+Sanfte+Regengerdusche+zum+Einschlafen+Lernen+Meditieren+und+Entspannen#gsc.tab=0"
+  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen></iframe>
+
+<mat-toolbar>
+  <span>Dokument</span>
+  <span class="spacer"></span>
+  <button mat-icon-button [matMenuTriggerFor]="menu2" matTooltip="Musik einschalten">
+    <mat-icon>music_note</mat-icon>
+  </button>
+  <mat-menu [hasBackdrop]="false" #menu2="matMenu">
+    <div (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
+      <button mat-menu-item>
+        <mat-slide-toggle checked="false" labelPosition="before" (change)="slideTogglelofi()">Lofi
+        </mat-slide-toggle>
+      </button>
+      <button mat-menu-item>
+        <mat-slide-toggle checked="false" labelPosition="before" (change)="slideToggleclassic()">Klassisch
+        </mat-slide-toggle>
+      </button>
+      <button mat-menu-item>
+        <mat-slide-toggle checked="false" labelPosition="before" (change)="slideTogglerain()">Regen
+        </mat-slide-toggle>
+      </button>
+    </div>
+  </mat-menu>
+
+  <!--  <button mat-button (click)="openDialog()" matTooltip="Timer stellen">
+    <mat-icon>alarm</mat-icon>
+  </button> -->
+  <button mat-icon-button (click)="sidenavLeft.toggle()" matTooltip="Dateiübersicht öffnen">
+    <mat-icon>vertical_split</mat-icon>
+  </button>
+  <button mat-icon-button (click)="sidenavRight.toggle()" matTooltip="Statistiken öffnen">
+    <mat-icon>analytics</mat-icon>
+  </button>
+  <a href="https://scholar.google.com/" target='_blank' style="color: black">
+    <button mat-icon-button matTooltip="Suche auf Google Scholar">
+      <mat-icon>search</mat-icon>
+    </button></a>
+  <button mat-icon-button [matMenuTriggerFor]="menu3" aria-label="Example icon-button with a menu"
+    matTooltip="Weitere Schreibunterstützungen">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu3="matMenu">
+    <button (click)="openApiDialog(schreibunterstuetzungen, 0)" mat-button matTooltip="Semantische Relationen finden">
+      Semantische Relationen finden
+    </button>
+
+    <button (click)="openApiDialog(zitationssuchen, 1)" mat-button matTooltip="Zitationsvorschläge finden">
+      Zitationsvorschläge finden
+    </button>
+  </mat-menu>
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="deleteUser()" matTooltip="Meinen Nutzeraccount löschen">
+
+      <mat-icon>delete</mat-icon> Nutzeraccount löschen
+    </button>
+
+    <button mat-menu-item (click)="logout()" matTooltip="Ausloggen">
+      <mat-icon>logout</mat-icon> Logout
+    </button>
+  </mat-menu>
+
+</mat-toolbar>
+
+<mat-sidenav-container class="container">
+  <mat-sidenav #sidenavLeft opened mode="side" class="side-nav">
+    <mat-toolbar class="sidenav-toolbar">
+      <span class="file">Datei</span>
+      <span class="spacer"></span>
+      <div class="sidenav-buttons">
+        <button mat-icon-button matTooltip="Neues Dokument erstellen">
+          <mat-icon (click)=addPaper() class="icon-sidenav">add</mat-icon>
+        </button>
+        <button (click)=deletePaper(currentPaper) mat-icon-button matTooltip="Ausgewähltes Dokument löschen">
+          <mat-icon class="icon-sidenav">delete</mat-icon>
+        </button>
+        <button (click)=updatePaper(currentPaper) mat-icon-button matTooltip="Änderungen speichern">
+          <mat-icon class="icon-sidenav">edit</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar>
+    <br>
+    <span class="recent">Meine Dokumente</span>
+    <mat-list>
+      <mat-list-item *ngFor="let paper of papers; index as i">
+        <button mat-button (click)="changePaper(i)"
+          [class.currentPaperHighlighter]="i ==currentPaper">{{paper.title}}</button>
+      </mat-list-item>
+
+    </mat-list>
+  </mat-sidenav>
+
+  <mat-sidenav #sidenavRight opened mode="side" opened class="side-nav" position="end">
+    <mat-toolbar class="sidenav-toolbar">
+      <span class="file">Statistiken/Tools</span>
+    </mat-toolbar>
+    <mat-list>
+      <mat-list-item>
+        Seitenanzahl: {{pages.length}}
+      </mat-list-item>
+      <mat-list-item>
+        <div>Wortanzahl: <span style="margin-right:1rem" id="wordCount">{{ wordcountlaenge }}</span></div>
+      </mat-list-item>
+      <mat-list-item>
+        <!--         <div>Durchschnittliche Satzlänge: <span style="margin-right:1rem" id="wordCount">{{ averageWordsInSentence
+            }}</span></div> -->
+        <div>Durchschnittliche Satzlänge: <span style="margin-right:1rem" id="wordCount">{{ averageSentenceLength
+            }}</span></div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+      </mat-list-item>
+
+      <mat-list-item>
+        <app-count-down></app-count-down>
+      </mat-list-item>
+
+    </mat-list>
+
+  </mat-sidenav>
+  <mat-grid-list cols="2" rowHeight="50px">
+    <mat-grid-tile class="menu" rowspan="1">
+      <h2>Editor</h2>
+      <span class="spacer"></span>
+      <a href="https://www.markdownguide.org/cheat-sheet" target='_blank' style="color: black">
+        <button mat-icon-button matTooltip="Markdown Cheat Sheet">
+          <mat-icon>lightbulb</mat-icon>
+        </button>
+      </a>
+      <button mat-icon-button [matMenuTriggerFor]="colormenu"
+        matTooltip="Schriftfarbe: <font color='Hex Code'>Text</font>">
+        <mat-icon>format_color_text</mat-icon>
+      </button>
+      <mat-menu [hasBackdrop]="false" #colormenu="matMenu">
+        <div (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
+          <app-color-picker></app-color-picker>
+        </div>
+      </mat-menu>
+      <button mat-icon-button matTooltip="Fett: **Text**">
+        <mat-icon>format_bold</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Kursiv: *Text*">
+        <mat-icon>format_italic</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Schriftgröße: # H1, ## H2, ### H3...">
+        <mat-icon>format_size</mat-icon>
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile class="menu" rowspan="1">
+      <h2>Preview</h2>
+      <span class="spacer"></span>
+      <button (click)=copyText() mat-icon-button matTooltip="Text kopieren">
+        <mat-icon>content_copy_rounded</mat-icon>
+      </button>
+      <a href="https://md2pdf.netlify.app" target='_blank' style="color: black">
+        <button mat-icon-button matTooltip="Pdf erstellen">
+          <mat-icon>picture_as_pdf</mat-icon>
+        </button>
+      </a>
+      <!-- 
+      <button (click)=sentenceLength() mat-icon-button matTooltip="Durchschnittliche Satzlänge">
+        <mat-icon>assessment</mat-icon>
+      </button> -->
+    </mat-grid-tile>
+    <mat-grid-tile [rowspan]="14 * (currentPage+1)">
+      <div class="page" *ngFor="let page of pages; index as i" [style.height]="sizePage.height + 'cm'"
+        [style.width]="sizePage.width + 'cm'" (click)="clickPage(i)">
+        <div class="editor" [style.paddingTop]="paddingPage.top + 'cm'" [style.paddingRight]="paddingPage.right + 'cm'"
+          [style.paddingBottom]="paddingPage.bottom + 'cm'" [style.paddingLeft]="paddingPage.left + 'cm'"
+          [id]="'editor-' + i" contenteditable="true" (input)="inputContent($event['data'], i); wordCounter(i)">
+        </div>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile [rowspan]="14 * (currentPage+1)">
+      <div class="page" *ngFor="let page of pages" [style.height]="sizePage.height + 'cm'"
+        [style.width]="sizePage.width + 'cm'">
+        <div markdown class="content" [style.paddingTop]="paddingPage.top + 'cm'"
+          [style.paddingRight]="paddingPage.right + 'cm'" [style.paddingBottom]="paddingPage.bottom + 'cm'"
+          [style.paddingLeft]="paddingPage.left + 'cm'" [data]="page?.innerText">
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</mat-sidenav-container>

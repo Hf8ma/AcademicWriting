@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Timer</h1>
+<div mat-dialog-content>Hier kannst du einen Timer stellen. Du wirst bei Ablauf der Zeit automatisch <br> mit einem Popup benachrichtigt, dass die Zeit abgelaufen ist.</div>
+    <div>      
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Stunden</mat-label>
+            <input matInput type ="number"  [(ngModel)]="stunden">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Minuten</mat-label>
+                <input matInput type ="number"  [(ngModel)]="minuten">
+                </mat-form-field>
+<br>
+</div>
+<!-- lazy loading oder sowas möglich? dann lädt chrome auch nur nach click den div und packt dann die sachen rein -->
+<div *ngIf="isChecked">
+<app-count-down [stunden]="stunden" [minuten]="minuten" [countUporDown]="'down'" [ngStyle]="{'color':'black'}"> </app-count-down>
+</div>
+<button mat-raised-button (click)="startTimer()">Timer starten</button>
+<button mat-raised-button (click)="closeDialog()">Close</button>

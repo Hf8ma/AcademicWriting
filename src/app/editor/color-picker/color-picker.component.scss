@@ -1,0 +1,26 @@
+.color-picker {
+  $radius: 5px;
+
+  .summary-info {
+    box-shadow: 0 7px 13px 0 rgba(86, 95, 102, 0.07);
+    background: #fff;
+    width: 160px;
+    padding: 10px;
+    border-radius: $radius;
+    display: flex;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .circle {
+    $size: 20px;
+    height: $size;
+    width: $size;
+    box-sizing: border-box;
+    border-radius: 100%;
+    cursor: pointer;
+    border: 1px solid #dadada;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
+    float: left;
+  }
+}

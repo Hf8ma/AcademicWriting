@@ -1,0 +1,135 @@
+.container {
+    width: 100%;
+    height: 100%;
+  }
+  .currentPaperHighlighter {
+    background-color:rgba(255, 255, 255, 0.68);
+  }
+  
+  mat-grid-tile {
+    background: white;
+    height: 100%;
+  }
+  
+  .menu {
+    background: gray;
+    height: 20%;
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  .side-nav {
+    background: rgba(0, 0, 0, 0.79);
+    width: 15%;
+  }
+  
+  .mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.68);
+  }
+  
+  .recent {
+    color: rgba(255, 255, 255, 0.68);
+    margin-left: 20px;
+  }
+  
+  .sidenav-buttons {
+    color: rgba(255, 255, 255, 0.68);
+  }
+  
+  .sidenav-toolbar {
+    height: 8%;
+    background: rgba(0, 0, 0, 0);
+  }
+  
+  .file {
+    color: rgba(255, 255, 255, 0.68);
+    font-weight: 1;
+    font-size: 20px;
+  }
+  
+  mat-list {
+    margin-left: 20px;
+  }
+  
+  h2 {
+    margin-left: 20px;
+    margin-top: 15px;
+  }
+  
+  .variable-binding,
+  .variable-textarea {
+    width: 95%;
+  }
+  
+  .variable-textarea {
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .07);
+    min-height: 420px;
+    padding: 8px;
+    transition: all 300ms ease-out;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+  }
+  
+  .variable-textarea:hover {
+    box-shadow: 0 6px 12px 3px rgba(0, 0, 0, .09),
+    0 2px 3px 1px rgba(0, 0, 0, .06);
+  }
+  
+  .variable-binding {
+    display: block;
+    float: right;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+  }
+  
+  .page {
+    background: white;
+    display: block;
+    margin: 10px auto;
+    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+  }
+  
+  .page .editor {
+    overflow: auto;
+    outline: 0;
+  }
+  
+  :host {
+    ::ng-deep .mat-grid-tile:nth-child(3) .mat-figure {
+      display: unset;
+    }
+  
+    ::ng-deep .mat-grid-tile:nth-child(4) .mat-figure {
+      display: unset;
+    }
+  }
+  
+  mat-divider {
+    background-color: gray;
+  }
+  
+  
+  
+  /* .matMenu {
+    ::ng-deep .menu2{
+      width: 100px;
+    }
+  } */
+  
+  // .mat-menu-panel.matMenu {width: 1px}
+  
+  /* .matMenu {
+    ::ng-deep .matMenu{
+      width: 100%;
+      float: both; 
+    }
+  } */
+  
+  
