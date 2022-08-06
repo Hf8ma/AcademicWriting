@@ -35,7 +35,7 @@ export class LoginComponent {
       })
     };
 
-    this.http.post('<BACKEND PLACEHOLDER>/api/auth/login',
+    this.http.post('http://127.0.0.1:5000/api/auth/login',
       { username: this.usernameFormControl.value, password: this.passwordFormControl.value }, httpOptions)
       .subscribe((user: any) => {
         console.log(user.access_token)

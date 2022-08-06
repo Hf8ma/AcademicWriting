@@ -47,7 +47,7 @@ export class ApiComponent implements OnInit {
     Validators.required,
   ]);
 
-  //private base_url='<BACKEND PLACEHOLDER>/api/synonyms?word=zeigen'
+  //private base_url='http://127.0.0.1:5000/api/synonyms?word=zeigen'
 
 
   /*startet funktion je nachdem welcher button in editor gedrückt wurde/welcher parameter übergeben wurde.
@@ -81,7 +81,7 @@ export class ApiComponent implements OnInit {
       })
     };
 
-    this.http.get(`<BACKEND PLACEHOLDER>/api/${this.selectedCategory}?word=${this.suchWort}`, httpOptions)
+    this.http.get(`http://127.0.0.1:5000/api/${this.selectedCategory}?word=${this.suchWort}`, httpOptions)
       .subscribe(wordList => {
         console.log(wordList);
         this.resultWordList = wordList
@@ -207,7 +207,7 @@ export class ApiComponent implements OnInit {
   }
   */
 
-  //const req = new HttpRequest('GET', '<BACKEND PLACEHOLDER>/api/synonyms?word=zeigen', {
+  //const req = new HttpRequest('GET', 'http://127.0.0.1:5000/api/synonyms?word=zeigen', {
   //reportProgress: true
 
 

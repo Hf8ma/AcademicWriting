@@ -43,7 +43,7 @@ export class RegistrierungsDialogComponent implements OnInit {
       })
     };
 
-    this.http.post('<BACKEND PLACEHOLDER>/api/user',
+    this.http.post('http://127.0.0.1:5000/api/user',
       {
         username: this.usernameFormControl.value, email: this.emailFormControl.value,
         password: this.passwordFormControl.value

@@ -141,7 +141,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
         Authorization: `${localStorage.getItem('access_token')}`
       })
     };
-    this.http.get(`<BACKEND PLACEHOLDER>/api/paper?all=True`, httpOptions)
+    this.http.get(`http://127.0.0.1:5000/api/paper?all=True`, httpOptions)
       .subscribe((wordList: any) => {
         console.log(wordList);
         this.papers = wordList;
@@ -163,7 +163,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
         Authorization: `${localStorage.getItem('access_token')}`
       })
     };
-    this.http.post(`<BACKEND PLACEHOLDER>/api/paper`, body, httpOptions)
+    this.http.post(`http://127.0.0.1:5000/api/paper`, body, httpOptions)
       .subscribe(wordList => {
         // this.papers.push(body);
         //wir brauchen die id des neu angelegten papers, um es löschen zu können -> daher reicht das pushen von dem paper object aus dem frontend nicht aus 
@@ -205,7 +205,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
       })
     };
 
-    this.http.put(`<BACKEND PLACEHOLDER>/api/paper?id=${paper_id}`, updated_paper, httpOptions)
+    this.http.put(`http://127.0.0.1:5000/api/paper?id=${paper_id}`, updated_paper, httpOptions)
       .subscribe(wordList => {
         console.log(wordList);
         this.papers[papers_index] = updated_paper;
@@ -221,7 +221,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
       })
     };
 
-    this.http.delete('<BACKEND PLACEHOLDER>/api/user?username=test2', httpOptions)
+    this.http.delete('http://127.0.0.1:5000/api/user?username=test2', httpOptions)
       .subscribe(user => {
         console.log(user);
       });
@@ -237,7 +237,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
         'Access-Control-Allow-Origin': '*'
       })
     };
-    this.http.delete(`<BACKEND PLACEHOLDER>/api/paper?id=${paper_id}`, httpOptions)
+    this.http.delete(`http://127.0.0.1:5000/api/paper?id=${paper_id}`, httpOptions)
       .subscribe(wordList => {
         console.log(wordList);
         this.papers.splice(papers_index, 1);
@@ -298,7 +298,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
       })
     };
 
-    this.http.get(`<BACKEND PLACEHOLDER>/api/avg_sentence_length/?text=${this.getwholeText()}`, httpOptions)
+    this.http.get(`http://127.0.0.1:5000/api/avg_sentence_length/?text=${this.getwholeText()}`, httpOptions)
       .subscribe((response: any) => {
         this.averageSentenceLength = response.toFixed(2).replace(/[.,]00$/, "")
 

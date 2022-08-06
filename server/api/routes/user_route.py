@@ -19,16 +19,21 @@ def get_user():
     if all:
         all_user = User.get_all()
         result = users_schema.dump(all_user)
-
-        return jsonify(result.data), 200
+        response = jsonify(result.data)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response,200
 
     if not all:
 
         user = User.query.filter_by(username=username).first()
-        if not user:
-            return jsonify(message='User wurde nicht gefunden'), 400
+        if not user: 
+            response = jsonify(message='User wurde nicht gefunden')
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response, 400
 
-        return user_schema.jsonify(user), 200
+        response = user_schema.jsonify(user)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response , 200
 
 
 @bp.route('/user', methods=['POST'])
@@ -38,15 +43,20 @@ def register_user():
     """
 
     if not request.is_json:
-        return jsonify(message='Anfrage enthielt kein gültiges JSON'), 400
+        response = jsonify(message='Anfrage enthielt kein gültiges JSON')
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 400
 
     user, errors = user_schema.load(request.get_json())
-    if errors:
-        return jsonify(errors), 400
+    if errors: 
+        response = jsonify(errors)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 400
 
     user.save()
-
-    return jsonify(message='Account wurde erfolgreich angelegt'), 200
+    response = jsonify(message='Account wurde erfolgreich angelegt')
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response, 200
 
 
 @bp.route('/user', methods=['PUT'])
@@ -61,8 +71,10 @@ def user_update():
 
     user = User.query.filter_by(username=username).first()
 
-    if not user:
-        return jsonify('User wurde nicht gefunden'), 400
+    if not user: 
+        response = jsonify('User wurde nicht gefunden')
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 400
 
     data = request.get_json()
     data.pop('id', None)
@@ -70,19 +82,25 @@ def user_update():
 
     errors = user_schema.validate(data, partial=True)
 
-    if errors:
-        return jsonify(errors), 400
+    if errors: 
+        response = jsonify(errors)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 400
 
     decoded_token = decode_token(access_token)
 
     author_id = decoded_token['sub']
 
-    if author_id != user.username:
-        return jsonify(message='Keine Berechtigung'), 401
+    if author_id != user.username: 
+        response = jsonify(message='Keine Berechtigung')
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 401
 
     user.update(**data)
 
-    return jsonify('Account wurde erfolgreich aktualisiert'), 200
+    response = jsonify('Account wurde erfolgreich aktualisiert')
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response, 200
 
 
 @bp.route('/user', methods=['DELETE'])
@@ -96,15 +114,21 @@ def user_delete():
 
     user = User.query.filter_by(username=username).first()
 
-    if not user:
-        return jsonify(message='User wurde nicht gefunden'), 400
+    if not user: 
+        response = jsonify(message='User wurde nicht gefunden')
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 400
 
     decoded_token = decode_token(access_token)
     author_id = decoded_token['sub']
 
-    if author_id != user.username:
-        return jsonify(message='Keine Berechtigung'), 401
+    if author_id != user.username: 
+        response = jsonify(message='Keine Berechtigung')
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 401
 
     user.delete()
 
-    return jsonify(message='User wurde erfolgreicht entfernt'), 200
+    response = jsonify(message='User wurde erfolgreicht entfernt')
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response, 200
