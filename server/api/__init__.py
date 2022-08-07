@@ -6,7 +6,7 @@ from flask_bcrypt import Bcrypt
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager
 import os
-
+from flask_cors import CORS
 
 db = SQLAlchemy()
 ma = Marshmallow()
@@ -52,6 +52,8 @@ def create_app(config_filename=None, static_folder=None, static_url_path=None):
 def create_manager():
 
     app = create_app()
+    #CORS(app, resources={r"/api/*": {"origins": "*", "allow_headers": "*", "expose_headers": "*"}})
+    #app.config['CORS_HEADERS'] = 'Content-Type'
 
     Migrate(app, db)
 
