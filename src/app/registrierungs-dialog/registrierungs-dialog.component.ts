@@ -40,14 +40,19 @@ export class RegistrierungsDialogComponent implements OnInit {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
       })
     };
-
+   console.log(httpOptions);
     this.http.post('http://127.0.0.1:5000/api/user',
+    JSON.stringify(
       {
         username: this.usernameFormControl.value, email: this.emailFormControl.value,
         password: this.passwordFormControl.value
-      }, httpOptions).subscribe(user => {
+      }), httpOptions).subscribe(user => {
         console.log(user)
       });
 

@@ -6,7 +6,7 @@ from flask_bcrypt import Bcrypt
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager
 import os
-
+from flask_cors import CORS, cross_origin
 
 db = SQLAlchemy()
 ma = Marshmallow()
@@ -19,7 +19,8 @@ def create_app(config_filename=None, static_folder=None, static_url_path=None):
     app = Flask(__name__,
                 static_folder=static_folder,
                 static_url_path=static_url_path)
-
+    cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+    
     if not config_filename:
         config_filename = os.environ['APP_SETTINGS']
 
@@ -29,10 +30,7 @@ def create_app(config_filename=None, static_folder=None, static_url_path=None):
     ma.init_app(app)
     bcrypt.init_app(app)
     jwt.init_app(app)
-
-    from .routes import auth
-    app.register_blueprint(auth.bp)
-
+    
     from .routes import user_route
     app.register_blueprint(user_route.bp)
 
@@ -45,7 +43,11 @@ def create_app(config_filename=None, static_folder=None, static_url_path=None):
     @app.route('/')
     def index():
         return app.send_static_file('index.html'), 200
-
+    
+    print('rrr')
+    @app.route('/home')
+    def home():
+        return 'ss'
     return app
 
 

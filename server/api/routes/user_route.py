@@ -2,12 +2,13 @@ from flask import Blueprint, jsonify, request
 from api.database.user import User, user_schema, users_schema
 from flask_jwt_extended import decode_token
 from api.routes.auth import permission_needed
-
+from flask_cors import CORS, cross_origin
 
 bp = Blueprint('user', __name__, url_prefix='/api')
 
 
 @bp.route('/user', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def get_user():
     """
     example: GET: host/api/user?username=test
@@ -37,6 +38,7 @@ def get_user():
 
 
 @bp.route('/user', methods=['POST'])
+# @cross_origin(supports_credentials=True)
 def register_user():
     """
     example: POST: host/api/user
@@ -44,23 +46,26 @@ def register_user():
 
     if not request.is_json:
         response = jsonify(message='Anfrage enthielt kein gültiges JSON')
-        response.headers.add('Access-Control-Allow-Origin', '*')
+        # response.headers.add('Access-Control-Allow-Origin', 'http://localhost:4200')
         return response, 400
 
     user, errors = user_schema.load(request.get_json())
+    print(errors)
     if errors: 
         response = jsonify(errors)
-        response.headers.add('Access-Control-Allow-Origin', '*')
+        # response.headers.add('Access-Control-Allow-Origin', 'http://localhost:4200')
         return response, 400
 
     user.save()
     response = jsonify(message='Account wurde erfolgreich angelegt')
-    response.headers.add('Access-Control-Allow-Origin', '*')
+    # response.headers.add('Access-Control-Allow-Origin', 'http://localhost:4200')
+    print(dir(response))
     return response, 200
 
 
 @bp.route('/user', methods=['PUT'])
 @permission_needed
+@cross_origin(supports_credentials=True)
 def user_update():
     """
     example: PUT: host/api/user?username=test
@@ -104,6 +109,7 @@ def user_update():
 
 
 @bp.route('/user', methods=['DELETE'])
+@cross_origin(supports_credentials=True)
 def user_delete():
     """
     example: DELETE: host/api/user?username=test
