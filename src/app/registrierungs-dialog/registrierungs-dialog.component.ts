@@ -40,8 +40,8 @@ export class RegistrierungsDialogComponent implements OnInit {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin' : '*',
-        'Access-Control-Allow-Headers' : 'Content-Type',
+        
+        
       })
     };
 

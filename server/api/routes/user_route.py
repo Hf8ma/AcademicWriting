@@ -18,28 +18,26 @@ def get_user():
     """
 
     username = request.args.get('username', default='', type=str)
+    print('get')
     all = request.args.get('all', default=False, type=bool)
 
     if all:
         all_user = User.get_all()
         result = users_schema.dump(all_user)
         response = jsonify(result.data)
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+          
         return response,200
 
     if not all:
 
         user = User.query.filter_by(username=username).first()
         if not user: 
-            response = jsonify(message='User wurde nicht gefunden')
-            response.headers.add('Access-Control-Allow-Origin', '*')
-            response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+            response = jsonify(message='User wurde nicht gefunden, get')
+               
             return response, 400
 
         response = user_schema.jsonify(user)
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+          
         return response , 200
 
 
@@ -52,20 +50,18 @@ def register_user():
 
     if not request.is_json:
         response = jsonify(message='Anfrage enthielt kein gültiges JSON')
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+          
         return response, 400
 
     user, errors = user_schema.load(request.get_json())
     if errors: 
         response = jsonify(errors)
-        response.headers.add('Access-Control-Allow-Origin', '*')
+          
         return response, 400
 
     user.save()
     response = jsonify(message='Account wurde erfolgreich angelegt')
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+ 
     return response, 200
 
 
@@ -83,9 +79,8 @@ def user_update():
     user = User.query.filter_by(username=username).first()
 
     if not user: 
-        response = jsonify('User wurde nicht gefunden')
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+        response = jsonify('User wurde nicht gefunden,put')
+          
         return response, 400
 
     data = request.get_json()
@@ -96,8 +91,7 @@ def user_update():
 
     if errors: 
         response = jsonify(errors)
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+          
         return response, 400
 
     decoded_token = decode_token(access_token)
@@ -106,15 +100,13 @@ def user_update():
 
     if author_id != user.username: 
         response = jsonify(message='Keine Berechtigung')
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+          
         return response, 401
 
     user.update(**data)
 
     response = jsonify('Account wurde erfolgreich aktualisiert')
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+ 
     return response, 200
 
 
@@ -131,9 +123,8 @@ def user_delete():
     user = User.query.filter_by(username=username).first()
 
     if not user: 
-        response = jsonify(message='User wurde nicht gefunden')
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+        response = jsonify(message='User wurde nicht gefunden,delete')
+          
         return response, 400
 
     decoded_token = decode_token(access_token)
@@ -141,13 +132,27 @@ def user_delete():
 
     if author_id != user.username: 
         response = jsonify(message='Keine Berechtigung')
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+          
         return response, 401
 
     user.delete()
 
     response = jsonify(message='User wurde erfolgreicht entfernt')
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+ 
     return response, 200
+
+
+
+# @bp.after_request
+# def add_cors_headers(response):
+#     #r = request.referrer[:-1]
+#     #if r in white:
+#     response.headers.add('Access-Control-Allow-Origin', '*')
+#     response.headers.add('Access-Control-Allow-Credentials', 'true')
+#     response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+#     response.headers.add('Access-Control-Allow-Headers', 'Cache-Control')
+#     response.headers.add('Access-Control-Allow-Headers', 'X-Requested-With')
+#     response.headers.add('Access-Control-Allow-Headers', 'Authorization')
+#     response.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
+#     print("after_request done.m.m.m.m.")
+#     return response
