@@ -31,6 +31,9 @@ def create_app(config_filename=None, static_folder=None, static_url_path=None):
     bcrypt.init_app(app)
     jwt.init_app(app)
     
+    from .routes import auth
+    app.register_blueprint(auth.bp)
+
     from .routes import user_route
     app.register_blueprint(user_route.bp)
 
@@ -44,10 +47,6 @@ def create_app(config_filename=None, static_folder=None, static_url_path=None):
     def index():
         return app.send_static_file('index.html'), 200
     
-    print('rrr')
-    @app.route('/home')
-    def home():
-        return 'ss'
     return app
 
 

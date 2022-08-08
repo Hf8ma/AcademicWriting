@@ -138,7 +138,11 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: `${localStorage.getItem('access_token')}`
+        Authorization: `${localStorage.getItem('access_token')}`,
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
       })
     };
     this.http.get(`http://127.0.0.1:5000/api/paper?all=True`, httpOptions)
@@ -160,7 +164,11 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: `${localStorage.getItem('access_token')}`
+        Authorization: `${localStorage.getItem('access_token')}`,
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
       })
     };
     this.http.post(`http://127.0.0.1:5000/api/paper`, body, httpOptions)
@@ -201,7 +209,11 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: `${localStorage.getItem('access_token')}`
+        Authorization: `${localStorage.getItem('access_token')}`,
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
       })
     };
 
@@ -218,6 +230,10 @@ export class EditorComponent implements OnInit, AfterViewChecked {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `${localStorage.getItem('access_token')}`,
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
       })
     };
 
@@ -234,7 +250,10 @@ export class EditorComponent implements OnInit, AfterViewChecked {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `${localStorage.getItem('access_token')}`,
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
       })
     };
     this.http.delete(`http://127.0.0.1:5000/api/paper?id=${paper_id}`, httpOptions)
@@ -294,7 +313,11 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        //Authorization: `${localStorage.getItem('access_token')}`,
+        Authorization: `${localStorage.getItem('access_token')}`,
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
       })
     };
 

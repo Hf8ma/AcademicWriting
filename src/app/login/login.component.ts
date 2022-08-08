@@ -32,11 +32,16 @@ export class LoginComponent {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
       })
     };
 
     this.http.post('http://127.0.0.1:5000/api/auth/login',
-      { username: this.usernameFormControl.value, password: this.passwordFormControl.value }, httpOptions)
+    JSON.stringify(
+       { username: this.usernameFormControl.value, password: this.passwordFormControl.value }), httpOptions)
       .subscribe((user: any) => {
         console.log(user.access_token)
         localStorage.setItem('access_token', user.access_token);
