@@ -59,7 +59,6 @@ def register_user():
     user.save()
     response = jsonify(message='Account wurde erfolgreich angelegt')
     # response.headers.add('Access-Control-Allow-Origin', 'http://localhost:4200')
-    print(dir(response))
     return response, 200
 
 

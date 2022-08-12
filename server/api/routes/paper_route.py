@@ -65,32 +65,32 @@ def add_paper():
 
 
 @bp.route('/paper', methods=['PUT'])
-def user_update():
+def paper_update():
     """
     example: PUT: host/api/paper?id=1
     """
 
     id = request.args.get('id', default=None, type=int)
     access_token = request.headers.get('Authorization')
-
     paper = Paper.query.get(id)
+    
 
     if not paper:
         return jsonify(message='Paper wurde nicht gefunden'), 400
 
     data = request.get_json()
     data.pop('id', None)
-
     errors = paper_schema.validate(data, partial=True)
 
     if errors:
         return jsonify(errors), 400
 
     decoded_token = decode_token(access_token)
-    author_id = decoded_token['identity']
+    print(" decoded_token .. update" , (decoded_token))
+    author_id = decoded_token['sub']
 
     if author_id != paper.author_id:
-        return jsonify(message='Keine Berechtigung'), 401
+         return jsonify(message='Keine Berechtigung'), 401
 
     paper.update(**data)
 
@@ -98,7 +98,7 @@ def user_update():
 
 
 @bp.route('/paper', methods=['DELETE'])
-def user_delete():
+def paper_delete():
     """
     example: DELETE: host/api/paper?id=1
     """
@@ -112,7 +112,8 @@ def user_delete():
         return jsonify(message='Paper wurde nicht gefunden'), 400
 
     decoded_token = decode_token(access_token)
-    author_id = decoded_token['identity']
+    print(" decoded_token .. delete" , (decoded_token))
+    author_id = decoded_token['sub']
 
     if author_id != paper.author_id:
         return jsonify(message='Keine Berechtigung'), 401

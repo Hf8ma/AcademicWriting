@@ -2,6 +2,8 @@ from api import db, ma, bcrypt
 from api.database.paper import Paper
 from marshmallow import post_load, pre_load, validates, ValidationError
 
+from api.database.goal import Goal
+
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -11,6 +13,7 @@ class User(db.Model):
     password = db.Column(db.String(), nullable=False)
     token = db.relationship('Token', backref='access_token', cascade='all,delete', lazy=True)
     papers = db.relationship(Paper, backref='author', cascade='all,delete', lazy=True)
+    goals = db.relationship(Goal, backref='author', cascade='all,delete', lazy=True)
 
     def __init__(self, username, email, password):
         self.username = username

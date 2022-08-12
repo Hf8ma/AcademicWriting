@@ -147,16 +147,21 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     };
     this.http.get(`http://127.0.0.1:5000/api/paper?all=True`, httpOptions)
       .subscribe((wordList: any) => {
-        console.log(wordList);
+        console.log("wordList  ", wordList);
         this.papers = wordList;
-        this.changePaper(this.papers.length - 1)
+        console.log("this.papers  ", this.papers);
+        if (this.papers.length >= 1){
+          this.changePaper(this.papers.length - 1);
+          console.log("this.papers.length >= 1  ", this.papers.length >= 1);
+        }
+        
 
       });
   }
 
   public addPaper(): void {
     const body = {
-      content: this.getwholeText(),
+      content: '', //this.getwholeText(),
       title: "Beispieldokument " + (this.papers.length + 1),
       last_modified: new Date(),
       author_id: localStorage.getItem('user_id')
@@ -176,13 +181,14 @@ export class EditorComponent implements OnInit, AfterViewChecked {
         // this.papers.push(body);
         //wir brauchen die id des neu angelegten papers, um es löschen zu können -> daher reicht das pushen von dem paper object aus dem frontend nicht aus 
         this.getAllPapers()
-        console.log(wordList);
+        console.log('wordList', wordList);
 
       });
   }
 
   public changePaper(papers_index: number): void {
-    console.log(this.papers[papers_index].content);
+    console.log('calling changePaper func  ',this.papers[papers_index].content);
+    console.log("papers_index", papers_index);
     this.pages[0].htmlContent = this.papers[papers_index].content;
 
     // this.currentChar = char
@@ -190,6 +196,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     this.ngAfterViewChecked();
     this.pages[0].innerText = this.papers[papers_index].content;
     this.currentPaper = papers_index;
+ 
 
     // TODO: choose one paper which is to be displayed
     // what happens to current paper? auto-save? no save?
@@ -199,10 +206,12 @@ export class EditorComponent implements OnInit, AfterViewChecked {
 
   public updatePaper(papers_index: number): void {
     const paper_id = this.papers[papers_index].id;
+    console.log('calling updatePaper func.. paper_id: ',this.papers[papers_index]);
     const updated_paper = {
       content: this.getwholeText(),
       title: this.papers[papers_index].title,
       last_modified: new Date(),
+      id : this.papers[papers_index].id,
       author_id: localStorage.getItem('user_id')
     }
 
@@ -219,7 +228,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
 
     this.http.put(`http://127.0.0.1:5000/api/paper?id=${paper_id}`, updated_paper, httpOptions)
       .subscribe(wordList => {
-        console.log(wordList);
+        console.log("wordList", wordList);
         this.papers[papers_index] = updated_paper;
 
       });
@@ -258,9 +267,19 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     };
     this.http.delete(`http://127.0.0.1:5000/api/paper?id=${paper_id}`, httpOptions)
       .subscribe(wordList => {
-        console.log(wordList);
+        console.log("wordList", wordList);
         this.papers.splice(papers_index, 1);
-        this.changePaper(this.papers.length - 1)
+        if (this.papers.length >= 1){
+          this.changePaper(this.papers.length - 1);
+          console.log("this.papers.length >= 1  ", this.papers.length >= 1);
+        }
+        else{
+          console.log("No papers left, this.pages.length : ", this.pages.length);
+          for (let i = 0; i < this.pages.length; i++) {
+            this.pages[i].innerText = null;
+          }
+        }
+        
       });
   }
 
@@ -321,11 +340,11 @@ export class EditorComponent implements OnInit, AfterViewChecked {
       })
     };
 
-    this.http.get(`http://127.0.0.1:5000/api/avg_sentence_length/?text=${this.getwholeText()}`, httpOptions)
-      .subscribe((response: any) => {
-        this.averageSentenceLength = response.toFixed(2).replace(/[.,]00$/, "")
+    // this.http.get(`http://127.0.0.1:5000/api/avg_sentence_length/?text=${this.getwholeText()}`, httpOptions)
+    //   .subscribe((response: any) => {
+    //     this.averageSentenceLength = response.toFixed(2).replace(/[.,]00$/, "")
 
-      });
+    //   });
 
   }
 

@@ -85,8 +85,9 @@ def logout():
     access_token = request.headers.get('Authorization')
 
     decoded_token = decode_token(access_token)
-
+    print('decoded token ', decoded_token)
     username = decoded_token['sub']
+    print('dir(username) ',dir(username))
 
     user = User.query.filter_by(username=username).first()
 

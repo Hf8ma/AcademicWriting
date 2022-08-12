@@ -6,7 +6,7 @@ from flask_bcrypt import Bcrypt
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager
 import os
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 
 db = SQLAlchemy()
 ma = Marshmallow()
@@ -60,6 +60,6 @@ def create_manager():
 
     manager.add_command('db', MigrateCommand)
 
-    from .database import paper, user
+    from .database import paper, user, goal
 
     return manager

@@ -29,6 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RegistrierungsDialogComponent } from './registrierungs-dialog/registrierungs-dialog.component';
 import { ApiComponent } from './editor/components/api/api.component';
 import { MatSelectModule } from '@angular/material/select';
+import { GoalComponent } from './editor/components/goal/goal.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { MatSelectModule } from '@angular/material/select';
     LoginComponent,
     RegistrierungsDialogComponent,
     ApiComponent,
+    GoalComponent,
   ],
   imports: [
     BrowserModule,
