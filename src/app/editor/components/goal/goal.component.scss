@@ -1,0 +1,17 @@
+.goal {
+    
+    border: 1px solid rgb(42, 53, 50) ;
+    font-family: Arial, sans-serif;
+    min-width: 14rem;
+    min-height: 3rem;
+    background-color: rgba(251, 245, 245, 0.747);
+    color: rgb(29, 28, 28);
+  }
+
+  .goal mat-label{
+    text-align: center;
+    color: rgb(183, 8, 8);
+    font-family:  Arial, sans-serif;
+    font-size: large;
+    padding-top: 3%;
+  }
