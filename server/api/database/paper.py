@@ -1,19 +1,21 @@
 from api import db, ma
 from marshmallow import post_load
 from sqlalchemy import func
-
+from api.database.duration import Duration
 
 class Paper(db.Model):
     __tablename__ = 'papers'
     id = db.Column(db.Integer(), primary_key=True, nullable=False)
-    author_id = db.Column(db.String(), db.ForeignKey('users.username'), nullable=False)
+    category_id = db.Column(db.Integer(), db.ForeignKey('categories.id'), nullable=False)
     title = db.Column(db.String(128), nullable=False)
     content = db.Column(db.Text(), nullable=True)
     last_modified = db.Column(db.DateTime(timezone=True), nullable=False)
     created = db.Column(db.DateTime(timezone=True), server_default=func.now(), nullable=False)
+    durations = db.relationship(Duration, backref='paper', cascade='all,delete', lazy=True)
 
-    def __init__(self, author_id, title, content, last_modified):
-        self.author_id = author_id
+
+    def __init__(self, category_id, title, content, last_modified):
+        self.category_id = category_id
         self.content = content
         self.title = title
         self.last_modified = last_modified
@@ -32,8 +34,8 @@ class Paper(db.Model):
         db.session.commit()
 
     @staticmethod
-    def get_all(username):
-        return Paper.query.filter_by(author_id=username).all()
+    def get_all(category_id):
+        return Paper.query.filter_by(category_id=category_id).all()
 
     def __repr__(self):
         return 'Paper: {}'.format(self.title)
@@ -41,7 +43,7 @@ class Paper(db.Model):
 
 class PaperSchema(ma.Schema):
     id = ma.Integer(required=False, dump_only=True)
-    author_id = ma.String(required=True)
+    category_id = ma.Integer(required=True)
     title = ma.String(required=True)
     content = ma.String(required=True)
     last_modified = ma.String(required=True)
