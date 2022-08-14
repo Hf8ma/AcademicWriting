@@ -6,7 +6,7 @@ class Goal(db.Model):
     __tablename__ = 'goals'
 
     id = db.Column(db.Integer(), primary_key=True, nullable=False)
-    author_id = db.Column(db.String(), db.ForeignKey('users.username'), nullable=False)
+    author_id = db.Column(db.String(), db.ForeignKey('users.id'), nullable=False)
     content = db.Column(db.Text(), nullable=True)
     created = db.Column(db.DateTime(timezone=True), server_default=func.now(), nullable=False)
 
@@ -29,8 +29,8 @@ class Goal(db.Model):
         db.session.commit()
 
     @staticmethod
-    def get_all(username):
-        return Goal.query.filter_by(author_id=username).all()
+    def get_all(user_id):
+        return Goal.query.filter_by(author_id=user_id).all()
 
     def __repr__(self):
         return 'Goal: {}'.format(self.content)
@@ -38,7 +38,7 @@ class Goal(db.Model):
 
 class GoalSchema(ma.Schema):
     id = ma.Integer(required=False, dump_only=True)
-    author_id = ma.String(required=True)
+    author_id = ma.Integer(required=True)
     content = ma.String(required=True)
     created = ma.DateTime(required=False, dump_only=True)
 
