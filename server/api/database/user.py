@@ -13,7 +13,6 @@ class User(db.Model):
     email = db.Column(db.String(128), unique=False, nullable=False)
     password = db.Column(db.String(), nullable=False)
     token = db.relationship('Token', backref='access_token', cascade='all,delete', lazy=True)
-    papers = db.relationship(Paper, backref='author', cascade='all,delete', lazy=True)
     goals = db.relationship(Goal, backref='author', cascade='all,delete', lazy=True)
     categories = db.relationship(Category, backref='author', cascade='all,delete', lazy=True)
     deadlines = db.relationship(Deadline, backref='author', cascade='all,delete', lazy=True)
