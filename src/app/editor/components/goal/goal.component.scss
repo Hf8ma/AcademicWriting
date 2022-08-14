@@ -2,9 +2,9 @@
     
     border: 1px solid rgb(42, 53, 50) ;
     font-family: Arial, sans-serif;
-    min-width: 14rem;
+   
     min-height: 3rem;
-    background-color: rgba(251, 245, 245, 0.747);
+    background-color: rgba(255, 255, 255);
     color: rgb(29, 28, 28);
   }
 
@@ -14,4 +14,7 @@
     font-family:  Arial, sans-serif;
     font-size: large;
     padding-top: 3%;
+  }
+  .goal textarea{
+    border: 0 ;
   }

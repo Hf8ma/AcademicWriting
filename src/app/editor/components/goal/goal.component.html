@@ -1,15 +1,6 @@
 <div class="goal">
     <mat-label>Goals for today</mat-label> 
-    <section id="textarea" contenteditable="true">
-    
-        <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-        </ul>
-
-    </section>
+    <textarea  cols="26" rows="4" (blur)="str = $event.target.value"></textarea>
 </div>
 
 
