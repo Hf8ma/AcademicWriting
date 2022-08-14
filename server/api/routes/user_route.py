@@ -95,7 +95,7 @@ def user_update():
 
     author_id = decoded_token['sub']
 
-    if author_id != user.username: 
+    if author_id != user.id: 
         response = jsonify(message='Keine Berechtigung')
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response, 401
@@ -111,14 +111,13 @@ def user_update():
 @cross_origin(supports_credentials=True)
 def user_delete():
     """
-    example: DELETE: host/api/user?username=test
+    example: DELETE: host/api/user?username=username
     """
 
     access_token = request.headers.get('Authorization')
     username = request.args.get('username', default='', type=str)
-
     user = User.query.filter_by(username=username).first()
-
+    print(user.id)
     if not user: 
         response = jsonify(message='User wurde nicht gefunden')
         response.headers.add('Access-Control-Allow-Origin', '*')
@@ -127,7 +126,7 @@ def user_delete():
     decoded_token = decode_token(access_token)
     author_id = decoded_token['sub']
 
-    if author_id != user.username: 
+    if author_id != user.id: 
         response = jsonify(message='Keine Berechtigung')
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response, 401
@@ -135,5 +134,4 @@ def user_delete():
     user.delete()
 
     response = jsonify(message='User wurde erfolgreicht entfernt')
-    response.headers.add('Access-Control-Allow-Origin', '*')
     return response, 200
