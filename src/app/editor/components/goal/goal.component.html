@@ -1,6 +1,8 @@
 <div class="goal">
-    <mat-label>Goals for today</mat-label> 
-    <textarea  cols="26" rows="4" (blur)="str = $event.target.value"></textarea>
+    <mat-label>Goals for today</mat-label>
+    <mat-form-field appearance="outline">
+        <textarea matInput placeholder="description"></textarea>
+
+    </mat-form-field>
+
 </div>
-
-

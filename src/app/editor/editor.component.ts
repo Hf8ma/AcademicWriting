@@ -161,7 +161,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
 
   public addPaper(): void {
     const body = {
-      content: '', //this.getwholeText(),
+      content: '',
       title: "Beispieldokument " + (this.papers.length + 1),
       last_modified: new Date(),
       author_id: localStorage.getItem('user_id')
