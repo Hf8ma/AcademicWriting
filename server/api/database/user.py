@@ -1,8 +1,8 @@
 from api import db, ma, bcrypt
-from api.database.paper import Paper
 from marshmallow import post_load, pre_load, validates, ValidationError
 
 from api.database.goal import Goal
+from api.database.note import Note
 from api.database.category import Category
 from api.database.deadline import Deadline
 
@@ -17,6 +17,7 @@ class User(db.Model):
     goals = db.relationship(Goal, backref='author', cascade='all,delete', lazy=True)
     categories = db.relationship(Category, backref='author', cascade='all,delete', lazy=True)
     deadlines = db.relationship(Deadline, backref='author', cascade='all,delete', lazy=True)
+    notes = db.relationship(Note, backref= 'author', cascade='all,delete', lazy=True)
 
     def __init__(self, username, email, password):
         self.username = username

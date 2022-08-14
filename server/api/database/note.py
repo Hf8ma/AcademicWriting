@@ -2,11 +2,11 @@ from api import db, ma
 from marshmallow import post_load
 from sqlalchemy import func
 
-class Goal(db.Model):
-    __tablename__ = 'goals'
+class Note(db.Model):
+    __tablename__ = 'notes'
 
     id = db.Column(db.Integer(), primary_key=True, nullable=False)
-    author_id = db.Column(db.String(), db.ForeignKey('users.id'), nullable=False)
+    author_id = db.Column(db.Integer(), db.ForeignKey('users.id'), nullable=False)
     content = db.Column(db.Text(), nullable=True)
     created = db.Column(db.DateTime(timezone=True), server_default=func.now(), nullable=False)
 
@@ -30,22 +30,22 @@ class Goal(db.Model):
 
     @staticmethod
     def get_all(user_id):
-        return Goal.query.filter_by(author_id=user_id).all()
+        return Note.query.filter_by(author_id=user_id).all()
 
     def __repr__(self):
-        return 'Goal: {}'.format(self.content)
+        return 'Note: {}'.format(self.content)
 
 
-class GoalSchema(ma.Schema):
+class NoteSchema(ma.Schema):
     id = ma.Integer(required=False, dump_only=True)
     author_id = ma.Integer(required=True)
     content = ma.String(required=True)
     created = ma.DateTime(required=False, dump_only=True)
 
     @post_load
-    def load_goal(self, data, **kwargs):
-        return Goal(**data)
+    def load_note(self, data, **kwargs):
+        return Note(**data)
 
 
-goal_schema = GoalSchema(many=False)
-goals_schema = GoalSchema(many=True)
+note_schema = NoteSchema(many=False)
+notes_schema = NoteSchema(many=True)
