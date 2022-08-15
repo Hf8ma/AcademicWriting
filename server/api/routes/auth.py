@@ -21,12 +21,12 @@ def permission_needed(function):
 
             decoded_token = decode_token(access_token)
 
-            username = decoded_token['sub']
+            user_id = decoded_token['sub']
 
-            user = User.query.filter_by(username=username).first()
+            user = User.query.filter_by(id=user_id).first()
 
             token = Token.query.filter_by(token=access_token,
-                                          username=user.username).first()
+                                          user_id=user.id).first()
 
             if not user:
                 return jsonify(message='User wurde nicht gefunden'), 400
@@ -64,9 +64,9 @@ def login():
     try:
         if bcrypt.check_password_hash(user.password, password):
             expires = timedelta(days=30)
-            access_token = create_access_token(identity=username,
+            access_token = create_access_token(identity=user.id,
                                                expires_delta=expires)
-            Token(access_token, user.username).save()
+            Token(access_token, user.id).save()
             return jsonify(access_token=access_token), 200
         else:
             return jsonify(message='Etwas ist schief gelaufen'), 400
@@ -86,17 +86,17 @@ def logout():
 
     decoded_token = decode_token(access_token)
     print('decoded token ', decoded_token)
-    username = decoded_token['sub']
-    print('dir(username) ',dir(username))
+    user_id = decoded_token['sub']
+    print('dir(user_id) ',dir(user_id))
 
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter_by(id=user_id).first()
 
     if not user:
         return jsonify(message='User wurde nicht gefunden'), 400
 
     token = Token.query.get(access_token)
 
-    if token.username != user.username:
+    if token.user_id != user.id:
         return jsonify(message='Token oder User nicht korrekt'), 400
 
     token.delete()

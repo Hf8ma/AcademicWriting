@@ -5,12 +5,12 @@ from sqlalchemy import func
 class Token(db.Model):
     __tablename__ = 'tokens'
     token = db.Column(db.String(), primary_key=True, nullable=False)
-    username = db.Column(db.String(32), db.ForeignKey('users.username'), nullable=False)
+    user_id = db.Column(db.Integer(), db.ForeignKey('users.id'), nullable=False)
     activated = db.Column(db.DateTime(timezone=True), server_default=func.now())
 
-    def __init__(self, token, username):
+    def __init__(self, token, user_id):
         self.token = token
-        self.username = username
+        self.user_id = user_id
 
     def save(self):
         db.session.add(self)
@@ -21,4 +21,4 @@ class Token(db.Model):
         db.session.commit()
 
     def __repr__(self):
-        return '{}: {}'.format(self.token, self.username)
+        return '{}: {}'.format(self.token, self.user_id)

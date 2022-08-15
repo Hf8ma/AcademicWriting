@@ -15,10 +15,7 @@ def get_paper():
     """
 
     id = request.args.get('id', default=None, type=int)
-    access_token = request.headers.get('Authorization')
-
-    decoded_token = decode_token(access_token)
-    author_id = decoded_token['sub']
+    category_id = request.args.get('category_id', default=None, type=int)
 
     if id:
 
@@ -26,15 +23,16 @@ def get_paper():
         if not paper:
             return jsonify(message='Paper konnte nicht gefunden werden'), 400
 
-        if author_id != paper.author_id:
-            return jsonify(message='Keine Berechtigung'), 401
 
         return paper_schema.jsonify(paper), 200
 
-    all_paper = Paper.get_all(username=author_id)
-    result = papers_schema.dump(all_paper)
+    if category_id:
+        all_paper = Paper.get_all(category_id=category_id)
+        result = papers_schema.dump(all_paper)
+        return jsonify(result.data), 200
 
-    return jsonify(result.data), 200
+    return jsonify(message='Keine Peper'), 200
+    
 
 
 @bp.route('/paper', methods=['POST'])
@@ -56,9 +54,9 @@ def add_paper():
     decoded_token = decode_token(access_token)
     author_id = decoded_token['sub']
 
-    if author_id != paper.author_id:
-        return jsonify(message='Keine Berechtigung'), 401
-
+    # if author_id != paper.category.author_id:
+    #     return jsonify(message='Keine Berechtigung'), 401
+    
     paper.save()
 
     return jsonify(message='Paper wurde erfolgreich erstellt.'), 200
@@ -89,8 +87,8 @@ def paper_update():
     print(" decoded_token .. update" , (decoded_token))
     author_id = decoded_token['sub']
 
-    if author_id != paper.author_id:
-         return jsonify(message='Keine Berechtigung'), 401
+    # if author_id != paper.category.author_id:
+    #      return jsonify(message='Keine Berechtigung'), 401
 
     paper.update(**data)
 
@@ -115,8 +113,8 @@ def paper_delete():
     print(" decoded_token .. delete" , (decoded_token))
     author_id = decoded_token['sub']
 
-    if author_id != paper.author_id:
-        return jsonify(message='Keine Berechtigung'), 401
+    # if author_id != paper.category.author_id:
+    #     return jsonify(message='Keine Berechtigung'), 401
 
     paper.delete()
 

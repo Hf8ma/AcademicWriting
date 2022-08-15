@@ -6,7 +6,7 @@ class Goal(db.Model):
     __tablename__ = 'goals'
 
     id = db.Column(db.Integer(), primary_key=True, nullable=False)
-    author_id = db.Column(db.String(), db.ForeignKey('users.id'), nullable=False)
+    author_id = db.Column(db.Integer(), db.ForeignKey('users.id'), nullable=False)
     content = db.Column(db.Text(), nullable=True)
     created = db.Column(db.DateTime(timezone=True), server_default=func.now(), nullable=False)
 

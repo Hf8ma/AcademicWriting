@@ -145,7 +145,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
         'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
       })
     };
-    this.http.get(`http://127.0.0.1:5000/api/paper?all=True`, httpOptions)
+    this.http.get(`http://127.0.0.1:5000/api/paper?category_id=1`, httpOptions)
       .subscribe((wordList: any) => {
         console.log("wordList  ", wordList);
         this.papers = wordList;
@@ -164,7 +164,8 @@ export class EditorComponent implements OnInit, AfterViewChecked {
       content: '',
       title: "Beispieldokument " + (this.papers.length + 1),
       last_modified: new Date(),
-      author_id: localStorage.getItem('user_id')
+      author_id: localStorage.getItem('user_id'),
+      category_id: 1
     };
     const httpOptions = {
       headers: new HttpHeaders({
@@ -212,7 +213,8 @@ export class EditorComponent implements OnInit, AfterViewChecked {
       title: this.papers[papers_index].title,
       last_modified: new Date(),
       id : this.papers[papers_index].id,
-      author_id: localStorage.getItem('user_id')
+      author_id: localStorage.getItem('user_id'),
+      category_id: 1
     }
 
     const httpOptions = {
@@ -246,9 +248,9 @@ export class EditorComponent implements OnInit, AfterViewChecked {
       })
     };
 
-    this.http.delete('http://127.0.0.1:5000/api/user?username=test2', httpOptions)
+    this.http.delete(`http://127.0.0.1:5000/api/user?username=${localStorage.getItem('user_id')}`, httpOptions)
       .subscribe(user => {
-        console.log(user);
+        this.logout();
       });
 
   }

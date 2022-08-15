@@ -1,18 +1,24 @@
 from api import db, ma
 from marshmallow import post_load
 from sqlalchemy import func
+from api.database.paper import Paper
 
-class Note(db.Model):
-    __tablename__ = 'notes'
+
+class Category(db.Model):
+    __tablename__ = 'categories'
 
     id = db.Column(db.Integer(), primary_key=True, nullable=False)
     author_id = db.Column(db.Integer(), db.ForeignKey('users.id'), nullable=False)
-    content = db.Column(db.Text(), nullable=True)
+    name = db.Column(db.Text(), nullable=False)
+    color = db.Column(db.Text(), nullable=False)
     created = db.Column(db.DateTime(timezone=True), server_default=func.now(), nullable=False)
+    papers = db.relationship(Paper, backref='category', cascade='all,delete', lazy=True)
 
-    def __init__(self, author_id, content):
+
+    def __init__(self, author_id, name, color):
         self.author_id = author_id
-        self.content = content
+        self.name = name
+        self.color = color
 
 
     def save(self):
@@ -30,22 +36,23 @@ class Note(db.Model):
 
     @staticmethod
     def get_all(user_id):
-        return Note.query.filter_by(author_id=user_id).all()
+        return Category.query.filter_by(author_id=user_id).all()
 
     def __repr__(self):
-        return 'Note: {}'.format(self.content)
+        return 'Category: {}'.format(self.name)
 
 
-class NoteSchema(ma.Schema):
+class CategorySchema(ma.Schema):
     id = ma.Integer(required=False, dump_only=True)
     author_id = ma.Integer(required=True)
-    content = ma.String(required=True)
+    name = ma.String(required=True)
+    color = ma.String(required=True)
     created = ma.DateTime(required=False, dump_only=True)
 
     @post_load
-    def load_note(self, data, **kwargs):
-        return Note(**data)
+    def load_category(self, data, **kwargs):
+        return Category(**data)
 
 
-note_schema = NoteSchema(many=False)
-notes_schema = NoteSchema(many=True)
+category_schema = CategorySchema(many=False)
+categories_schema = CategorySchema(many=True)
