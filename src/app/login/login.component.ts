@@ -17,10 +17,6 @@ export class LoginComponent {
     Validators.required,
   ]);
 
-  public emailFormControl = new FormControl('', [
-    Validators.email,
-  ]);
-
   public passwordFormControl = new FormControl('', [
     Validators.required,
   ]);
@@ -40,12 +36,17 @@ export class LoginComponent {
     };
 
     this.http.post('http://127.0.0.1:5000/api/auth/login',
-    JSON.stringify(
-       { username: this.usernameFormControl.value, password: this.passwordFormControl.value }), httpOptions)
-      .subscribe((user: any) => {
-        console.log(user.access_token)
-        localStorage.setItem('access_token', user.access_token);
-        localStorage.setItem('user_id', this.usernameFormControl.value);
+      JSON.stringify(
+        {
+          username: this.usernameFormControl.value,
+          password: this.passwordFormControl.value
+        }
+      ), httpOptions
+    )
+      .subscribe((response: any) => {
+        console.log("response in login.ts is ",response)
+        localStorage.setItem('access_token', response.access_token);
+        localStorage.setItem('user_id', response.user_id);
         this.router.navigateByUrl('editor').then(r => r);
       });
   }
@@ -57,7 +58,7 @@ export class LoginComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      console.log('result in login.ts when calling  dialogRef.afterClosed(): ', result);
     });
   }
 }

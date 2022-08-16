@@ -46,15 +46,16 @@ export class RegistrierungsDialogComponent implements OnInit {
         'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
       })
     };
-   console.log(httpOptions);
+    console.log('httpOptions - inside registrieren : ', httpOptions);
     this.http.post('http://127.0.0.1:5000/api/user',
-    JSON.stringify(
-      {
-        username: this.usernameFormControl.value, email: this.emailFormControl.value,
-        password: this.passwordFormControl.value
-      }), httpOptions).subscribe(user => {
-        console.log(user)
-      });
+      JSON.stringify(
+        {
+          username: this.usernameFormControl.value,
+          email: this.emailFormControl.value,
+          password: this.passwordFormControl.value
+        }), httpOptions).subscribe(user => {
+          console.log('inside registrieren - ts : ',user)
+        });
 
     this.onClose();
   }
