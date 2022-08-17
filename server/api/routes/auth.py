@@ -61,13 +61,14 @@ def login():
 
     user = User.query.filter_by(username=username).first()
 
+
     try:
         if bcrypt.check_password_hash(user.password, password):
             expires = timedelta(days=30)
             access_token = create_access_token(identity=user.id,
                                                expires_delta=expires)
             Token(access_token, user.id).save()
-            return jsonify(access_token=access_token), 200
+            return jsonify(access_token=access_token, user_id = user.id ), 200
         else:
             return jsonify(message='Etwas ist schief gelaufen'), 400
     except Exception as e:
@@ -85,9 +86,8 @@ def logout():
     access_token = request.headers.get('Authorization')
 
     decoded_token = decode_token(access_token)
-    print('decoded token ', decoded_token)
     user_id = decoded_token['sub']
-    print('dir(user_id) ',dir(user_id))
+ 
 
     user = User.query.filter_by(id=user_id).first()
 

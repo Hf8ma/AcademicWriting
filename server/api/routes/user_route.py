@@ -46,19 +46,16 @@ def register_user():
 
     if not request.is_json:
         response = jsonify(message='Anfrage enthielt kein gültiges JSON')
-        # response.headers.add('Access-Control-Allow-Origin', 'http://localhost:4200')
         return response, 400
 
     user, errors = user_schema.load(request.get_json())
     print(errors)
     if errors: 
         response = jsonify(errors)
-        # response.headers.add('Access-Control-Allow-Origin', 'http://localhost:4200')
         return response, 400
 
     user.save()
     response = jsonify(message='Account wurde erfolgreich angelegt')
-    # response.headers.add('Access-Control-Allow-Origin', 'http://localhost:4200')
     return response, 200
 
 
@@ -111,12 +108,12 @@ def user_update():
 @cross_origin(supports_credentials=True)
 def user_delete():
     """
-    example: DELETE: host/api/user?username=username
+    example: DELETE: host/api/user?user_id=username
     """
 
     access_token = request.headers.get('Authorization')
-    username = request.args.get('username', default='', type=str)
-    user = User.query.filter_by(username=username).first()
+    user_id = request.args.get('user_id', default='', type=str)
+    user = User.query.filter_by(id =user_id).first()
     print(user.id)
     if not user: 
         response = jsonify(message='User wurde nicht gefunden')
