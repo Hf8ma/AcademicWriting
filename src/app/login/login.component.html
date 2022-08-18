@@ -1,34 +1,48 @@
-<div class="login-background">
-  <div class="login-form">
-    <h3>Login - Academic Writing Editor</h3>
-    <div class="login-info">
-      <h4>Dein persönlicher Zugang zu dem Academic Writing Editor - </h4><button (click)="registrieren()">Hier
-        anmelden</button>
-    </div>
-    <div class="login-div">
-      <form class="login-form-fields">
-        <mat-form-field appearance="fill">
-          <mat-label>Username</mat-label>
-          <input type="text" matInput [formControl]="usernameFormControl">
-          <mat-error *ngIf="usernameFormControl.hasError('required')">
-            Username is required
-          </mat-error>
-        </mat-form-field>
+<div class="'container">
+  <!-- <section> -->
+    <div class="top-section"></div>
+  <!-- </section>
+  
 
-        <mat-form-field appearance="fill">
-          <mat-label>Passwort</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl">
-          <mat-error *ngIf="passwordFormControl.hasError('required')">
-            Password is required
-          </mat-error>
-          <button class="visibility-button" mat-icon-button matSuffix (click)="hide = !hide"
-            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-        </mat-form-field>
-        <button (click)="login()" class="login-button" mat-raised-button color="primary"
-          [disabled]="usernameFormControl.invalid || passwordFormControl.invalid">Anmelden</button>
-      </form>
+  <section> -->
+    <div class="form-section">
+      <mat-card class="my-card">
+        <img mat-card-xl-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <mat-card-content>
+          
+          <form class="my-form">
+            <mat-form-field class="full-width">
+              <mat-label>Username</mat-label>
+              <input type="text" matInput [formControl]="usernameFormControl">
+              <mat-error *ngIf="usernameFormControl.hasError('required')">
+                Username is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <mat-label>Password</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl">
+              <mat-error *ngIf="passwordFormControl.hasError('required')">
+                Password is required
+              </mat-error>
+              <button class="visibility-button" mat-icon-button matSuffix (click)="hide = !hide"
+                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+          </form>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button (click)="login()" color="primary"
+            [disabled]="usernameFormControl.invalid || passwordFormControl.invalid">Anmelden</button>
+          <button mat-raised-button (click)="registrieren()" class="register-button">Hier anmelden</button>
+        </mat-card-actions>
+      </mat-card>
+
+      <!-- </div> -->
     </div>
-  </div>
+  <!-- </section>
+  
+  <section> -->
+    <div class="bottom-section"></div>
+  <!-- </section> -->
 </div>

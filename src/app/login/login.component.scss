@@ -1,67 +1,118 @@
-.login-background {
-  background-color: #20202f;
-  height: 100%;
+body {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.container {
+  flex-flow: column wrap;
+}
+
+.top-section,
+.form-section,
+.bottom-section {
+
   width: 100%;
-}
-
-.login-form {
-  padding-left: 30%;
-  padding-top: 8%;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-h3 {
-  white-space: pre-wrap;
-  color: white;
-  font-size: 40px;
-}
-
-h4 {
-  white-space: pre-wrap;
-  color: darkgrey;
-  padding-left: 3.5%;
-  display: inline;
-}
-
-a {
-  font-size: 15px;
-  color: darkgrey;
-}
-
-.login-info {
-  margin-bottom: 5%;
+  height: 300px;
 
 }
 
-.login-div {
-  height: 60%;
-  width: 40%;
-  background-color: white;
-  margin-left: 7.4%;
-  border-radius: 25px;
+.top-section {
+  order: 1;
+
+  background: #8caf2c;
 }
 
-.login-form-fields {
-  min-width: 150px;
-  max-width: 500px;
-  width: 80%;
+.form-section {
+  order: 2;
 }
 
-mat-form-field {
-  width: 100%;
-  margin-top: 15%;
-  padding-left: 12%;
+.my-card,
+.form-section {
+  background: #b6e7d7;
 }
 
-.login-button {
-  margin-left: 83%;
-  margin-top: 8%;
-  background-color: #20202f;
+.bottom-section {
+
+  order: 3;
+  background: #8a1c1c;
 }
 
 .visibility-button {
   color: #20202f;
 }
 
+.my-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+
+
+.full-width {
+  width: 100%;
+}
+
+
+// .login-form {
+//   padding-left: 30%;
+//   padding-top: 8%;
+//   justify-content: center;
+//   align-items: center;
+//   height: 100%;
+// }
+
+// h3 {
+//   white-space: pre-wrap;
+//   color: white;
+//   font-size: 40px;
+// }
+
+// h4 {
+//   white-space: pre-wrap;
+//   color: darkgrey;
+//   padding-left: 3.5%;
+//   display: inline;
+// }
+
+// a {
+//   font-size: 15px;
+//   color: darkgrey;
+// }
+
+// .login-info {
+//   margin-bottom: 5%;
+
+// }
+
+// .login-div {
+//   height: 60%;
+//   width: 40%;
+//   background-color: white;
+//   margin-left: 7.4%;
+//   border-radius: 25px;
+// }
+
+// .login-form-fields {
+//   min-width: 150px;
+//   max-width: 500px;
+//   width: 80%;
+// }
+
+// mat-form-field {
+//   width: 100%;
+//   margin-top: 15%;
+//   padding-left: 12%;
+// }
+
+// .login-button {
+//   margin-left: 83%;
+//   margin-top: 8%;
+//   background-color: #20202f;
+// }
+
+// .register-button {
+//   margin-left: 73%;
+//   margin-top: 8%;
+//   background-color: #20202f;
+// }
