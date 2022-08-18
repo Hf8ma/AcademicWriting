@@ -11,8 +11,10 @@
       <mat-card-actions>
         <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="7px">
 
-          <button mat-flat-button style="background: #039BE5; color: white"
-                  [matTooltip]="'add and show all papers'">Papers
+          <button mat-flat-button
+                  style="background: #039BE5; color: white"
+                  [matTooltip]="'add and show all papers'"
+                  (click)="openPapersDialog(cat)">Papers
           </button>
 
           <button mat-flat-button style="background: #FFC107; color: white"

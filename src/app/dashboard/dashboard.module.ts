@@ -28,10 +28,12 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import { CategoryDialogComponent } from './category-dialog/category-dialog.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {DeleteCategoryDialogComponent} from './delete-category-dialog/delete-category-dialog.component';
+import {CategoryPapersDialogComponent} from './category-papers-dialog/category-papers-dialog.component';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [DashboardComponent, FolderComponent, AddDocumentComponent, DeadlineComponent,
-    StatisticsComponent, CategoryDialogComponent, DeleteCategoryDialogComponent],
+    StatisticsComponent, CategoryDialogComponent, DeleteCategoryDialogComponent, CategoryPapersDialogComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
@@ -55,10 +57,11 @@ import {DeleteCategoryDialogComponent} from './delete-category-dialog/delete-cat
     MatSelectModule,
     MatSlideToggleModule,
     FlexLayoutModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTableModule
   ],
   providers: [
-    MatSnackBarModule,
+    MatSnackBarModule, MatTableModule
   ]
 })
 export class DashboardModule { }

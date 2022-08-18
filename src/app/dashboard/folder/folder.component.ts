@@ -4,6 +4,7 @@ import {CategoryDialogComponent} from '../category-dialog/category-dialog.compon
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {DeleteCategoryDialogComponent} from '../delete-category-dialog/delete-category-dialog.component';
+import {CategoryPapersDialogComponent} from '../category-papers-dialog/category-papers-dialog.component';
 
 @Component({
   selector: 'app-folder',
@@ -55,6 +56,21 @@ export class FolderComponent implements OnInit {
   openDeleteCategoryDialog(category): void {
     const dialogRef = this.dialog.open(DeleteCategoryDialogComponent, {
       width: '250px',
+      data: category
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.message) {
+        this.snackBar.open(result.message, 'Close' , {
+          duration: 6000
+        });
+      }
+    });
+  }
+
+  openPapersDialog(category): void {
+    const dialogRef = this.dialog.open(CategoryPapersDialogComponent, {
+      width: '800px',
       data: category
     });
 

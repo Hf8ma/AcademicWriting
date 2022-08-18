@@ -2,11 +2,11 @@
 
 <div mat-dialog-content>
     <div fxLayout="column">
-       Are you sure you want to delete {{data.name}} Folder?
+      Are you sure you want to delete <strong>{{data.name}}</strong> Folder?
     </div>
 
 </div>
 <div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="">close</button>
-  <button mat-button (click)="deleteCategory()">delete</button>
+  <button mat-flat-button color="primary" [mat-dialog-close]="">close</button>
+  <button mat-flat-button color="warn" (click)="deleteCategory()">delete</button>
 </div>
