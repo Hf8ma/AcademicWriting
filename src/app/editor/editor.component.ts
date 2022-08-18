@@ -155,7 +155,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
           this.changePaper(this.papers.length - 1);
           console.log("this.papers.length >= 1  ", this.papers.length >= 1);
         }
-        
+
 
       });
   }
@@ -181,7 +181,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     this.http.post(`http://127.0.0.1:5000/api/paper`, body, httpOptions)
       .subscribe(wordList => {
         // this.papers.push(body);
-        //wir brauchen die id des neu angelegten papers, um es löschen zu können -> daher reicht das pushen von dem paper object aus dem frontend nicht aus 
+        //wir brauchen die id des neu angelegten papers, um es löschen zu können -> daher reicht das pushen von dem paper object aus dem frontend nicht aus
         this.getAllPapers()
         console.log('wordList', wordList);
 
@@ -198,7 +198,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     this.ngAfterViewChecked();
     this.pages[0].innerText = this.papers[papers_index].content;
     this.currentPaper = papers_index;
- 
+
 
     // TODO: choose one paper which is to be displayed
     // what happens to current paper? auto-save? no save?
@@ -237,25 +237,6 @@ export class EditorComponent implements OnInit, AfterViewChecked {
       });
   }
 
-  public deleteUser(): void {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `${localStorage.getItem('access_token')}`,
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': 'true',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-      })
-    };
-
-    this.http.delete(`http://127.0.0.1:5000/api/user?user_id=${localStorage.getItem('user_id')}`, httpOptions)
-      .subscribe(user => {
-        this.logout();
-      });
-
-  }
-
   public deletePaper(papers_index: number): void {
     const paper_id = this.papers[papers_index].id;
     const httpOptions = {
@@ -282,7 +263,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
             this.pages[i].innerText = null;
           }
         }
-        
+
       });
   }
 
@@ -299,20 +280,20 @@ export class EditorComponent implements OnInit, AfterViewChecked {
         // const text = markdown.replace(/<[^>]*>/g, '').toString()
       }
       console.log(markdown);
-  
+
       const httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           // 'Authorization': `${localStorage.getItem("access_token")}`
         })
       };
-  
+
       this.http.post(`https://md-to-pdf.herokuapp.com/`, {
         markdown: '<p>markdown</p>',
       }, httpOptions)
         .subscribe(wordList => {
           console.log(wordList);
-  
+
         });
     } */
 
@@ -376,12 +357,6 @@ export class EditorComponent implements OnInit, AfterViewChecked {
       this.runAfterViewChecked = true;
     }
     this.getAverageSentenceLength()
-  }
-
-  public logout(): void {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('user_id');
-    this.router.navigateByUrl('').then(r => r);
   }
 
   public slideTogglelofi(): void {

@@ -60,7 +60,8 @@ def login():
         return jsonify(message='Passwort fehlt'), 400
 
     user = User.query.filter_by(username=username).first()
-
+    print(username)
+    print(user.id)
 
     try:
         if bcrypt.check_password_hash(user.password, password):
@@ -68,7 +69,7 @@ def login():
             access_token = create_access_token(identity=user.id,
                                                expires_delta=expires)
             Token(access_token, user.id).save()
-            return jsonify(access_token=access_token, user_id = user.id ), 200
+            return jsonify(access_token=access_token, user_id = user.id, username= user.username ), 200
         else:
             return jsonify(message='Etwas ist schief gelaufen'), 400
     except Exception as e:
@@ -87,7 +88,7 @@ def logout():
 
     decoded_token = decode_token(access_token)
     user_id = decoded_token['sub']
- 
+
 
     user = User.query.filter_by(id=user_id).first()
 
