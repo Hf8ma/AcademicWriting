@@ -36,17 +36,13 @@ export class LoginComponent {
     };
 
     this.http.post('http://127.0.0.1:5000/api/auth/login',
-      JSON.stringify(
-        {
-          username: this.usernameFormControl.value,
-          password: this.passwordFormControl.value
-        }
-      ), httpOptions
-    )
-      .subscribe((response: any) => {
-        console.log("response in login.ts is ",response)
-        localStorage.setItem('access_token', response.access_token);
-        localStorage.setItem('user_id', response.user_id);
+    JSON.stringify(
+       { username: this.usernameFormControl.value, password: this.passwordFormControl.value }), httpOptions)
+      .subscribe((user: any) => {
+        console.log(user.access_token)
+        localStorage.setItem('access_token', user.access_token);
+        localStorage.setItem('user_id', user.user_id);
+        localStorage.setItem('user_name', user.username);
         this.router.navigateByUrl('editor').then(r => r);
       });
   }
