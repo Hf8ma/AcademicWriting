@@ -17,10 +17,6 @@ export class LoginComponent {
     Validators.required,
   ]);
 
-  public emailFormControl = new FormControl('', [
-    Validators.email,
-  ]);
-
   public passwordFormControl = new FormControl('', [
     Validators.required,
   ]);
@@ -58,7 +54,7 @@ export class LoginComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      console.log('result in login.ts when calling  dialogRef.afterClosed(): ', result);
     });
   }
 }

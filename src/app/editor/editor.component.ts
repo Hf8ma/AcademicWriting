@@ -147,6 +147,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     };
     this.http.get(`http://127.0.0.1:5000/api/paper?category_id=1`, httpOptions)
       .subscribe((wordList: any) => {
+        console.log('author_id: ', localStorage.getItem('user_id'))
         console.log("wordList  ", wordList);
         this.papers = wordList;
         console.log("this.papers  ", this.papers);
