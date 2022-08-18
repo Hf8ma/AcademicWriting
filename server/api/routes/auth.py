@@ -67,7 +67,7 @@ def login():
             access_token = create_access_token(identity=user.id,
                                                expires_delta=expires)
             Token(access_token, user.id).save()
-            return jsonify(access_token=access_token), 200
+            return jsonify(access_token=access_token, user_id= user.id, username= user.username), 200
         else:
             return jsonify(message='Etwas ist schief gelaufen'), 400
     except Exception as e:

@@ -45,7 +45,8 @@ export class LoginComponent {
       .subscribe((user: any) => {
         console.log(user.access_token)
         localStorage.setItem('access_token', user.access_token);
-        localStorage.setItem('user_id', this.usernameFormControl.value);
+        localStorage.setItem('user_id', user.user_id);
+        localStorage.setItem('user_name', user.username);
         this.router.navigateByUrl('editor').then(r => r);
       });
   }

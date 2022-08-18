@@ -27,7 +27,7 @@ def get_user():
     if not all:
 
         user = User.query.filter_by(username=username).first()
-        if not user: 
+        if not user:
             response = jsonify(message='User wurde nicht gefunden')
             response.headers.add('Access-Control-Allow-Origin', '*')
             return response, 400
@@ -51,7 +51,7 @@ def register_user():
 
     user, errors = user_schema.load(request.get_json())
     print(errors)
-    if errors: 
+    if errors:
         response = jsonify(errors)
         # response.headers.add('Access-Control-Allow-Origin', 'http://localhost:4200')
         return response, 400
@@ -75,7 +75,7 @@ def user_update():
 
     user = User.query.filter_by(username=username).first()
 
-    if not user: 
+    if not user:
         response = jsonify('User wurde nicht gefunden')
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response, 400
@@ -86,7 +86,7 @@ def user_update():
 
     errors = user_schema.validate(data, partial=True)
 
-    if errors: 
+    if errors:
         response = jsonify(errors)
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response, 400
@@ -95,7 +95,7 @@ def user_update():
 
     author_id = decoded_token['sub']
 
-    if author_id != user.id: 
+    if author_id != user.id:
         response = jsonify(message='Keine Berechtigung')
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response, 401
@@ -111,24 +111,21 @@ def user_update():
 @cross_origin(supports_credentials=True)
 def user_delete():
     """
-    example: DELETE: host/api/user?username=username
+    example: DELETE: host/api/user?user_id=user_id
     """
 
     access_token = request.headers.get('Authorization')
-    username = request.args.get('username', default='', type=str)
-    user = User.query.filter_by(username=username).first()
-    print(user.id)
-    if not user: 
+    user_id = request.args.get('user_id', default='', type=str)
+    user = User.query.filter_by(id=user_id).first()
+    if not user:
         response = jsonify(message='User wurde nicht gefunden')
-        response.headers.add('Access-Control-Allow-Origin', '*')
         return response, 400
 
     decoded_token = decode_token(access_token)
     author_id = decoded_token['sub']
 
-    if author_id != user.id: 
+    if author_id != user.id:
         response = jsonify(message='Keine Berechtigung')
-        response.headers.add('Access-Control-Allow-Origin', '*')
         return response, 401
 
     user.delete()

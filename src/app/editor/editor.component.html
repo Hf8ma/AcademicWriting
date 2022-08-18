@@ -60,19 +60,6 @@
       Zitationsvorschläge finden
     </button>
   </mat-menu>
-  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="deleteUser()" matTooltip="Meinen Nutzeraccount löschen">
-
-      <mat-icon>delete</mat-icon> Nutzeraccount löschen
-    </button>
-
-    <button mat-menu-item (click)="logout()" matTooltip="Ausloggen">
-      <mat-icon>logout</mat-icon> Logout
-    </button>
-  </mat-menu>
 
 </mat-toolbar>
 
@@ -179,7 +166,7 @@
           <mat-icon>picture_as_pdf</mat-icon>
         </button>
       </a>
-      <!-- 
+      <!--
       <button (click)=sentenceLength() mat-icon-button matTooltip="Durchschnittliche Satzlänge">
         <mat-icon>assessment</mat-icon>
       </button> -->
