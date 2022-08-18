@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Delete Folder</h1>
+
+<div mat-dialog-content>
+    <div fxLayout="column">
+       Are you sure you want to delete {{data.name}} Folder?
+    </div>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="">close</button>
+  <button mat-button (click)="deleteCategory()">delete</button>
+</div>

@@ -1,0 +1,32 @@
+<div fxLayout="column" style="padding: 20px">
+  <div style="color: red; font-size: large" *ngIf="!all_categories || all_categories.length===0">
+    <p>You must have at least one Folder to create a Document</p>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="start"
+       fxLayoutGap="10px"
+       *ngIf="all_categories && all_categories.length!==0">
+    <mat-card *ngFor="let cat of all_categories"
+              style="background:{{cat.color}};">
+      <mat-card-content style="text-align: center; font-size: x-large;color: white; padding: 20px">{{cat.name}}</mat-card-content>
+      <mat-card-actions>
+        <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="7px">
+
+          <button mat-flat-button style="background: #039BE5; color: white"
+                  [matTooltip]="'add and show all papers'">Papers
+          </button>
+
+          <button mat-flat-button style="background: #FFC107; color: white"
+                  [matTooltip]="'edit folder name or color'"
+                  (click)="openEditCategoryDialog(cat)">Edit</button>
+
+          <button mat-flat-button
+                  style="background: #F44336; color: white"
+                  [matTooltip]="'Delete folder'"
+          (click)="openDeleteCategoryDialog(cat)">
+            Delete
+          </button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<div fxLayout="column"  fxLayoutAlign="center" fxLayoutGap="30px" class="dashboard-container">
+  <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="30px">
+    <mat-card  fxFlex="75">
+      <mat-card-header>
+        <mat-card-title>My Folders</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <app-folder></app-folder>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button class="btn-new-folder" (click)="openAddCategoryDialog()">Add new Folder</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card fxFlex fxFlex.gt-sm="25">
+      <mat-card-header>
+        <mat-card-title>Notes</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          you can here display your notes component
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="30px">
+  <mat-card fxFlex="75">
+    <mat-card-header>
+      <mat-card-title>My Deadlines</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        add deadline calender here
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card fxFlex="25">
+    <mat-card-header>
+      <mat-card-title>Goals</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        you can here display your goals component
+      </p>
+    </mat-card-content>
+  </mat-card>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="30px">
+  <mat-card fxFlex="100">
+    <mat-card-header>
+      <mat-card-title>statistics</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+       display statistic component here
+      </p>
+    </mat-card-content>
+  </mat-card>
+  </div>
+</div>

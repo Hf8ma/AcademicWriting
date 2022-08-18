@@ -15,7 +15,6 @@ def permission_needed(function):
     def wrapper(*args, **kwargs):
         try:
             access_token = request.headers.get('Authorization')
-
             if not access_token:
                 return jsonify(message='access_token fehlt'), 401
 

@@ -20,7 +20,7 @@ def create_app(config_filename=None, static_folder=None, static_url_path=None):
                 static_folder=static_folder,
                 static_url_path=static_url_path)
     cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
-    
+
     if not config_filename:
         config_filename = os.environ['APP_SETTINGS']
 
@@ -30,7 +30,7 @@ def create_app(config_filename=None, static_folder=None, static_url_path=None):
     ma.init_app(app)
     bcrypt.init_app(app)
     jwt.init_app(app)
-    
+
     from .routes import auth
     app.register_blueprint(auth.bp)
 
@@ -40,13 +40,16 @@ def create_app(config_filename=None, static_folder=None, static_url_path=None):
     from .routes import paper_route
     app.register_blueprint(paper_route.bp)
 
+    from .routes import category_route
+    app.register_blueprint(category_route.bp)
+
     from .routes import convert_route
     app.register_blueprint(convert_route.bp)
 
     @app.route('/')
     def index():
         return app.send_static_file('index.html'), 200
-    
+
     return app
 
 
