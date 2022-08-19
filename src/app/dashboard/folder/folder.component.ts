@@ -5,6 +5,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {DeleteCategoryDialogComponent} from '../delete-category-dialog/delete-category-dialog.component';
 import {CategoryPapersDialogComponent} from '../category-papers-dialog/category-papers-dialog.component';
+import {CategoryServiceService} from '../services/category-service.service';
 
 @Component({
   selector: 'app-folder',
@@ -16,8 +17,10 @@ export class FolderComponent implements OnInit {
   httpOptions = {};
   serverUrl = 'http://127.0.0.1:5000/api/';
 
-  constructor(public dialog: MatDialog, private snackBar: MatSnackBar,
-              private readonly http: HttpClient) { }
+  constructor(public dialog: MatDialog,
+              private snackBar: MatSnackBar,
+              private readonly http: HttpClient,
+              private categoryService: CategoryServiceService) { }
 
   ngOnInit(): void {
       this.httpOptions = {
@@ -30,17 +33,25 @@ export class FolderComponent implements OnInit {
           'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
         })
       };
-      this.http.get(`${this.serverUrl}category`, this.httpOptions)
-        .subscribe((response: any) => {
-          this.all_categories = response;
-          console.log('this.categories  ', this.all_categories);
-        });
+      this.getCategories();
+      let changes = this.categoryService.getChanges().subscribe(message => {
+          if(message){
+            this.getCategories();
+          }
+      });
+  }
+
+  getCategories(){
+    this.http.get(`${this.serverUrl}category`, this.httpOptions)
+      .subscribe((response: any) => {
+        this.all_categories = response;
+      });
   }
 
 
   openEditCategoryDialog(category): void {
     const dialogRef = this.dialog.open(CategoryDialogComponent, {
-      width: '250px',
+      width: '350px',
       data: category
     });
 

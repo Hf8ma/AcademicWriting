@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
 
   openAddCategoryDialog(): void {
     const dialogRef = this.dialog.open(CategoryDialogComponent, {
-      width: '250px',
+      width: '350px',
       data: {}
     });
 

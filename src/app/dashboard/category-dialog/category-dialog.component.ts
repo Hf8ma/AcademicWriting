@@ -2,11 +2,9 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-export interface CategoryModel {
-  id?: number;
-  name?: string;
-  color?: string;
-}
+import {CategoryModel} from '../model/category-model';
+import {CategoryServiceService} from '../services/category-service.service';
+
 @Component({
   selector: 'app-category-dialog',
   templateUrl: './category-dialog.component.html',
@@ -20,7 +18,8 @@ export class CategoryDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<CategoryDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: CategoryModel,
               private fb: FormBuilder,
-              private readonly http: HttpClient) { }
+              private readonly http: HttpClient,
+              private categoryService: CategoryServiceService) { }
 
   ngOnInit(): void {
     this.categoryForm = this.fb.group({
@@ -50,11 +49,13 @@ export class CategoryDialogComponent implements OnInit {
         body['id'] = this.data.id;
         this.http.put(`${this.serverUrl}category?id=${this.data.id}`, body, this.httpOptions)
           .subscribe(response => {
+            this.categoryService.changeCategoryList('yes');
             this.dialogRef.close(response);
           });
       }else{
         this.http.post(`${this.serverUrl}category`, body, this.httpOptions)
           .subscribe(response => {
+            this.categoryService.changeCategoryList('yes');
             this.dialogRef.close(response);
           });
       }

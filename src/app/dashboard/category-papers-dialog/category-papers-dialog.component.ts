@@ -2,16 +2,9 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormGroup} from '@angular/forms';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-export interface CategoryModel {
-  id?: number;
-  name?: string;
-  color?: string;
-}
-export interface PaperModel {
-  id: number;
-  title: string;
-  created_at: string;
-}
+import { CategoryModel } from '../model/category-model';
+import { PaperModel } from '../model/paper-model';
+
 
 const PAPERS_DATA: PaperModel[] = [
   {id: 1, title: 'Hydrogen', created_at: '20.20.2022 9:22'},
