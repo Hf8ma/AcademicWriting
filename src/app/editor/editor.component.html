@@ -12,8 +12,11 @@
   allowfullscreen></iframe>
 
 <mat-toolbar>
-  <span>Dokument</span>
+  <span>{{paper && paper.title ? paper.title : 'Neue Dokument'}}</span>
   <span class="spacer"></span>
+  <a mat-icon-button  (click)="goDashboard()"  matTooltip="zurück zum Dashboard">
+    <mat-icon>skip_previous</mat-icon>
+  </a>
   <button mat-icon-button [matMenuTriggerFor]="menu2" matTooltip="Musik einschalten">
     <mat-icon>music_note</mat-icon>
   </button>
@@ -66,29 +69,14 @@
 <mat-sidenav-container class="container">
   <mat-sidenav #sidenavLeft opened mode="side" class="side-nav">
     <mat-toolbar class="sidenav-toolbar">
-      <span class="file">Datei</span>
+      <span class="file">Dokument Speichern</span>
       <span class="spacer"></span>
       <div class="sidenav-buttons">
-        <button mat-icon-button matTooltip="Neues Dokument erstellen">
-          <mat-icon (click)=addPaper() class="icon-sidenav">add</mat-icon>
-        </button>
-        <button (click)=deletePaper(currentPaper) mat-icon-button matTooltip="Ausgewähltes Dokument löschen">
-          <mat-icon class="icon-sidenav">delete</mat-icon>
-        </button>
-        <button (click)=updatePaper(currentPaper) mat-icon-button matTooltip="Änderungen speichern">
-          <mat-icon class="icon-sidenav">edit</mat-icon>
+        <button mat-icon-button matTooltip="Dokument Speichern">
+          <mat-icon (click)=savePaper() class="icon-sidenav">save</mat-icon>
         </button>
       </div>
     </mat-toolbar>
-    <br>
-    <span class="recent">Meine Dokumente</span>
-    <mat-list>
-      <mat-list-item *ngFor="let paper of papers; index as i">
-        <button mat-button (click)="changePaper(i)"
-          [class.currentPaperHighlighter]="i ==currentPaper">{{paper.title}}</button>
-      </mat-list-item>
-
-    </mat-list>
   </mat-sidenav>
 
   <mat-sidenav #sidenavRight opened mode="side" opened class="side-nav" position="end">

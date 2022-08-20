@@ -26,13 +26,17 @@ import { RegistrierungsDialogComponent } from './registrierungs-dialog/registrie
 import { MatSelectModule } from '@angular/material/select';
 import { EditorModule } from './editor/editor.module';
 import {LayoutsModule} from './layout/layout.module';
+
 import {FlexLayoutModule} from '@angular/flex-layout';
+
+import {DashboardModule} from './dashboard/dashboard.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegistrierungsDialogComponent,
+    RegistrierungsDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +63,10 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     MatSlideToggleModule,
     LayoutsModule,
     EditorModule,
+
     FlexLayoutModule,
+
+    DashboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

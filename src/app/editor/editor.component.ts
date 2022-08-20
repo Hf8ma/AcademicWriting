@@ -4,7 +4,9 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import { ApiComponent } from './components/api/api.component';
 import { MarkdownService } from 'ngx-markdown';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {PaperTitleDialogComponent} from './components/paper-title-dialog/paper-title-dialog.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 
@@ -47,9 +49,11 @@ export class EditorComponent implements OnInit, AfterViewChecked {
   public runAfterViewChecked = false;
   public wordcountlaenge = 0;
   public wordList: string[];
-  public papers: any[];
-  public averageSentenceLength = 0
+  public paper: any;
+  public averageSentenceLength = 0;
   public selectedCategory: string;
+  categoryId: number;
+  id: number;
 
   public schreibunterstuetzungen = [
     { value: 'synonyms', viewValue: 'Synonyme' },
@@ -65,19 +69,23 @@ export class EditorComponent implements OnInit, AfterViewChecked {
   ];
 
   constructor(public dialog: MatDialog,
-    private markdownService: MarkdownService,
-    private readonly http: HttpClient,
-    private router: Router) {
+              private markdownService: MarkdownService,
+              private readonly http: HttpClient,
+              private router: Router, private route: ActivatedRoute, private snackBar: MatSnackBar) {
   }
 
   public ngOnInit(): void {
-    this.getAllPapers();
+      this.categoryId = +this.route.snapshot.paramMap.get('category_id');
+      this.id = +this.route.snapshot.paramMap.get('id');
+      if (this.id){
+        this.getPaper();
+      }
   }
 
   public ngAfterViewChecked(): void {
     if (this.focusText) {
-      //focus führt dazu, dass der Fokus wieder auf den Text zurückfällt -> daher kann input nicht befüllt werden.
-      //Mauszeiger auf der 2. seite -> buttons lassen sich nicht mehr betätigen
+      // focus führt dazu, dass der Fokus wieder auf den Text zurückfällt -> daher kann input nicht befüllt werden.
+      // Mauszeiger auf der 2. seite -> buttons lassen sich nicht mehr betätigen
       document.getElementById('editor-' + this.currentPage).focus();
 
       if (this.runAfterViewChecked) {
@@ -132,8 +140,11 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     this.dialog.open(DialogComponent);
   }
 
+  public goDashboard(): void{
+    this.router.navigate(['dashboard']);
+  }
 
-  public getAllPapers(): void {
+  public getPaper(): void {
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -145,28 +156,50 @@ export class EditorComponent implements OnInit, AfterViewChecked {
         'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
       })
     };
-    this.http.get(`http://127.0.0.1:5000/api/paper?category_id=1`, httpOptions)
-      .subscribe((wordList: any) => {
-        console.log('author_id: ', localStorage.getItem('user_id'))
-        console.log("wordList  ", wordList);
-        this.papers = wordList;
-        console.log("this.papers  ", this.papers);
-        if (this.papers.length >= 1){
-          this.changePaper(this.papers.length - 1);
-          console.log("this.papers.length >= 1  ", this.papers.length >= 1);
+    this.http.get(`http://127.0.0.1:5000/api/paper?id=${this.id}`, httpOptions)
+      .subscribe((response: any) => {
+        this.paper = response;
+        if (this.paper){
+          this.pages[0].htmlContent = this.paper.content;
+
+          // this.currentChar = char
+          this.runAfterViewChecked = true;
+          this.ngAfterViewChecked();
+          this.pages[0].innerText = this.paper.content;
         }
-
-
       });
+  }
+
+  public savePaper(): void{
+    this.focusText = false;
+    const dialogRef = this.dialog.open(PaperTitleDialogComponent, {
+      width: '350px',
+      data: this.paper ? { id: this.paper.id, title: this.paper.title} : {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result !== '') {
+        if (this.paper){
+          this.paper.title = result;
+          this.updatePaper();
+          this.focusText = true;
+        }else{
+          this.paper = {};
+          this.paper.title = result;
+          this.addPaper();
+          this.focusText = true;
+        }
+      }
+    });
   }
 
   public addPaper(): void {
     const body = {
-      content: '',
-      title: "Beispieldokument " + (this.papers.length + 1),
+      content:  this.getwholeText(),
+      title: this.paper.title,
       last_modified: new Date(),
       author_id: localStorage.getItem('user_id'),
-      category_id: 1
+      category_id: this.categoryId
     };
     const httpOptions = {
       headers: new HttpHeaders({
@@ -179,44 +212,24 @@ export class EditorComponent implements OnInit, AfterViewChecked {
       })
     };
     this.http.post(`http://127.0.0.1:5000/api/paper`, body, httpOptions)
-      .subscribe(wordList => {
-        // this.papers.push(body);
-        //wir brauchen die id des neu angelegten papers, um es löschen zu können -> daher reicht das pushen von dem paper object aus dem frontend nicht aus
-        this.getAllPapers()
-        console.log('wordList', wordList);
-
+      .subscribe(response => {
+        this.paper = response;
+        this.snackBar.open('paper added successfully', 'Close' , {
+          duration: 6000
+        });
       });
   }
 
-  public changePaper(papers_index: number): void {
-    console.log('calling changePaper func  ',this.papers[papers_index].content);
-    console.log("papers_index", papers_index);
-    this.pages[0].htmlContent = this.papers[papers_index].content;
 
-    // this.currentChar = char
-    this.runAfterViewChecked = true;
-    this.ngAfterViewChecked();
-    this.pages[0].innerText = this.papers[papers_index].content;
-    this.currentPaper = papers_index;
-
-
-    // TODO: choose one paper which is to be displayed
-    // what happens to current paper? auto-save? no save?
-    // update function (put request) = save?
-    // load current paper again from backend? after update the paper is not up2date when loaded from frontend only
-  }
-
-  public updatePaper(papers_index: number): void {
-    const paper_id = this.papers[papers_index].id;
-    console.log('calling updatePaper func.. paper_id: ',this.papers[papers_index]);
-    const updated_paper = {
+  public updatePaper(): void {
+    const updatedPaper = {
       content: this.getwholeText(),
-      title: this.papers[papers_index].title,
+      title: this.paper.title,
       last_modified: new Date(),
-      id : this.papers[papers_index].id,
+      id : this.paper.id,
       author_id: localStorage.getItem('user_id'),
-      category_id: 1
-    }
+      category_id: this.categoryId
+    };
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -229,47 +242,16 @@ export class EditorComponent implements OnInit, AfterViewChecked {
       })
     };
 
-    this.http.put(`http://127.0.0.1:5000/api/paper?id=${paper_id}`, updated_paper, httpOptions)
-      .subscribe(wordList => {
-        console.log("wordList", wordList);
-        this.papers[papers_index] = updated_paper;
-
-      });
-  }
-
-  public deletePaper(papers_index: number): void {
-    const paper_id = this.papers[papers_index].id;
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `${localStorage.getItem('access_token')}`,
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': 'true',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-      })
-    };
-    this.http.delete(`http://127.0.0.1:5000/api/paper?id=${paper_id}`, httpOptions)
-      .subscribe(wordList => {
-        console.log("wordList", wordList);
-        this.papers.splice(papers_index, 1);
-        if (this.papers.length >= 1){
-          this.changePaper(this.papers.length - 1);
-          console.log("this.papers.length >= 1  ", this.papers.length >= 1);
-        }
-        else{
-          console.log("No papers left, this.pages.length : ", this.pages.length);
-          for (let i = 0; i < this.pages.length; i++) {
-            this.pages[i].innerText = null;
-          }
-        }
-
+    this.http.put(`http://127.0.0.1:5000/api/paper?id=${this.paper.id}`, updatedPaper, httpOptions)
+      .subscribe( response => {
+        this.paper = response;
+        this.snackBar.open('paper updated successfully', 'Close' , {
+          duration: 6000
+        });
       });
   }
 
   public copyText(): void {
-
-
     navigator.clipboard.writeText(this.getwholeText()).then();
   }
 
@@ -298,7 +280,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     } */
 
   public openApiDialog(schreibunterstuetzung: any, unterstuetzungstyp: any): void {
-    this.focusText = false
+    this.focusText = false;
     const dialogRef = this.dialog.open(ApiComponent, {
       autoFocus: true,
       width: '250px',
@@ -308,7 +290,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     dialogRef.componentInstance.unterstuetzungstyp = unterstuetzungstyp;
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      this.focusText = true
+      this.focusText = true;
     });
   }
 
@@ -356,7 +338,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
       this.currentPage = i + 1;
       this.runAfterViewChecked = true;
     }
-    this.getAverageSentenceLength()
+    this.getAverageSentenceLength();
   }
 
   public slideTogglelofi(): void {

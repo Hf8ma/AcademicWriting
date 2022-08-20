@@ -25,11 +25,16 @@ import { MatListModule } from '@angular/material/list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {PaperTitleDialogComponent} from './components/paper-title-dialog/paper-title-dialog.component';
+import {FlexModule} from '@angular/flex-layout';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {DeletePaperDialogComponent} from './components/delete-paper-dialog/delete-paper-dialog.component';
 
 
 
 @NgModule({
-  declarations: [EditorComponent, GoalComponent, ApiComponent, DialogComponent, CountDownComponent, ColorPickerComponent],
+  declarations: [EditorComponent, GoalComponent, ApiComponent, DialogComponent, CountDownComponent,
+    ColorPickerComponent, PaperTitleDialogComponent, DeletePaperDialogComponent],
   imports: [
     CommonModule,
     EditorRoutingModule,
@@ -52,6 +57,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     HttpClientModule,
     MatSelectModule,
     MatSlideToggleModule,
+    FlexModule,
+    MatSnackBarModule
   ]
 })
 export class EditorModule { }
