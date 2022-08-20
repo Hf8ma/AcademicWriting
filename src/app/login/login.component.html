@@ -1,34 +1,55 @@
-<div class="login-background">
-  <div class="login-form">
-    <h3>Login - Academic Writing Editor</h3>
-    <div class="login-info">
-      <h4>Dein persönlicher Zugang zu dem Academic Writing Editor - </h4><button (click)="registrieren()">Hier
-        anmelden</button>
-    </div>
-    <div class="login-div">
-      <form class="login-form-fields">
-        <mat-form-field appearance="fill">
-          <mat-label>Username</mat-label>
-          <input type="text" matInput [formControl]="usernameFormControl">
-          <mat-error *ngIf="usernameFormControl.hasError('required')">
-            Username is required
-          </mat-error>
-        </mat-form-field>
+<div class="container" fxLayout="column" fxFlexFill style="background: #ffffff">
 
-        <mat-form-field appearance="fill">
-          <mat-label>Passwort</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl">
-          <mat-error *ngIf="passwordFormControl.hasError('required')">
-            Password is required
-          </mat-error>
-          <button class="visibility-button" mat-icon-button matSuffix (click)="hide = !hide"
-            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-        </mat-form-field>
-        <button (click)="login()" class="login-button" mat-raised-button color="primary"
+  <div class="top-section" fxFlex ></div>
+
+  <mat-divider ></mat-divider>
+
+  <div class="form-section" fxFlex fxLayout="row" fxLayoutAlign="space-evenly stretch">
+    <picture fxFlex fxLayoutAlign="space-around center" class='logoimage'>
+      <source media='(min-width:0px)' srcset="/assets/logoimage.jpg">
+      <img    mat-card-image src="" alt="Photo of academic logo" style="width:400px;">
+    </picture>
+    <mat-divider  vertical></mat-divider>
+    <!-- <img fxFlex mat-card-image class='logoimage' src="/assets/logoimage.jpg" alt="Photo of academic logo"> -->
+    <mat-card class="my-card" fxFlex fxLayout="column"  style="background: #a4c5f0; ">
+      <mat-card-content fxFlex fxLayoutAlign="space-evenly center" >
+        <form class="my-form" fxLayout="column" fxLayoutAlign="space-around stretch" style="margin-top:40px;">
+          <div fxFlex>
+            <span class="material-icons" style="margin-right: 7px;"> person</span>
+            <mat-form-field class="full-width" style="width: 300px;">
+              <mat-label>Username</mat-label>
+              <input type="text" matInput [formControl]="usernameFormControl">
+              <mat-error *ngIf="usernameFormControl.hasError('required')">
+                Username is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex>
+            <span class="material-icons" style="margin-right: 7px;"> vpn_key</span>
+            <mat-form-field class="full-width" style="width: 300px;">
+              <mat-label>Password</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl">
+              <mat-error *ngIf="passwordFormControl.hasError('required')">
+                Password is required
+              </mat-error>
+              <button class="visibility-button" mat-icon-button matSuffix (click)="hide = !hide"
+                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </form>
+      </mat-card-content>
+      <mat-card-actions fxFlex fxLayoutAlign="center center">
+        <button mat-raised-button (click)="login()" color="primary"
           [disabled]="usernameFormControl.invalid || passwordFormControl.invalid">Anmelden</button>
-      </form>
-    </div>
+        <button mat-raised-button (click)="registrieren()" class="register-button">Hier anmelden</button>
+      </mat-card-actions>
+
+    </mat-card>
   </div>
+
+  <mat-divider></mat-divider>
+  <div class="bottom-section" fxFlex > </div>
+  
 </div>
