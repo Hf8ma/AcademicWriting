@@ -39,11 +39,10 @@ export class LoginComponent {
     JSON.stringify(
        { username: this.usernameFormControl.value, password: this.passwordFormControl.value }), httpOptions)
       .subscribe((user: any) => {
-        console.log(user.access_token)
         localStorage.setItem('access_token', user.access_token);
         localStorage.setItem('user_id', user.user_id);
         localStorage.setItem('user_name', user.username);
-        this.router.navigateByUrl('editor').then(r => r);
+        this.router.navigateByUrl('dashboard').then(r => r);
       });
   }
 

@@ -32,7 +32,7 @@ def get_paper():
         return jsonify(result.data), 200
 
     return jsonify(message='Keine Peper'), 200
-    
+
 
 
 @bp.route('/paper', methods=['POST'])
@@ -56,10 +56,11 @@ def add_paper():
 
     # if author_id != paper.category.author_id:
     #     return jsonify(message='Keine Berechtigung'), 401
-    
+
     paper.save()
 
-    return jsonify(message='Paper wurde erfolgreich erstellt.'), 200
+    result = paper_schema.dump(paper)
+    return jsonify(result.data), 200
 
 
 @bp.route('/paper', methods=['PUT'])
@@ -71,7 +72,7 @@ def paper_update():
     id = request.args.get('id', default=None, type=int)
     access_token = request.headers.get('Authorization')
     paper = Paper.query.get(id)
-    
+
 
     if not paper:
         return jsonify(message='Paper wurde nicht gefunden'), 400
@@ -92,7 +93,8 @@ def paper_update():
 
     paper.update(**data)
 
-    return jsonify(message='Paper wurde erfolgreich aktualisiert'), 200
+    result = paper_schema.dump(paper)
+    return jsonify(result.data), 200
 
 
 @bp.route('/paper', methods=['DELETE'])
