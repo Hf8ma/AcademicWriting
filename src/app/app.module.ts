@@ -26,6 +26,7 @@ import { RegistrierungsDialogComponent } from './registrierungs-dialog/registrie
 import { MatSelectModule } from '@angular/material/select';
 import { EditorModule } from './editor/editor.module';
 import {LayoutsModule} from './layout/layout.module';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import {LayoutsModule} from './layout/layout.module';
     MatSelectModule,
     MatSlideToggleModule,
     LayoutsModule,
-    EditorModule
+    EditorModule,
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
