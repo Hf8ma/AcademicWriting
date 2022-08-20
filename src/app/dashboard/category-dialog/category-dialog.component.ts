@@ -6,7 +6,7 @@ import {CategoryModel} from '../model/category-model';
 import {CategoryServiceService} from '../services/category-service.service';
 
 @Component({
-  selector: 'app-category-dialog',
+  selector: 'app-paper-title-dialog',
   templateUrl: './category-dialog.component.html',
   styleUrls: ['./category-dialog.component.scss']
 })

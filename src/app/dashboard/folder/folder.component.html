@@ -1,11 +1,11 @@
 <div fxLayout="column" style="padding: 20px">
-  <div style="color: red; font-size: large" *ngIf="!all_categories || all_categories.length===0">
+  <div style="color: red; font-size: large" *ngIf="!allCategories || allCategories.length===0">
     <p>You must have at least one Folder to create a Document</p>
   </div>
   <div fxLayout="row wrap" fxLayoutAlign="start"
        fxLayoutGap="10px"
-       *ngIf="all_categories && all_categories.length!==0">
-    <mat-card *ngFor="let cat of all_categories"
+       *ngIf="allCategories && allCategories.length!==0">
+    <mat-card *ngFor="let cat of allCategories"
               style="background:{{cat.color}};">
       <mat-card-content style="text-align: center; font-size: x-large;color: white; padding: 20px">{{cat.name}}</mat-card-content>
       <mat-card-actions>

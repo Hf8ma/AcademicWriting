@@ -9,7 +9,8 @@ const routes: Routes = [
     path: 'editor',
     component: MasterComponent,
     children: [
-      { path: '', component: EditorComponent }
+      { path: ':category_id/edit/:id', component: EditorComponent },
+      { path: ':category_id', component: EditorComponent }
     ]
   }
 ];

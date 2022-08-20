@@ -13,7 +13,7 @@ import {CategoryServiceService} from '../services/category-service.service';
   styleUrls: ['./folder.component.scss']
 })
 export class FolderComponent implements OnInit {
-  all_categories = [];
+  allCategories = [];
   httpOptions = {};
   serverUrl = 'http://127.0.0.1:5000/api/';
 
@@ -34,17 +34,17 @@ export class FolderComponent implements OnInit {
         })
       };
       this.getCategories();
-      let changes = this.categoryService.getChanges().subscribe(message => {
-          if(message){
+      const changes = this.categoryService.getChanges().subscribe(message => {
+          if (message){
             this.getCategories();
           }
       });
   }
 
-  getCategories(){
+  getCategories(): void{
     this.http.get(`${this.serverUrl}category`, this.httpOptions)
       .subscribe((response: any) => {
-        this.all_categories = response;
+        this.allCategories = response;
       });
   }
 

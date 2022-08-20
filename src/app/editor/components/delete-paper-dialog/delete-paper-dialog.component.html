@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Delete Paper</h1>
+
+<div mat-dialog-content>
+    <div fxLayout="column">
+      Are you sure you want to delete <strong>{{data.title}}</strong> Paper?
+    </div>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-flat-button color="primary" [mat-dialog-close]="">close</button>
+  <button mat-flat-button color="warn" (click)="deletePaper()">delete</button>
+</div>
