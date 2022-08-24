@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FolderComponent} from './folder/folder.component';
 import {AddDocumentComponent} from './add-document/add-document.component';
-import {DeadlineComponent} from './deadline/deadline.component';
 import {StatisticsComponent} from './statistics/statistics.component';
 import {DashboardComponent} from './dashboard.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -32,36 +31,36 @@ import {CategoryPapersDialogComponent} from './category-papers-dialog/category-p
 import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
-  declarations: [DashboardComponent, FolderComponent, AddDocumentComponent, DeadlineComponent,
-    StatisticsComponent, CategoryDialogComponent, DeleteCategoryDialogComponent, CategoryPapersDialogComponent],
-  imports: [
-    CommonModule,
-    DashboardRoutingModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatGridListModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatListModule,
-    MatDialogModule,
-    MatTooltipModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatDividerModule,
-    MarkdownModule.forRoot(),
-    MatMenuModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatSelectModule,
-    MatSlideToggleModule,
-    FlexLayoutModule,
-    MatSnackBarModule,
-    MatTableModule
-  ],
-  providers: [
-    MatSnackBarModule, MatTableModule
-  ]
+    declarations: [DashboardComponent, FolderComponent, AddDocumentComponent,
+        StatisticsComponent, CategoryDialogComponent, DeleteCategoryDialogComponent, CategoryPapersDialogComponent],
+    imports: [
+        CommonModule,
+        DashboardRoutingModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatGridListModule,
+        MatCardModule,
+        MatButtonModule,
+        MatIconModule,
+        MatListModule,
+        MatDialogModule,
+        MatTooltipModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatDividerModule,
+        MarkdownModule.forRoot(),
+        MatMenuModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        FlexLayoutModule,
+        MatSnackBarModule,
+        MatTableModule
+    ],
+    providers: [
+        MatSnackBarModule, MatTableModule
+    ]
 })
 export class DashboardModule { }
