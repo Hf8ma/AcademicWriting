@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EditorComponent } from './editor.component';
-import { GoalComponent } from './components/goal/goal.component';
 import { ApiComponent } from './components/api/api.component';
 import { DialogComponent } from './components/dialog/dialog.component';
-import { CountDownComponent } from './components/count-down/count-down.component';
 import { ColorPickerComponent } from './color-picker/color-picker.component';
 import { EditorRoutingModule } from './editor-routing.module';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -33,32 +31,32 @@ import {DeletePaperDialogComponent} from './components/delete-paper-dialog/delet
 
 
 @NgModule({
-  declarations: [EditorComponent, GoalComponent, ApiComponent, DialogComponent, CountDownComponent,
-    ColorPickerComponent, PaperTitleDialogComponent, DeletePaperDialogComponent],
-  imports: [
-    CommonModule,
-    EditorRoutingModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatGridListModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatListModule,
-    MatDialogModule,
-    MatTooltipModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatDividerModule,
-    MarkdownModule.forRoot(),
-    MatMenuModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatSelectModule,
-    MatSlideToggleModule,
-    FlexModule,
-    MatSnackBarModule
-  ]
+    declarations: [EditorComponent, ApiComponent, DialogComponent,
+        ColorPickerComponent, PaperTitleDialogComponent, DeletePaperDialogComponent],
+    imports: [
+        CommonModule,
+        EditorRoutingModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatGridListModule,
+        MatCardModule,
+        MatButtonModule,
+        MatIconModule,
+        MatListModule,
+        MatDialogModule,
+        MatTooltipModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatDividerModule,
+        MarkdownModule.forRoot(),
+        MatMenuModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        FlexModule,
+        MatSnackBarModule
+    ]
 })
 export class EditorModule { }
