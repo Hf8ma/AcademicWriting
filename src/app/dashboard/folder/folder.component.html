@@ -6,7 +6,7 @@
        fxLayoutGap="10px"
        *ngIf="allCategories && allCategories.length!==0">
     <mat-card *ngFor="let cat of allCategories"
-              style="background:{{cat.color}};">
+              ngstyle="background:{{cat.color}};">
       <mat-card-content style="text-align: center; font-size: x-large;color: white; padding: 20px">{{cat.name}}</mat-card-content>
       <mat-card-actions>
         <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="7px">
