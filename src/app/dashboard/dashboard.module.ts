@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FolderComponent} from './folder/folder.component';
-import {AddDocumentComponent} from './add-document/add-document.component';
+
 import {DeadlineComponent} from './deadline/deadline.component';
 import {StatisticsComponent} from './statistics/statistics.component';
 import {DashboardComponent} from './dashboard.component';
@@ -32,7 +32,7 @@ import {CategoryPapersDialogComponent} from './category-papers-dialog/category-p
 import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
-  declarations: [DashboardComponent, FolderComponent, AddDocumentComponent, DeadlineComponent,
+  declarations: [DashboardComponent, FolderComponent, DeadlineComponent,
     StatisticsComponent, CategoryDialogComponent, DeleteCategoryDialogComponent, CategoryPapersDialogComponent],
   imports: [
     CommonModule,
