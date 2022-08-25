@@ -9,20 +9,33 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatBadgeModule} from '@angular/material/badge';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatCardModule} from '@angular/material/card';
+import {GoalComponent} from './goal/goal.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {CountDownComponent} from './count-down/count-down.component';
+import {DeadlineComponent} from './deadline/deadline.component';
+import { NotesComponent } from './notes/notes.component';
+import {MatInputModule} from '@angular/material/input';
 
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule.forChild([]),
-        FlexLayoutModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatButtonModule,
-        MatMenuModule,
-        MatBadgeModule
-    ],
-  declarations: [MasterComponent, HeaderComponent],
+  imports: [
+    CommonModule,
+    RouterModule.forChild([]),
+    FlexLayoutModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatBadgeModule,
+    MatSidenavModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule
+  ],
+  declarations: [MasterComponent, HeaderComponent, SidebarComponent, GoalComponent, CountDownComponent, DeadlineComponent, NotesComponent],
   exports: [ MasterComponent],
 })
 export class LayoutsModule { }

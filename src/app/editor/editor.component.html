@@ -43,9 +43,9 @@
   <button mat-icon-button (click)="sidenavLeft.toggle()" matTooltip="Dateiübersicht öffnen">
     <mat-icon>vertical_split</mat-icon>
   </button>
-  <button mat-icon-button (click)="sidenavRight.toggle()" matTooltip="Statistiken öffnen">
-    <mat-icon>analytics</mat-icon>
-  </button>
+<!--  <button mat-icon-button (click)="sidenavRight.toggle()" matTooltip="Statistiken öffnen">-->
+<!--    <mat-icon>analytics</mat-icon>-->
+<!--  </button>-->
   <a href="https://scholar.google.com/" target='_blank' style="color: black">
     <button mat-icon-button matTooltip="Suche auf Google Scholar">
       <mat-icon>search</mat-icon>
@@ -77,9 +77,6 @@
         </button>
       </div>
     </mat-toolbar>
-  </mat-sidenav>
-
-  <mat-sidenav #sidenavRight opened mode="side" opened class="side-nav" position="end">
     <mat-toolbar class="sidenav-toolbar">
       <span class="file">Statistiken/Tools</span>
     </mat-toolbar>
@@ -94,22 +91,9 @@
         <!--         <div>Durchschnittliche Satzlänge: <span style="margin-right:1rem" id="wordCount">{{ averageWordsInSentence
             }}</span></div> -->
         <div>Durchschnittliche Satzlänge: <span style="margin-right:1rem" id="wordCount">{{ averageSentenceLength
-            }}</span></div>
+          }}</span></div>
       </mat-list-item>
       <mat-divider></mat-divider>
-
-
-
-
-    </mat-list>
-
-    <mat-list>
-      <app-count-down></app-count-down>
-    </mat-list>
-
-
-    <mat-list>
-      <app-goal></app-goal>
     </mat-list>
 
   </mat-sidenav>

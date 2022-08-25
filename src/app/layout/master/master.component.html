@@ -1,5 +1,12 @@
 <app-header fxLayout="column"></app-header>
+<mat-drawer-container dir="rtl"  style="min-height: 100%">
+  <mat-drawer-content dir="ltr">
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+  <mat-drawer mode="side" dir="ltr" style="width: 15%" opened>
+    <app-sidebar></app-sidebar>
+  </mat-drawer>
+</mat-drawer-container>
 
-<div>
-  <router-outlet></router-outlet>
-</div>
