@@ -1,6 +1,6 @@
-<h1 mat-dialog-title>Sign Up</h1>
+<h1 mat-dialog-title>Registrierung</h1>
 <div mat-dialog-content>
-  <p>Please enter your username:</p>
+  <p>Legen Sie einen Benutzernamen fest:</p>
   <form class="login-form-fields">
     <mat-form-field appearance="fill">
       <mat-label>Username</mat-label>
@@ -10,7 +10,7 @@
       </mat-error>
     </mat-form-field>
 
-    <p>Please enter your email address:</p>
+    <p>Geben Sie Ihre Email-Adresse ein:</p>
     <mat-form-field appearance="fill">
       <mat-label>Email</mat-label>
       <input type="email" matInput [formControl]="emailFormControl" placeholder="test@gmail.com">
@@ -22,9 +22,9 @@
       </mat-error>
     </mat-form-field>
 
-    <p>Please enter your password:</p>
+    <p>Legen Sie ein Passwort an:</p>
     <mat-form-field appearance="fill">
-      <mat-label>Password</mat-label>
+      <mat-label>Passwort</mat-label>
       <input matInput [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl">
       <mat-error *ngIf="passwordFormControl.hasError('required')">
         Password is required
@@ -35,10 +35,10 @@
       </button>
     </mat-form-field>
     <div mat-dialog-actions>
-      <button mat-button (click)="onClose()">Cancel</button>
+      <button mat-button (click)="onClose()">Abbrechen</button>
       <button mat-button (click)="registrieren()"
               [disabled]="usernameFormControl.invalid || emailFormControl.invalid || passwordFormControl.invalid">
-        Confirm
+        Bestätigen
       </button>
     </div>
   </form>

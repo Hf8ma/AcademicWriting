@@ -70,7 +70,7 @@ export class CountDownComponent implements OnInit, OnDestroy {
           .subscribe(x => { this.getTimeDifferenceCountDown(); });
       }
       else {
-        console.log("count up")
+        console.log("hochzählen")
         this.subscription = interval(1000)
           .subscribe(x => { this.getTimeDifferenceCountUp(); });
 
@@ -106,7 +106,7 @@ export class CountDownComponent implements OnInit, OnDestroy {
     this.timeDifference = (new Date().getTime() - this.dDay.getTime());
     //console.log(this.timeAtStop)
     if (this.timeDifference > 1500000) {
-      window.alert("Take a break, eat a Snickers")
+      window.alert("Nimm dir ne Pause, iss ein Snickers")
       this.subscription.unsubscribe();
     }
 
