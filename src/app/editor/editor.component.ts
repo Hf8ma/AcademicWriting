@@ -1,12 +1,14 @@
 import { MatDialog } from '@angular/material/dialog';
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
-import { DialogComponent } from './components/dialog/dialog.component';
-import { ApiComponent } from './components/api/api.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import { MarkdownService } from 'ngx-markdown';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
+
 import {PaperTitleDialogComponent} from './components/paper-title-dialog/paper-title-dialog.component';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { DialogComponent } from './components/dialog/dialog.component';
+import { ApiComponent } from './components/api/api.component';
+
 
 
 

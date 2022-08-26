@@ -1,8 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -18,18 +15,20 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
-import { LoginComponent } from './login/login.component';
+
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { HttpClientModule } from '@angular/common/http';
-import { RegistrierungsDialogComponent } from './registrierungs-dialog/registrierungs-dialog.component';
-import { MatSelectModule } from '@angular/material/select';
-import { EditorModule } from './editor/editor.module';
-import {LayoutsModule} from './layout/layout.module';
-
 import {FlexLayoutModule} from '@angular/flex-layout';
+import { MatSelectModule } from '@angular/material/select';
 
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+import {LayoutsModule} from './layout/layout.module';
 import {DashboardModule} from './dashboard/dashboard.module';
+import { RegistrierungsDialogComponent } from './registrierungs-dialog/registrierungs-dialog.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -62,7 +61,7 @@ import {DashboardModule} from './dashboard/dashboard.module';
     MatSelectModule,
     MatSlideToggleModule,
     LayoutsModule,
-    EditorModule,
+    
 
     FlexLayoutModule,
 
