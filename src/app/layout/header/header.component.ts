@@ -1,7 +1,12 @@
-import { Component } from "@angular/core";
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Router} from '@angular/router';
-
+import { EditorUrlParamsService } from './../../editor/editor.service';
+import { DeletePaperDialogComponent } from './../../editor/components/delete-paper-dialog/delete-paper-dialog.component';
+import { Component, OnInit } from "@angular/core";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { PaperModel } from "src/app/dashboard/model/paper-model";
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-header',
@@ -10,10 +15,61 @@ import {Router} from '@angular/router';
 })
 export class HeaderComponent {
   username = '';
-  constructor(    private readonly http: HttpClient,
-                  private router: Router) {
+  isDashboardRoute = true;
+  dataSource = new MatTableDataSource<PaperModel>([]);
+  //categoryId : number;
+ // paper_id =0;
+
+  constructor(private readonly http: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    public urlParamService: EditorUrlParamsService) {
+    //this.paper_id = this.urlParamService.activeFilters;  
     this.username = localStorage.getItem('user_name');
+    this.isDashboardRoute = this.router.url && this.router.url.includes('dashboard') ? true : false;
+  
   }
+
+  ngOnInit(): void {
+    // this.paper_id = this.urlParamService.paperID;
+    // console.log('lets see if we got paper id correct: ',this.paper_id )
+    this.router.events.subscribe((event) => {
+
+      if (event instanceof NavigationEnd) {
+        this.isDashboardRoute = event.url && event.url.includes('dashboard') ? true : false;
+        //.log(' this.isDashboardRoute', this.isDashboardRoute)
+        if (this.isDashboardRoute === false) {
+         
+        }
+      }
+    });
+  }
+
+  public deletePaper(paper: PaperModel): void {
+    console.log('this paper id ', this.urlParamService.paperID)
+    const dialogRef = this.dialog.open(DeletePaperDialogComponent, {
+      width: '250px',
+      data: { id: this.urlParamService.paperID}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.message) {
+        console.log('paper has been deleted and I am after closed deletedialog')
+             
+        this.snackBar.open(result.message, 'Close', {
+          duration: 6000
+        });
+        this.goDashboard();
+      }
+    });
+  }
+
+  public goDashboard(): void{
+    this.router.navigate(['dashboard']);
+  }
+
 
   public deleteUser(): void {
     const httpOptions = {

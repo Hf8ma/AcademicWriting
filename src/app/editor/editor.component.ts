@@ -1,3 +1,4 @@
+import { EditorUrlParamsService } from './editor.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { DialogComponent } from './components/dialog/dialog.component';
@@ -17,9 +18,9 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit, AfterViewChecked {
-  public musikToggleActivelofi = false;
-  public musikToggleActiveclassic = false;
-  public musikToggleActiverain = false;
+  // public musikToggleActivelofi = false;
+  // public musikToggleActiveclassic = false;
+  // public musikToggleActiverain = false;
   public focusText = true;
 
   public sizePage = {
@@ -71,12 +72,20 @@ export class EditorComponent implements OnInit, AfterViewChecked {
   constructor(public dialog: MatDialog,
               private markdownService: MarkdownService,
               private readonly http: HttpClient,
-              private router: Router, private route: ActivatedRoute, private snackBar: MatSnackBar) {
+              private router: Router,
+               private route: ActivatedRoute,
+                private snackBar: MatSnackBar,
+                public urlParamService: EditorUrlParamsService) {
   }
 
   public ngOnInit(): void {
-      this.categoryId = +this.route.snapshot.paramMap.get('category_id');
-      this.id = +this.route.snapshot.paramMap.get('id');
+    this.categoryId = +this.route.snapshot.paramMap.get('category_id');
+    console.log('this.categoryId ', this.categoryId );
+    
+    this.id = +this.route.snapshot.paramMap.get('id');
+    
+    this.urlParamService.paperID = this.id;
+
       if (this.id){
         this.getPaper();
       }
@@ -341,31 +350,31 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     this.getAverageSentenceLength();
   }
 
-  public slideTogglelofi(): void {
-    if (this.musikToggleActivelofi === true) {
-      this.musikToggleActivelofi = false;
+  // public slideTogglelofi(): void {
+  //   if (this.musikToggleActivelofi === true) {
+  //     this.musikToggleActivelofi = false;
 
-    } else {
-      this.musikToggleActivelofi = true;
-    }
-  }
+  //   } else {
+  //     this.musikToggleActivelofi = true;
+  //   }
+  // }
 
-  public slideToggleclassic(): void {
-    if (this.musikToggleActiveclassic === true) {
-      this.musikToggleActiveclassic = false;
-    } else {
-      this.musikToggleActiveclassic = true;
+  // public slideToggleclassic(): void {
+  //   if (this.musikToggleActiveclassic === true) {
+  //     this.musikToggleActiveclassic = false;
+  //   } else {
+  //     this.musikToggleActiveclassic = true;
 
-    }
-  }
+  //   }
+  // }
 
-  public slideTogglerain(): void {
-    if (this.musikToggleActiverain === true) {
-      this.musikToggleActiverain = false;
-    } else {
-      this.musikToggleActiverain = true;
-    }
-  }
+  // public slideTogglerain(): void {
+  //   if (this.musikToggleActiverain === true) {
+  //     this.musikToggleActiverain = false;
+  //   } else {
+  //     this.musikToggleActiverain = true;
+  //   }
+  // }
 
   public getwholeText(): string {
     let text = '';

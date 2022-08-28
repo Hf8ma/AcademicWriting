@@ -1,4 +1,4 @@
-<iframe *ngIf="musikToggleActivelofi" width="0" height="0"
+<!-- <iframe *ngIf="musikToggleActivelofi" width="0" height="0"
   src="http://youtuberepeater.com/watch?v=5qap5aO4i9A&name=lofi+hip+hop+radio+beats+to+relax+study#gsc.tab=0"
   frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
   allowfullscreen></iframe>
@@ -9,18 +9,18 @@
 <iframe *ngIf="musikToggleActiverain" width="0" height="0"
   src="http://youtuberepeater.com/watch?v=gpmZjOQakbA&name=Leichte+Regentropfen+Sanfte+Regengerdusche+zum+Einschlafen+Lernen+Meditieren+und+Entspannen#gsc.tab=0"
   frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen></iframe>
+  allowfullscreen></iframe> -->
 
 <mat-toolbar>
-  <span>{{paper && paper.title ? paper.title : 'Neue Dokument'}}</span>
+  <span>{{paper && paper.title ? paper.title : 'New Document'}}</span>
   <span class="spacer"></span>
   <a mat-icon-button  (click)="goDashboard()"  matTooltip="zurück zum Dashboard">
     <mat-icon>skip_previous</mat-icon>
   </a>
-  <button mat-icon-button [matMenuTriggerFor]="menu2" matTooltip="Musik einschalten">
+  <!-- <button mat-icon-button [matMenuTriggerFor]="menu2" matTooltip="Musik einschalten">
     <mat-icon>music_note</mat-icon>
-  </button>
-  <mat-menu [hasBackdrop]="false" #menu2="matMenu">
+  </button> -->
+  <!-- <mat-menu [hasBackdrop]="false" #menu2="matMenu">
     <div (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
       <button mat-menu-item>
         <mat-slide-toggle checked="false" labelPosition="before" (change)="slideTogglelofi()">Lofi
@@ -35,7 +35,7 @@
         </mat-slide-toggle>
       </button>
     </div>
-  </mat-menu>
+  </mat-menu> -->
 
   <!--  <button mat-button (click)="openDialog()" matTooltip="Timer stellen">
     <mat-icon>alarm</mat-icon>
@@ -46,10 +46,10 @@
 <!--  <button mat-icon-button (click)="sidenavRight.toggle()" matTooltip="Statistiken öffnen">-->
 <!--    <mat-icon>analytics</mat-icon>-->
 <!--  </button>-->
-  <a href="https://scholar.google.com/" target='_blank' style="color: black">
+  <!-- <a href="https://scholar.google.com/" target='_blank' style="color: black">
     <button mat-icon-button matTooltip="Suche auf Google Scholar">
       <mat-icon>search</mat-icon>
-    </button></a>
+    </button></a> -->
   <button mat-icon-button [matMenuTriggerFor]="menu3" aria-label="Example icon-button with a menu"
     matTooltip="Weitere Schreibunterstützungen">
     <mat-icon>more_vert</mat-icon>
