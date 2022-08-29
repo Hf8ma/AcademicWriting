@@ -17,8 +17,7 @@ export class HeaderComponent {
   username = '';
   isDashboardRoute = true;
   dataSource = new MatTableDataSource<PaperModel>([]);
-  //categoryId : number;
- // paper_id =0;
+
 
   constructor(private readonly http: HttpClient,
     private router: Router,
@@ -26,23 +25,19 @@ export class HeaderComponent {
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     public urlParamService: EditorUrlParamsService) {
-    //this.paper_id = this.urlParamService.activeFilters;  
+    
     this.username = localStorage.getItem('user_name');
     this.isDashboardRoute = this.router.url && this.router.url.includes('dashboard') ? true : false;
   
   }
 
   ngOnInit(): void {
-    // this.paper_id = this.urlParamService.paperID;
-    // console.log('lets see if we got paper id correct: ',this.paper_id )
+  
     this.router.events.subscribe((event) => {
 
       if (event instanceof NavigationEnd) {
         this.isDashboardRoute = event.url && event.url.includes('dashboard') ? true : false;
-        //.log(' this.isDashboardRoute', this.isDashboardRoute)
-        if (this.isDashboardRoute === false) {
-         
-        }
+
       }
     });
   }

@@ -18,18 +18,16 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit, AfterViewChecked {
-  // public musikToggleActivelofi = false;
-  // public musikToggleActiveclassic = false;
-  // public musikToggleActiverain = false;
+ 
   public focusText = true;
 
   public sizePage = {
-    width: 13,
-    height: 18
+    width: 29,  //cm
+    height: 19 //cm
   };
 
   public paddingPage = {
-    top: 2,
+    top: 1,
     right: 2,
     bottom: 2,
     left: 2
@@ -85,6 +83,9 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     this.id = +this.route.snapshot.paramMap.get('id');
     
     this.urlParamService.paperID = this.id;
+    this.urlParamService.categoryID = this.categoryId;
+    //this.urlParamService.paper = this.paper;
+  
 
       if (this.id){
         this.getPaper();
@@ -254,7 +255,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     this.http.put(`http://127.0.0.1:5000/api/paper?id=${this.paper.id}`, updatedPaper, httpOptions)
       .subscribe( response => {
         this.paper = response;
-        this.snackBar.open('paper updated successfully', 'Close' , {
+        this.snackBar.open('paper saved successfully', 'Close' , {
           duration: 6000
         });
       });

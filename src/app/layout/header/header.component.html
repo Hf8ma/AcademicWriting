@@ -6,6 +6,9 @@
   <span fxFlex="auto"></span>
   <div *ngIf="!isDashboardRoute">
     <!-- Document name-->
+    <a mat-icon-button (click)="goDashboard()" matTooltip="go to Dashboard">
+      <mat-icon>skip_previous</mat-icon>
+    </a>
     <button mat-icon-button matTooltip="change category"  (click)="changeCategory(element.id)">
       <mat-icon>snippet_folder</mat-icon>
     </button>

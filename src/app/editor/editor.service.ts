@@ -5,6 +5,8 @@ export class EditorUrlParamsService {
 
     categoryID_: number;
     paperID_: number;
+    paper_: any;
+  
 
     constructor() { }
 
@@ -25,5 +27,13 @@ export class EditorUrlParamsService {
         this.paperID_ = papaerID;
         
     }
+    get paper(): any {
+        return this.paper_;
+    }
+
+    set paper(paperval: any) {
+        this.paper_ = paperval;
+    }
+
 
 }
