@@ -224,6 +224,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     this.http.post(`http://127.0.0.1:5000/api/paper`, body, httpOptions)
       .subscribe(response => {
         this.paper = response;
+        console.log('in save paper after post call ',response)
         this.snackBar.open('paper added successfully', 'Close' , {
           duration: 6000
         });

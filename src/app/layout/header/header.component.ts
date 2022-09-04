@@ -1,3 +1,4 @@
+
 import { EditorUrlParamsService } from './../../editor/editor.service';
 import { DeletePaperDialogComponent } from './../../editor/components/delete-paper-dialog/delete-paper-dialog.component';
 import { Component, OnInit } from "@angular/core";
@@ -7,16 +8,24 @@ import { PaperModel } from "src/app/dashboard/model/paper-model";
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CatgoriesListComponent } from '../catgories-list/catgories-list.component';
+import { DashboardFolderService } from 'src/app/dashboard/services/dashboard-folder.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
   username = '';
   isDashboardRoute = true;
   dataSource = new MatTableDataSource<PaperModel>([]);
+  catgColor: string;
+
+  // allCategories = [];
+  // httpOptions = {};
+  // serverUrl = 'http://127.0.0.1:5000/api/';
+
 
 
   constructor(private readonly http: HttpClient,
@@ -24,7 +33,8 @@ export class HeaderComponent {
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    public urlParamService: EditorUrlParamsService) {
+    private urlParamService: EditorUrlParamsService,
+    private dashboradService: DashboardFolderService) {
     
     this.username = localStorage.getItem('user_name');
     this.isDashboardRoute = this.router.url && this.router.url.includes('dashboard') ? true : false;
@@ -40,7 +50,19 @@ export class HeaderComponent {
 
       }
     });
+    
+      //console.log('this.dashboradService.categories  ', this.dashboradService.categories)
+      //const allCategories = this.dashboradService.categories;
+     // console.log('header all categories ',allCategories )
+      const id = this.urlParamService.categoryID;
+     // this.catgColor = allCategories.find(x=>x.id == id).color;
+     // console.log(this.catgColor);
+    
+    
+
+    
   }
+
 
   public deletePaper(paper: PaperModel): void {
     console.log('this paper id ', this.urlParamService.paperID)
@@ -89,5 +111,24 @@ export class HeaderComponent {
     localStorage.removeItem('access_token');
     localStorage.removeItem('user_id');
     this.router.navigateByUrl('').then(r => r);
+  }
+
+  changeCategory(){
+    const dialogRef = this.dialog.open(CatgoriesListComponent, {
+      width: '600px',
+      //data: { allcategories: this.allCategories}
+    });
+    
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.message) {
+        console.log('paper has been deleted and I am after closed deletedialog')
+             
+        this.snackBar.open(result.message, 'Close', {
+          duration: 6000
+        });
+        this.goDashboard();
+      }
+    });
+ 
   }
 }

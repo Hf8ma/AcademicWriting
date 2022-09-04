@@ -11,7 +11,7 @@ bp = Blueprint('paper', __name__, url_prefix='/api')
 @permission_needed
 def get_paper():
     """
-    example: GET: host/api/paper?id=1
+    example: GET: host/api/paper?id=1 or with category_id
     """
 
     id = request.args.get('id', default=None, type=int)
@@ -109,7 +109,7 @@ def paper_delete():
     paper = Paper.query.get(id)
 
     if not paper:
-        return jsonify(message='Paper wurde nicht gefunden'), 400
+        return jsonify(message='Paper not found'), 400
 
     decoded_token = decode_token(access_token)
     print(" decoded_token .. delete" , (decoded_token))

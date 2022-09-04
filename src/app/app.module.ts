@@ -30,6 +30,7 @@ import {LayoutsModule} from './layout/layout.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {DashboardModule} from './dashboard/dashboard.module';
+import { MatTableModule } from '@angular/material/table';
 
 
 @NgModule({
@@ -65,7 +66,7 @@ import {DashboardModule} from './dashboard/dashboard.module';
     EditorModule,
 
     FlexLayoutModule,
-
+    MatTableModule,
     DashboardModule
   ],
   providers: [],

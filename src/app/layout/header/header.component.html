@@ -9,10 +9,11 @@
     <a mat-icon-button (click)="goDashboard()" matTooltip="go to Dashboard">
       <mat-icon>skip_previous</mat-icon>
     </a>
-    <button mat-icon-button matTooltip="change category"  (click)="changeCategory(element.id)">
+    <button mat-icon-button matTooltip="change category"  (click)="changeCategory()" 
+    style="color: {{catgColor}};">
       <mat-icon>snippet_folder</mat-icon>
     </button>
-    <button mat-icon-button color="warn" (click)="deletePaper(element)" matTooltip="delete paper">
+    <button mat-icon-button color="warn" (click)="deletePaper()" matTooltip="delete paper">
       <mat-icon>delete</mat-icon>
     </button>
     <button mat-icon-button matTooltip="Search for words">

@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class EditorUrlParamsService {
 
-    categoryID_: number;
-    paperID_: number;
-    paper_: any;
+    private categoryID_: number;
+    private paperID_: number;
+    private paper_: any;
   
 
     constructor() { }
