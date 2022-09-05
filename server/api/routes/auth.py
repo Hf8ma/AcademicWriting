@@ -47,7 +47,7 @@ def login():
     """
 
     if not request.is_json:
-        return jsonify(message='Die Anfrage enthielt kein gültiges JSON'), 400
+        return jsonify(message='Die Request did not contain valid JSON'), 400
 
     username = request.json.get('username')
     password = request.json.get('password')

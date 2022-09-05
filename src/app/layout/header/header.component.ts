@@ -21,6 +21,8 @@ export class HeaderComponent implements OnInit{
   isDashboardRoute = true;
   dataSource = new MatTableDataSource<PaperModel>([]);
   catgColor: string;
+  category_id: number;
+  paper: PaperModel;
 
   // allCategories = [];
   // httpOptions = {};
@@ -54,24 +56,33 @@ export class HeaderComponent implements OnInit{
       //console.log('this.dashboradService.categories  ', this.dashboradService.categories)
       //const allCategories = this.dashboradService.categories;
      // console.log('header all categories ',allCategories )
-      const id = this.urlParamService.categoryID;
+      //const id = this.urlParamService.categoryID;
      // this.catgColor = allCategories.find(x=>x.id == id).color;
      // console.log(this.catgColor);
-    
-    
+     const changes = this.urlParamService.getChanges().subscribe(paperCat => {
+      console.log('paperCat && paperCat.paper',paperCat && paperCat.paper)
+      if (paperCat && paperCat.paper){
+        this.paper = paperCat.paper;
+        this.category_id = paperCat.category_id;
+        console.log('header ngoninit, paper', this.paper);
+        console.log('header ngoninit, category id', this.category_id );
+      }
+  });
 
     
   }
 
 
   public deletePaper(paper: PaperModel): void {
-    console.log('this paper id ', this.urlParamService.paperID)
+    if(this.paper){// if the paper is stored in the database then you can delete it
+   
     const dialogRef = this.dialog.open(DeletePaperDialogComponent, {
       width: '250px',
-      data: { id: this.urlParamService.paperID}
+      data: { id: this.paper.id}
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log(' after closed , print result', result)
       if (result && result.message) {
         console.log('paper has been deleted and I am after closed deletedialog')
              
@@ -81,6 +92,12 @@ export class HeaderComponent implements OnInit{
         this.goDashboard();
       }
     });
+  }
+  else{// if the paper is NOT stored in the database then you can NOT delete it
+    this.snackBar.open('Sorry, the paper is not saved yet', 'Close', {
+      duration: 6000
+    });
+  }
   }
 
   public goDashboard(): void{

@@ -78,17 +78,18 @@ export class EditorComponent implements OnInit, AfterViewChecked {
 
   public ngOnInit(): void {
     this.categoryId = +this.route.snapshot.paramMap.get('category_id');
-    console.log('this.categoryId ', this.categoryId );
+    console.log('editor oninit this.categoryId ', this.categoryId );
     
     this.id = +this.route.snapshot.paramMap.get('id');
-    
-    this.urlParamService.paperID = this.id;
-    this.urlParamService.categoryID = this.categoryId;
-    //this.urlParamService.paper = this.paper;
-  
-
-      if (this.id){
+    console.log('editor oninit this.paperId ', this.id );
+      if (this.id){ //here wer're editing the paper
         this.getPaper();
+      }
+      else{
+        this.urlParamService.changeParam({
+          category_id: this.categoryId,
+          paper: null
+        })
       }
   }
 
@@ -155,7 +156,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
   }
 
   public getPaper(): void {
-
+    console.log('hello')
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -168,14 +169,19 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     };
     this.http.get(`http://127.0.0.1:5000/api/paper?id=${this.id}`, httpOptions)
       .subscribe((response: any) => {
+        console.log('into get paper from editor: ', response)
         this.paper = response;
+        
         if (this.paper){
           this.pages[0].htmlContent = this.paper.content;
-
-          // this.currentChar = char
           this.runAfterViewChecked = true;
           this.ngAfterViewChecked();
           this.pages[0].innerText = this.paper.content;
+
+          this.urlParamService.changeParam({
+            category_id: this.categoryId,
+            paper: this.paper
+          })
         }
       });
   }
@@ -224,8 +230,12 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     this.http.post(`http://127.0.0.1:5000/api/paper`, body, httpOptions)
       .subscribe(response => {
         this.paper = response;
+        this.urlParamService.changeParam({
+          category_id: this.categoryId,
+          paper: this.paper
+        })
         console.log('in save paper after post call ',response)
-        this.snackBar.open('paper added successfully', 'Close' , {
+        this.snackBar.open('Paper has been added successfully', 'Close' , {
           duration: 6000
         });
       });
@@ -256,6 +266,10 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     this.http.put(`http://127.0.0.1:5000/api/paper?id=${this.paper.id}`, updatedPaper, httpOptions)
       .subscribe( response => {
         this.paper = response;
+        this.urlParamService.changeParam({
+          category_id: this.categoryId,
+          paper: this.paper
+        })
         this.snackBar.open('paper saved successfully', 'Close' , {
           duration: 6000
         });

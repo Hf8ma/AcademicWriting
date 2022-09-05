@@ -45,7 +45,7 @@ def register_user():
     """
 
     if not request.is_json:
-        response = jsonify(message='Anfrage enthielt kein gültiges JSON')
+        response = jsonify(message='Request did not contain valid JSON')
         return response, 400
 
     user, errors = user_schema.load(request.get_json())

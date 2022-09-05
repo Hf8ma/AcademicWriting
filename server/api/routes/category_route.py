@@ -46,7 +46,7 @@ def add_category():
     access_token = request.headers.get('Authorization')
 
     if not request.is_json:
-        return jsonify(message='Anfrage enthielt kein gültiges JSON'), 400
+        return jsonify(message='Request did not contain valid JSON'), 400
 
     category, errors = category_schema.load(request.get_json())
     if errors:

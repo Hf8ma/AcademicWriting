@@ -1,39 +1,28 @@
+import { PaperModel } from 'src/app/dashboard/model/paper-model';
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+
+export interface EditorModel {
+    paper: PaperModel;
+    category_id: number;
+  }
+  
 
 @Injectable()
 export class EditorUrlParamsService {
 
-    private categoryID_: number;
-    private paperID_: number;
-    private paper_: any;
+    private subject = new Subject<EditorModel>();
+
+    changeParam(paperCat: EditorModel): void {
+      this.subject.next(paperCat);
+    }
   
-
-    constructor() { }
-
-    get categoryID(): any {
-        return this.categoryID_;
+    clearParam(): void {
+      this.subject.next();
     }
-
-    set categoryID(CatIDval: any) {
-        this.categoryID_ = CatIDval;
+  
+    getChanges(): Observable<any> {
+      return this.subject.asObservable();
     }
-
-   get paperID(): any {
-        return this.paperID_;
-        
-    }
-    
-    set paperID(papaerID: any) {
-        this.paperID_ = papaerID;
-        
-    }
-    get paper(): any {
-        return this.paper_;
-    }
-
-    set paper(paperval: any) {
-        this.paper_ = paperval;
-    }
-
 
 }
