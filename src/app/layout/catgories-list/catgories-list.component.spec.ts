@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddDocumentComponent } from './add-document.component';
+import { CatgoriesListComponent } from './catgories-list.component';
 
-describe('AddDocumentComponent', () => {
-  let component: AddDocumentComponent;
-  let fixture: ComponentFixture<AddDocumentComponent>;
+describe('CatgoriesListComponent', () => {
+  let component: CatgoriesListComponent;
+  let fixture: ComponentFixture<CatgoriesListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddDocumentComponent ]
+      declarations: [ CatgoriesListComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddDocumentComponent);
+    fixture = TestBed.createComponent(CatgoriesListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

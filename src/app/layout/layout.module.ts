@@ -18,6 +18,9 @@ import {CountDownComponent} from './count-down/count-down.component';
 import {DeadlineComponent} from './deadline/deadline.component';
 import { NotesComponent } from './notes/notes.component';
 import {MatInputModule} from '@angular/material/input';
+import { CatgoriesListComponent } from './catgories-list/catgories-list.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
 
 
 @NgModule({
@@ -33,9 +36,17 @@ import {MatInputModule} from '@angular/material/input';
     MatSidenavModule,
     MatCardModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatDialogModule,
+    MatTableModule,
+
   ],
-  declarations: [MasterComponent, HeaderComponent, SidebarComponent, GoalComponent, CountDownComponent, DeadlineComponent, NotesComponent],
+  declarations: [MasterComponent, HeaderComponent, SidebarComponent, 
+    GoalComponent, CountDownComponent, DeadlineComponent, NotesComponent, CatgoriesListComponent],
   exports: [ MasterComponent],
+  providers: [
+     MatTableModule
+]
+
 })
 export class LayoutsModule { }

@@ -38,13 +38,15 @@ export class DeletePaperDialogComponent implements OnInit {
   }
 
   deletePaper(): void {
+    
       if (this.data){
         this.http.delete(`${this.serverUrl}paper?id=${this.data.id}`, this.httpOptions)
           .subscribe(response => {
+            console.log('into delete paper dialog, response , 1', response)
             this.dialogRef.close(response);
           });
       }
-      this.dialogRef.close();
+
       return;
   }
 }
