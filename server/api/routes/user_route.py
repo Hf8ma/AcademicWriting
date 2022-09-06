@@ -55,7 +55,7 @@ def register_user():
         return response, 400
 
     user.save()
-    response = jsonify(message='Account wurde erfolgreich angelegt')
+    response = jsonify(message='Account was created successfully')
     return response, 200
 
 

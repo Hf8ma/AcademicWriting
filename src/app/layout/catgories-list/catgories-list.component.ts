@@ -58,27 +58,10 @@ export class CatgoriesListComponent implements OnInit {
   }
 
   
-  //  selectCategory(CategoryId: number) {
-  //   //change category_id in paper record
-  //   const updatedPaper = {
-  //     content: this.getwholeText(),
-  //     title: this.paper.title,
-  //     last_modified: new Date(),
-  //     id : this.paper.id,
-  //     author_id: localStorage.getItem('user_id'),
-  //     category_id: this.categoryId
-  //   };
-
-  //   this.http.put(`http://127.0.0.1:5000/api/paper?id=${this.paper.id}`, updatedPaper, this.httpOptions)
-  //     .subscribe( response => {
-  //       this.paper = response;
-  //       this.snackBar.open('paper saved successfully', 'Close' , {
-  //         duration: 6000
-  //       });
-  //     });
-  //   this.dialogRef.close();
-  //   this.router.navigate(['editor', this.data.id, 'edit', id]).then();
-  //   // 
-  //   return;
-  //  }
+   selectCategory(Category) {
+    console.log('in dialog ,selected category is ',Category)
+    this.dialogRef.close(Category);
+    
+    return;
+   }
 }

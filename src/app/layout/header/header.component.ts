@@ -10,13 +10,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CatgoriesListComponent } from '../catgories-list/catgories-list.component';
 import { DashboardFolderService } from 'src/app/dashboard/services/dashboard-folder.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent implements OnInit {
   username = '';
   isDashboardRoute = true;
   dataSource = new MatTableDataSource<PaperModel>([]);
@@ -26,7 +27,7 @@ export class HeaderComponent implements OnInit{
 
   // allCategories = [];
   // httpOptions = {};
-  // serverUrl = 'http://127.0.0.1:5000/api/';
+   serverUrl = 'http://127.0.0.1:5000/api/';
 
 
 
@@ -36,15 +37,15 @@ export class HeaderComponent implements OnInit{
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private urlParamService: EditorUrlParamsService,
-    private dashboradService: DashboardFolderService) {
-    
+    private location: Location) {
+
     this.username = localStorage.getItem('user_name');
     this.isDashboardRoute = this.router.url && this.router.url.includes('dashboard') ? true : false;
-  
+
   }
 
   ngOnInit(): void {
-  
+
     this.router.events.subscribe((event) => {
 
       if (event instanceof NavigationEnd) {
@@ -52,55 +53,53 @@ export class HeaderComponent implements OnInit{
 
       }
     });
-    
-      //console.log('this.dashboradService.categories  ', this.dashboradService.categories)
-      //const allCategories = this.dashboradService.categories;
-     // console.log('header all categories ',allCategories )
-      //const id = this.urlParamService.categoryID;
-     // this.catgColor = allCategories.find(x=>x.id == id).color;
-     // console.log(this.catgColor);
-     const changes = this.urlParamService.getChanges().subscribe(paperCat => {
-      console.log('paperCat && paperCat.paper',paperCat && paperCat.paper)
-      if (paperCat && paperCat.paper){
-        this.paper = paperCat.paper;
-        this.category_id = paperCat.category_id;
-        console.log('header ngoninit, paper', this.paper);
-        console.log('header ngoninit, category id', this.category_id );
-      }
-  });
+    if (this.isDashboardRoute == false) {
+      const changes = this.urlParamService.getChanges().subscribe(paperCat => {
+        console.log('header,, paperCat && paperCat.paper', paperCat && paperCat.paper)
+        if (paperCat && paperCat.paper) {
+          this.paper = paperCat.paper;
+          this.category_id = paperCat.category_id;
+          console.log('header ngoninit, paper', this.paper);
+          console.log('header ngoninit, category id', this.category_id);
+        }
+      });
+    }
 
-    
+
+
   }
 
 
   public deletePaper(paper: PaperModel): void {
-    if(this.paper){// if the paper is stored in the database then you can delete it
-   
-    const dialogRef = this.dialog.open(DeletePaperDialogComponent, {
-      width: '250px',
-      data: { id: this.paper.id}
-    });
+    if (this.paper) {// if the paper is stored in the database then you can delete it
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(' after closed , print result', result)
-      if (result && result.message) {
-        console.log('paper has been deleted and I am after closed deletedialog')
-             
-        this.snackBar.open(result.message, 'Close', {
-          duration: 6000
-        });
-        this.goDashboard();
-      }
-    });
-  }
-  else{// if the paper is NOT stored in the database then you can NOT delete it
-    this.snackBar.open('Sorry, the paper is not saved yet', 'Close', {
-      duration: 6000
-    });
-  }
+      const dialogRef = this.dialog.open(DeletePaperDialogComponent, {
+        width: '250px',
+        data: { id: this.paper.id }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(' after closed , print result', result)
+        if (result && result.message) {
+          console.log('paper has been deleted and I am after closed deletedialog')
+
+          this.snackBar.open(result.message, 'Close', {
+            duration: 6000
+          });
+          this.goDashboard();
+        }
+      });
+    }
+    else {// if the paper is NOT stored in the database then you can NOT delete it
+      this.snackBar.open('Sorry, the paper is not saved yet', 'Close', {
+        duration: 6000
+      });
+    }
   }
 
-  public goDashboard(): void{
+  public goDashboard(): void {
+    // clearparam
+    //this.urlParamService.clearParam();
     this.router.navigate(['dashboard']);
   }
 
@@ -130,22 +129,50 @@ export class HeaderComponent implements OnInit{
     this.router.navigateByUrl('').then(r => r);
   }
 
-  changeCategory(){
+
+
+  changeCategory() {
     const dialogRef = this.dialog.open(CatgoriesListComponent, {
-      width: '600px',
-      //data: { allcategories: this.allCategories}
+      width: '600px'
     });
-    
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.message) {
-        console.log('paper has been deleted and I am after closed deletedialog')
-             
-        this.snackBar.open(result.message, 'Close', {
-          duration: 6000
-        });
-        this.goDashboard();
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `${localStorage.getItem('access_token')}`,
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+      })
+    };
+    dialogRef.afterClosed().subscribe(selectedCategory => {
+      if (selectedCategory && selectedCategory.id) {
+        console.log(selectedCategory.id);
+        this.catgColor = selectedCategory.color;
+        const updatedPaper = {
+          content: this.paper.content,
+          title: this.paper.title,
+          last_modified: this.paper.last_modified,
+          id: this.paper.id,
+          author_id: localStorage.getItem('user_id'),
+          category_id: selectedCategory.id
+        };
+
+        this.http.put(`http://127.0.0.1:5000/api/paper?id=${this.paper.id}`, updatedPaper, httpOptions)
+          .subscribe((updatedPAper: PaperModel) => {
+            console.log(updatedPAper);
+            this.urlParamService.changeParam({
+              paper: updatedPAper,
+              category_id: updatedPAper.category_id
+            });
+          });
+        const url = '/editor/'+ selectedCategory.id + '/edit/' + this.paper.id;
+
+        this.location.go(url);
+   
       }
     });
- 
+
   }
 }

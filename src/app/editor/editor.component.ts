@@ -91,6 +91,14 @@ export class EditorComponent implements OnInit, AfterViewChecked {
           paper: null
         })
       }
+     
+      const changes = this.urlParamService.getChanges().subscribe(updatedPaper =>{
+        console.log('ngoninit editor, before if updatedpaper');
+        if(updatedPaper.paper && updatedPaper.category_id){
+          this.categoryId = updatedPaper.category_id;
+          this.paper = updatedPaper.paper;
+        }
+      });
   }
 
   public ngAfterViewChecked(): void {
@@ -233,7 +241,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
         this.urlParamService.changeParam({
           category_id: this.categoryId,
           paper: this.paper
-        })
+        });
         console.log('in save paper after post call ',response)
         this.snackBar.open('Paper has been added successfully', 'Close' , {
           duration: 6000

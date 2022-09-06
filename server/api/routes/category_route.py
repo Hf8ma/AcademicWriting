@@ -23,7 +23,7 @@ def get_category():
 
         category = Category.query.get(id)
         if not category:
-            return jsonify(message='Category konnte nicht gefunden werden'), 400
+            return jsonify(message='Category could not be found'), 400
 
 
         return category_schema.jsonify(category), 200
@@ -56,11 +56,11 @@ def add_category():
     author_id = decoded_token['sub']
 
     if author_id != category.author_id:
-        return jsonify(message='Keine Berechtigung'), 401
+        return jsonify(message='No authorization'), 401
 
     category.save()
 
-    return jsonify(message='Category wurde erfolgreich erstellt.'), 200
+    return jsonify(message='Category was created successfully.'), 200
 
 
 @bp.route('/category', methods=['PUT'])
@@ -75,7 +75,7 @@ def category_update():
 
 
     if not category:
-        return jsonify(message='category wurde nicht gefunden'), 400
+        return jsonify(message='category was not found'), 400
 
     data = request.get_json()
     data.pop('id', None)
@@ -88,11 +88,11 @@ def category_update():
     author_id = decoded_token['sub']
 
     if author_id != category.author_id:
-         return jsonify(message='Keine Berechtigung'), 401
+         return jsonify(message='No authorization'), 401
 
     category.update(**data)
 
-    return jsonify(message='category wurde erfolgreich aktualisiert'), 200
+    return jsonify(message='category was successfully updated'), 200
 
 
 @bp.route('/category', methods=['DELETE'])
@@ -107,15 +107,15 @@ def category_delete():
     category = Category.query.get(id)
 
     if not category:
-        return jsonify(message='Category wurde nicht gefunden'), 400
+        return jsonify(message='Category was not found'), 400
 
     decoded_token = decode_token(access_token)
     print(" decoded_token .. delete" , (decoded_token))
     author_id = decoded_token['sub']
 
     if author_id != category.author_id:
-        return jsonify(message='Keine Berechtigung'), 401
+        return jsonify(message='No authorization'), 401
 
     category.delete()
 
-    return jsonify(message='Category wurde erfolgreich entfernt'), 200
+    return jsonify(message='Category has been successfully removed'), 200
