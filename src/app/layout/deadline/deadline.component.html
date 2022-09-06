@@ -1,1 +1,3 @@
-<p>deadline works!</p>
+<div (click)="$event.stopPropagation()">
+  <mat-calendar #calendar (selectedChange)="select($event,calendar)" [dateClass]="isSelected"></mat-calendar>
+</div>

@@ -34,6 +34,13 @@ class Deadline(db.Model):
     def get_all(user_id):
         return Deadline.query.filter_by(author_id=user_id).all()
 
+    @staticmethod
+    def get_by_date():
+        import datetime
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
+        week = (datetime.datetime.now() + datetime.timedelta(days=7)).strftime("%Y-%m-%d")
+        return Deadline.query.filter(Deadline.submission_date>=today).filter(Deadline.submission_date<=week).all()
+
     def __repr__(self):
         return 'Deadline: {}'.format(self.content)
 

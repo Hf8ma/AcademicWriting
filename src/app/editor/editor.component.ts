@@ -10,15 +10,13 @@ import {PaperTitleDialogComponent} from './components/paper-title-dialog/paper-t
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 
-
-
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit, AfterViewChecked {
- 
+
   public focusText = true;
 
   public sizePage = {
@@ -79,7 +77,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
   public ngOnInit(): void {
     this.categoryId = +this.route.snapshot.paramMap.get('category_id');
     console.log('editor oninit this.categoryId ', this.categoryId );
-    
+
     this.id = +this.route.snapshot.paramMap.get('id');
     console.log('editor oninit this.paperId ', this.id );
       if (this.id){ //here wer're editing the paper
@@ -91,7 +89,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
           paper: null
         })
       }
-     
+
       const changes = this.urlParamService.getChanges().subscribe(updatedPaper =>{
         console.log('ngoninit editor, before if updatedpaper');
         if(updatedPaper.paper && updatedPaper.category_id){
@@ -179,7 +177,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
       .subscribe((response: any) => {
         console.log('into get paper from editor: ', response)
         this.paper = response;
-        
+
         if (this.paper){
           this.pages[0].htmlContent = this.paper.content;
           this.runAfterViewChecked = true;

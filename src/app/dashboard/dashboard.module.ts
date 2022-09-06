@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FolderComponent} from './folder/folder.component';
-
 import {StatisticsComponent} from './statistics/statistics.component';
 import {DashboardComponent} from './dashboard.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
