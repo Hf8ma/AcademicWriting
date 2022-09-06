@@ -9,8 +9,6 @@ import {PaperTitleDialogComponent} from './components/paper-title-dialog/paper-t
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 
-
-
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
@@ -71,7 +69,9 @@ export class EditorComponent implements OnInit, AfterViewChecked {
   constructor(public dialog: MatDialog,
               private markdownService: MarkdownService,
               private readonly http: HttpClient,
-              private router: Router, private route: ActivatedRoute, private snackBar: MatSnackBar) {
+              private router: Router,
+              private route: ActivatedRoute,
+              private snackBar: MatSnackBar) {
   }
 
   public ngOnInit(): void {

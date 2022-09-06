@@ -18,6 +18,12 @@ import {CountDownComponent} from './count-down/count-down.component';
 import {DeadlineComponent} from './deadline/deadline.component';
 import { NotesComponent } from './notes/notes.component';
 import {MatInputModule} from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import { DeadlineDialogComponent } from './deadline-dialog/deadline-dialog.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatDialogModule} from '@angular/material/dialog';
+import { DeadlineShowDialogComponent } from './deadline-show-dialog/deadline-show-dialog.component';
 
 
 @NgModule({
@@ -33,9 +39,13 @@ import {MatInputModule} from '@angular/material/input';
     MatSidenavModule,
     MatCardModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    ReactiveFormsModule,
+    MatDialogModule
   ],
-  declarations: [MasterComponent, HeaderComponent, SidebarComponent, GoalComponent, CountDownComponent, DeadlineComponent, NotesComponent],
+  declarations: [MasterComponent, HeaderComponent, SidebarComponent, GoalComponent, CountDownComponent, DeadlineComponent, NotesComponent, DeadlineDialogComponent, DeadlineShowDialogComponent],
   exports: [ MasterComponent],
 })
 export class LayoutsModule { }
