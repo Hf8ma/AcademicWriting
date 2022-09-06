@@ -1,6 +1,6 @@
-<h1 mat-dialog-title>Registrierung</h1>
+<h1 mat-dialog-title>Registration</h1>
 <div mat-dialog-content>
-  <p>Legen Sie einen Benutzernamen fest:</p>
+  <p>Enter a username:</p>
   <form class="login-form-fields">
     <mat-form-field appearance="fill">
       <mat-label>Username</mat-label>
@@ -10,7 +10,7 @@
       </mat-error>
     </mat-form-field>
 
-    <p>Geben Sie Ihre Email-Adresse ein:</p>
+    <p>Enter an email address:</p>
     <mat-form-field appearance="fill">
       <mat-label>Email</mat-label>
       <input type="email" matInput [formControl]="emailFormControl" placeholder="test@gmail.com">
@@ -22,7 +22,7 @@
       </mat-error>
     </mat-form-field>
 
-    <p>Legen Sie ein Passwort an:</p>
+    <p>Enter a password:</p>
     <mat-form-field appearance="fill">
       <mat-label>Passwort</mat-label>
       <input matInput [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl">
@@ -35,10 +35,10 @@
       </button>
     </mat-form-field>
     <div mat-dialog-actions>
-      <button mat-button (click)="onClose()">Abbrechen</button>
+      <button mat-button (click)="onClose()">cancel</button>
       <button mat-button (click)="registrieren()"
               [disabled]="usernameFormControl.invalid || emailFormControl.invalid || passwordFormControl.invalid">
-        Bestätigen
+        confirm
       </button>
     </div>
   </form>

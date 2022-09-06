@@ -27,6 +27,7 @@ import {PaperTitleDialogComponent} from './components/paper-title-dialog/paper-t
 import {FlexModule} from '@angular/flex-layout';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {DeletePaperDialogComponent} from './components/delete-paper-dialog/delete-paper-dialog.component';
+import { EditorUrlParamsService } from './editor.service';
 
 
 
@@ -57,6 +58,9 @@ import {DeletePaperDialogComponent} from './components/delete-paper-dialog/delet
         MatSlideToggleModule,
         FlexModule,
         MatSnackBarModule
+    ],
+    providers: [
+        EditorUrlParamsService
     ]
 })
 export class EditorModule { }

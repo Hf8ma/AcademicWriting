@@ -11,7 +11,7 @@ bp = Blueprint('paper', __name__, url_prefix='/api')
 @permission_needed
 def get_paper():
     """
-    example: GET: host/api/paper?id=1
+    example: GET: host/api/paper?id=1 or with category_id
     """
 
     id = request.args.get('id', default=None, type=int)
@@ -21,7 +21,7 @@ def get_paper():
 
         paper = Paper.query.get(id)
         if not paper:
-            return jsonify(message='Paper konnte nicht gefunden werden'), 400
+            return jsonify(message='Paper could not be found'), 400
 
 
         return paper_schema.jsonify(paper), 200
@@ -31,7 +31,7 @@ def get_paper():
         result = papers_schema.dump(all_paper)
         return jsonify(result.data), 200
 
-    return jsonify(message='Keine Peper'), 200
+    return jsonify(message='No paper'), 200
 
 
 
@@ -45,7 +45,7 @@ def add_paper():
     access_token = request.headers.get('Authorization')
 
     if not request.is_json:
-        return jsonify(message='Anfrage enthielt kein gültiges JSON'), 400
+        return jsonify(message='Request did not contain valid JSON'), 400
 
     paper, errors = paper_schema.load(request.get_json())
     if errors:
@@ -75,7 +75,7 @@ def paper_update():
 
 
     if not paper:
-        return jsonify(message='Paper wurde nicht gefunden'), 400
+        return jsonify(message='Paper Not found'), 400
 
     data = request.get_json()
     data.pop('id', None)
@@ -109,7 +109,7 @@ def paper_delete():
     paper = Paper.query.get(id)
 
     if not paper:
-        return jsonify(message='Paper wurde nicht gefunden'), 400
+        return jsonify(message='Paper not found'), 400
 
     decoded_token = decode_token(access_token)
     print(" decoded_token .. delete" , (decoded_token))
@@ -120,4 +120,4 @@ def paper_delete():
 
     paper.delete()
 
-    return jsonify(message='Paper wurde erfolgreich entfernt'), 200
+    return jsonify(message='Paper has been removed successfully'), 200

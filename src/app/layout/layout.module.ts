@@ -24,6 +24,8 @@ import { DeadlineDialogComponent } from './deadline-dialog/deadline-dialog.compo
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 import { DeadlineShowDialogComponent } from './deadline-show-dialog/deadline-show-dialog.component';
+import { CatgoriesListComponent } from './catgories-list/catgories-list.component';
+import { MatTableModule } from '@angular/material/table';
 
 
 @NgModule({
@@ -40,12 +42,20 @@ import { DeadlineShowDialogComponent } from './deadline-show-dialog/deadline-sho
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDialogModule,
+    MatTableModule,
+    MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
     MatDialogModule
   ],
-  declarations: [MasterComponent, HeaderComponent, SidebarComponent, GoalComponent, CountDownComponent, DeadlineComponent, NotesComponent, DeadlineDialogComponent, DeadlineShowDialogComponent],
+  declarations: [MasterComponent, HeaderComponent, SidebarComponent, DeadlineDialogComponent, DeadlineShowDialogComponent,
+    GoalComponent, CountDownComponent, NotesComponent, CatgoriesListComponent, DeadlineComponent],
   exports: [ MasterComponent],
+  providers: [
+     MatTableModule
+]
+
 })
 export class LayoutsModule { }

@@ -1,3 +1,4 @@
+import { EditorUrlParamsService } from './editor.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { DialogComponent } from './components/dialog/dialog.component';
@@ -15,18 +16,16 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit, AfterViewChecked {
-  public musikToggleActivelofi = false;
-  public musikToggleActiveclassic = false;
-  public musikToggleActiverain = false;
+
   public focusText = true;
 
   public sizePage = {
-    width: 13,
-    height: 18
+    width: 29,  //cm
+    height: 19 //cm
   };
 
   public paddingPage = {
-    top: 2,
+    top: 1,
     right: 2,
     bottom: 2,
     left: 2
@@ -70,16 +69,34 @@ export class EditorComponent implements OnInit, AfterViewChecked {
               private markdownService: MarkdownService,
               private readonly http: HttpClient,
               private router: Router,
-              private route: ActivatedRoute,
-              private snackBar: MatSnackBar) {
+               private route: ActivatedRoute,
+                private snackBar: MatSnackBar,
+                public urlParamService: EditorUrlParamsService) {
   }
 
   public ngOnInit(): void {
-      this.categoryId = +this.route.snapshot.paramMap.get('category_id');
-      this.id = +this.route.snapshot.paramMap.get('id');
-      if (this.id){
+    this.categoryId = +this.route.snapshot.paramMap.get('category_id');
+    console.log('editor oninit this.categoryId ', this.categoryId );
+
+    this.id = +this.route.snapshot.paramMap.get('id');
+    console.log('editor oninit this.paperId ', this.id );
+      if (this.id){ //here wer're editing the paper
         this.getPaper();
       }
+      else{
+        this.urlParamService.changeParam({
+          category_id: this.categoryId,
+          paper: null
+        })
+      }
+
+      const changes = this.urlParamService.getChanges().subscribe(updatedPaper =>{
+        console.log('ngoninit editor, before if updatedpaper');
+        if(updatedPaper.paper && updatedPaper.category_id){
+          this.categoryId = updatedPaper.category_id;
+          this.paper = updatedPaper.paper;
+        }
+      });
   }
 
   public ngAfterViewChecked(): void {
@@ -145,7 +162,7 @@ export class EditorComponent implements OnInit, AfterViewChecked {
   }
 
   public getPaper(): void {
-
+    console.log('hello')
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -158,14 +175,19 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     };
     this.http.get(`http://127.0.0.1:5000/api/paper?id=${this.id}`, httpOptions)
       .subscribe((response: any) => {
+        console.log('into get paper from editor: ', response)
         this.paper = response;
+
         if (this.paper){
           this.pages[0].htmlContent = this.paper.content;
-
-          // this.currentChar = char
           this.runAfterViewChecked = true;
           this.ngAfterViewChecked();
           this.pages[0].innerText = this.paper.content;
+
+          this.urlParamService.changeParam({
+            category_id: this.categoryId,
+            paper: this.paper
+          })
         }
       });
   }
@@ -214,7 +236,12 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     this.http.post(`http://127.0.0.1:5000/api/paper`, body, httpOptions)
       .subscribe(response => {
         this.paper = response;
-        this.snackBar.open('paper added successfully', 'Close' , {
+        this.urlParamService.changeParam({
+          category_id: this.categoryId,
+          paper: this.paper
+        });
+        console.log('in save paper after post call ',response)
+        this.snackBar.open('Paper has been added successfully', 'Close' , {
           duration: 6000
         });
       });
@@ -245,7 +272,11 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     this.http.put(`http://127.0.0.1:5000/api/paper?id=${this.paper.id}`, updatedPaper, httpOptions)
       .subscribe( response => {
         this.paper = response;
-        this.snackBar.open('paper updated successfully', 'Close' , {
+        this.urlParamService.changeParam({
+          category_id: this.categoryId,
+          paper: this.paper
+        })
+        this.snackBar.open('paper saved successfully', 'Close' , {
           duration: 6000
         });
       });
@@ -341,31 +372,31 @@ export class EditorComponent implements OnInit, AfterViewChecked {
     this.getAverageSentenceLength();
   }
 
-  public slideTogglelofi(): void {
-    if (this.musikToggleActivelofi === true) {
-      this.musikToggleActivelofi = false;
+  // public slideTogglelofi(): void {
+  //   if (this.musikToggleActivelofi === true) {
+  //     this.musikToggleActivelofi = false;
 
-    } else {
-      this.musikToggleActivelofi = true;
-    }
-  }
+  //   } else {
+  //     this.musikToggleActivelofi = true;
+  //   }
+  // }
 
-  public slideToggleclassic(): void {
-    if (this.musikToggleActiveclassic === true) {
-      this.musikToggleActiveclassic = false;
-    } else {
-      this.musikToggleActiveclassic = true;
+  // public slideToggleclassic(): void {
+  //   if (this.musikToggleActiveclassic === true) {
+  //     this.musikToggleActiveclassic = false;
+  //   } else {
+  //     this.musikToggleActiveclassic = true;
 
-    }
-  }
+  //   }
+  // }
 
-  public slideTogglerain(): void {
-    if (this.musikToggleActiverain === true) {
-      this.musikToggleActiverain = false;
-    } else {
-      this.musikToggleActiverain = true;
-    }
-  }
+  // public slideTogglerain(): void {
+  //   if (this.musikToggleActiverain === true) {
+  //     this.musikToggleActiverain = false;
+  //   } else {
+  //     this.musikToggleActiverain = true;
+  //   }
+  // }
 
   public getwholeText(): string {
     let text = '';

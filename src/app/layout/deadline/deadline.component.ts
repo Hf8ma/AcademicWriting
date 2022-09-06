@@ -6,7 +6,6 @@ import {DeadlineDialogComponent} from '../deadline-dialog/deadline-dialog.compon
 import {DatePipe} from '@angular/common';
 import {MatCalendar} from '@angular/material/datepicker';
 import {DeadlineShowDialogComponent} from '../deadline-show-dialog/deadline-show-dialog.component';
-import {insertAfterLastOccurrence} from '@angular/cdk/schematics';
 
 @Component({
   selector: 'app-deadline',
