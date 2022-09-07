@@ -26,7 +26,11 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { DeadlineShowDialogComponent } from './deadline-show-dialog/deadline-show-dialog.component';
 import { CatgoriesListComponent } from './catgories-list/catgories-list.component';
 import { MatTableModule } from '@angular/material/table';
-
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { NoteDialogComponent } from './note-dialog/note-dialog.component';
+import { NoteDeleteDialogComponent } from './note-delete-dialog/note-delete-dialog.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCarouselModule } from '@ngmodule/material-carousel';
 
 @NgModule({
   imports: [
@@ -48,10 +52,13 @@ import { MatTableModule } from '@angular/material/table';
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTooltipModule,
+    BrowserAnimationsModule,
+    MatCarouselModule
   ],
   declarations: [MasterComponent, HeaderComponent, SidebarComponent, DeadlineDialogComponent, DeadlineShowDialogComponent,
-    GoalComponent, CountDownComponent, NotesComponent, CatgoriesListComponent, DeadlineComponent],
+    GoalComponent, CountDownComponent, NotesComponent, CatgoriesListComponent, DeadlineComponent, NoteDialogComponent, NoteDeleteDialogComponent],
   exports: [ MasterComponent],
   providers: [
      MatTableModule

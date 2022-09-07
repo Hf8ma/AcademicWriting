@@ -1,1 +1,68 @@
-<p>notes works!</p>
+<!--<div>-->
+<!--  <swiper #swiper [slidesPerView]="1" [centeredSlides]="true" [navigation]="true"-->
+<!--          [pagination]="true">-->
+<!--    <ng-template swiperSlide *ngFor="let note of notes; index as i">-->
+<!--      {{ note.content }}-->
+<!--    </ng-template>-->
+<!--  </swiper>-->
+<!--  <button mat-mini-fab   #nextEl class="swiper-navigation-prev" matTooltip="previous note">-->
+<!--    <mat-icon>navigate_before</mat-icon>-->
+<!--  </button>-->
+<!--  <button mat-mini-fab   #prevEl class="swiper-navigation-next" matTooltip="next note">-->
+<!--    <mat-icon>navigate_next</mat-icon>-->
+<!--  </button>-->
+<!--  <button mat-mini-fab   #prevEl class="add-note" matTooltip="add new note" (click)="addNote()">-->
+<!--    <mat-icon>add</mat-icon>-->
+<!--  </button>-->
+
+<!--</div>-->
+
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title fxLayout="row" fxLayoutAlign="space-between center">
+      <span>Notes</span>
+      <button mat-mini-fab  class="add-note" matTooltip="add new note" (click)="addNote()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-card-title>
+
+  </mat-card-header>
+  <mat-card-content>
+    <mat-carousel
+      timings="250ms ease-in"
+      [autoplay]="false"
+      interval="6000"
+      color="accent"
+      maxWidth="auto"
+      proportion="25"
+      slides="5"
+      [loop]="true"
+      [hideArrows]="false"
+      [hideIndicators]="false"
+      [useKeyboard]="false"
+      [useMouseWheel]="false"
+      orientation="ltr"
+    >
+      <mat-carousel-slide
+        #matCarouselSlide
+        *ngFor="let note of notes; let i = index"
+        [hideOverlay]="true"
+      >
+        <div class="content">
+
+<!--          <mat-form-field class="example-full-width" appearance="fill">-->
+<!--            <textarea matInput rows="25" (keyup)="noteChanged(note)">{{note.content}}</textarea>-->
+<!--          </mat-form-field>-->
+          <p>{{note.content}}</p>
+          <button mat-mini-fab color="primary"   class="edit-note" matTooltip="edit note" (click)="editNote(note)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-mini-fab  color="warn"  class="delete-note" matTooltip="delete note" (click)="deleteNote(note)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-carousel-slide>
+    </mat-carousel>
+  </mat-card-content>
+</mat-card>

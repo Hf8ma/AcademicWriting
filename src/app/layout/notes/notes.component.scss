@@ -1,0 +1,62 @@
+
+::ng-deep{
+  .mat-card-header-text {
+    width: 100% !important;
+  }
+  .carousel-list{
+    min-height: 200px!important;
+  }
+  .carousel-indicators{
+    bottom: 28px!important;
+  }
+  .carousel> button{
+    bottom: 0px!important;
+    top: unset!important;
+  }
+  .carousel-slide-content, .carousel-slide {
+    min-height: 200px!important;
+  }
+  .carousel > button:first-of-type{
+    left: 6px!important;
+  }
+  .carousel > button:last-of-type{
+    right: 6px!important;
+  }
+}
+.add-note, .edit-note, .delete-note {
+  width: 35px;
+  height: 35px;
+  line-height: 14px;
+  font-size: 14px;
+
+  &::ng-deep .mat-button-wrapper{
+    line-height: 14px;
+    padding: 0;
+
+    .mat-icon {
+      font-size: 20px;
+      padding-right: 0px;
+      padding-top: 3px;
+    }
+  }
+}
+.content{
+  width: 100%;
+  p{
+    width: 75%!important;
+    min-height: 200px;
+    background: #f7ecf2;
+    padding: 10px;
+    margin: auto;
+  }
+  .edit-note{
+    position: absolute;
+    top: 5%;
+    right: 13px;
+  }
+  .delete-note{
+    position: absolute;
+    top: 20%;
+    right: 13px;
+  }
+}
