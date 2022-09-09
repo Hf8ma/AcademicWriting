@@ -7,28 +7,47 @@
        *ngIf="allCategories && allCategories.length!==0">
     <mat-card *ngFor="let cat of allCategories"
               style="background:{{cat.color}}">
-      <mat-card-content style="text-align: center; font-size: x-large;color: white; padding: 20px">{{cat.name}}</mat-card-content>
-      <mat-card-actions>
-        <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="7px">
-
-          <button mat-flat-button
-                  style="background: #039BE5; color: white"
-                  [matTooltip]="'add and show all papers'"
-                  (click)="openPapersDialog(cat)">Papers
+      <mat-card-content style="text-align: center; font-size: x-large;color: white; padding: 20px">
+        {{cat.name}}
+        <button mat-icon-button class="actions-btn" [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" style="font-size: 14px">
+          <button mat-menu-item (click)="openPapersDialog(cat)">
+            <mat-icon style="font-size: 20px">visibility</mat-icon>
+            <span>show papers</span>
           </button>
-
-          <button mat-flat-button style="background: #FFC107; color: white"
-                  [matTooltip]="'edit folder name or color'"
-                  (click)="openEditCategoryDialog(cat)">Edit</button>
-
-          <button mat-flat-button
-                  style="background: #F44336; color: white"
-                  [matTooltip]="'Delete folder'"
-          (click)="openDeleteCategoryDialog(cat)">
-            Delete
+          <button mat-menu-item (click)="openEditCategoryDialog(cat)">
+            <mat-icon style="font-size: 20px">edit</mat-icon>
+            <span>edit</span>
           </button>
-        </div>
-      </mat-card-actions>
+          <button mat-menu-item (click)="openDeleteCategoryDialog(cat)">
+            <mat-icon style="font-size: 20px">delete</mat-icon>
+            <span>delete</span>
+          </button>
+        </mat-menu>
+      </mat-card-content>
+<!--      <mat-card-actions>-->
+<!--        <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="7px">-->
+
+<!--          <button mat-flat-button-->
+<!--                  style="background: #039BE5; color: white"-->
+<!--                  [matTooltip]="'add and show all papers'"-->
+<!--                  (click)="openPapersDialog(cat)">Papers-->
+<!--          </button>-->
+
+<!--          <button mat-flat-button style="background: #FFC107; color: white"-->
+<!--                  [matTooltip]="'edit folder name or color'"-->
+<!--                  (click)="openEditCategoryDialog(cat)">Edit</button>-->
+
+<!--          <button mat-flat-button-->
+<!--                  style="background: #F44336; color: white"-->
+<!--                  [matTooltip]="'Delete folder'"-->
+<!--          (click)="openDeleteCategoryDialog(cat)">-->
+<!--            Delete-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </mat-card-actions>-->
     </mat-card>
   </div>
 </div>

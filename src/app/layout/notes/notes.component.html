@@ -1,27 +1,7 @@
-<!--<div>-->
-<!--  <swiper #swiper [slidesPerView]="1" [centeredSlides]="true" [navigation]="true"-->
-<!--          [pagination]="true">-->
-<!--    <ng-template swiperSlide *ngFor="let note of notes; index as i">-->
-<!--      {{ note.content }}-->
-<!--    </ng-template>-->
-<!--  </swiper>-->
-<!--  <button mat-mini-fab   #nextEl class="swiper-navigation-prev" matTooltip="previous note">-->
-<!--    <mat-icon>navigate_before</mat-icon>-->
-<!--  </button>-->
-<!--  <button mat-mini-fab   #prevEl class="swiper-navigation-next" matTooltip="next note">-->
-<!--    <mat-icon>navigate_next</mat-icon>-->
-<!--  </button>-->
-<!--  <button mat-mini-fab   #prevEl class="add-note" matTooltip="add new note" (click)="addNote()">-->
-<!--    <mat-icon>add</mat-icon>-->
-<!--  </button>-->
-
-<!--</div>-->
-
-
 <mat-card>
   <mat-card-header>
     <mat-card-title fxLayout="row" fxLayoutAlign="space-between center">
-      <span>Notes</span>
+      <span>My Notes</span>
       <button mat-mini-fab  class="add-note" matTooltip="add new note" (click)="addNote()">
         <mat-icon>add</mat-icon>
       </button>
@@ -30,6 +10,7 @@
   </mat-card-header>
   <mat-card-content>
     <mat-carousel
+      *ngIf="notes && notes.length"
       timings="250ms ease-in"
       [autoplay]="false"
       interval="6000"
@@ -55,14 +36,15 @@
 <!--            <textarea matInput rows="25" (keyup)="noteChanged(note)">{{note.content}}</textarea>-->
 <!--          </mat-form-field>-->
           <p>{{note.content}}</p>
-          <button mat-mini-fab color="primary"   class="edit-note" matTooltip="edit note" (click)="editNote(note)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-mini-fab  color="warn"  class="delete-note" matTooltip="delete note" (click)="deleteNote(note)">
-            <mat-icon>delete</mat-icon>
-          </button>
+            <mat-icon color="primary" class="edit-note" matTooltip="edit note" (click)="editNote(note)">edit</mat-icon>
+
+            <mat-icon color="warn" class="delete-note" matTooltip="delete note" (click)="deleteNote(note)">delete</mat-icon>
+
         </div>
       </mat-carousel-slide>
     </mat-carousel>
+    <div *ngIf="!notes || !notes.length">
+      <strong style="color: red">You don't have any notes till now.</strong>
+    </div>
   </mat-card-content>
 </mat-card>

@@ -24,7 +24,7 @@ def get_deadline():
 
         deadline = Deadline.query.get(id)
         if not deadline:
-            return jsonify(message='Deadline konnte nicht gefunden werden'), 400
+            return jsonify(message='Deadline could not be found'), 400
 
 
         return deadline_schema.jsonify(deadline), 200
@@ -51,7 +51,7 @@ def add_deadline():
     access_token = request.headers.get('Authorization')
 
     if not request.is_json:
-        return jsonify(message='Anfrage enthielt kein gültiges JSON'), 400
+        return jsonify(message='Request did not contain valid JSON'), 400
 
     deadline, errors = deadline_schema.load(request.get_json())
     if errors:
@@ -61,7 +61,7 @@ def add_deadline():
     author_id = decoded_token['sub']
 
     if author_id != deadline.author_id:
-        return jsonify(message='Keine Berechtigung'), 401
+        return jsonify(message='No Authorization'), 401
 
     deadline.save()
 
@@ -81,7 +81,7 @@ def deadline_update():
 
 
     if not deadline:
-        return jsonify(message='deadline wurde nicht gefunden'), 400
+        return jsonify(message='Deadline was not found'), 400
 
     data = request.get_json()
     data.pop('id', None)
@@ -94,11 +94,11 @@ def deadline_update():
     author_id = decoded_token['sub']
 
     if author_id != deadline.author_id:
-         return jsonify(message='Keine Berechtigung'), 401
+         return jsonify(message='No Authorization'), 401
 
     deadline.update(**data)
 
-    return jsonify(message='deadline wurde erfolgreich aktualisiert'), 200
+    return jsonify(message='Deadline was successfully updated'), 200
 
 
 @bp.route('/deadline', methods=['DELETE'])
@@ -113,15 +113,15 @@ def deadline_delete():
     deadline = Deadline.query.get(id)
 
     if not deadline:
-        return jsonify(message='Deadline wurde nicht gefunden'), 400
+        return jsonify(message='Deadline was not found'), 400
 
     decoded_token = decode_token(access_token)
     print(" decoded_token .. delete" , (decoded_token))
     author_id = decoded_token['sub']
 
     if author_id != deadline.author_id:
-        return jsonify(message='Keine Berechtigung'), 401
+        return jsonify(message='No Authorization'), 401
 
     deadline.delete()
 
-    return jsonify(message='Deadline wurde erfolgreich entfernt'), 200
+    return jsonify(message='Deadline has been successfully removed'), 200

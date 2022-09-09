@@ -31,34 +31,38 @@ import { NoteDialogComponent } from './note-dialog/note-dialog.component';
 import { NoteDeleteDialogComponent } from './note-delete-dialog/note-delete-dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
+import {MatListModule} from '@angular/material/list';
+import { GoalDialogComponent } from './goal-dialog/goal-dialog.component';
+import { GoalDeleteDialogComponent } from './goal-delete-dialog/goal-delete-dialog.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule.forChild([]),
-    FlexLayoutModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatBadgeModule,
-    MatSidenavModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDialogModule,
-    MatTableModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatTooltipModule,
-    BrowserAnimationsModule,
-    MatCarouselModule
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild([]),
+        FlexLayoutModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatBadgeModule,
+        MatSidenavModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDialogModule,
+        MatTableModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        ReactiveFormsModule,
+        MatDialogModule,
+        MatTooltipModule,
+        BrowserAnimationsModule,
+        MatCarouselModule,
+        MatListModule
+    ],
   declarations: [MasterComponent, HeaderComponent, SidebarComponent, DeadlineDialogComponent, DeadlineShowDialogComponent,
-    GoalComponent, CountDownComponent, NotesComponent, CatgoriesListComponent, DeadlineComponent, NoteDialogComponent, NoteDeleteDialogComponent],
+    GoalComponent, CountDownComponent, NotesComponent, CatgoriesListComponent, DeadlineComponent, NoteDialogComponent, NoteDeleteDialogComponent, GoalDialogComponent, GoalDeleteDialogComponent],
   exports: [ MasterComponent],
   providers: [
      MatTableModule

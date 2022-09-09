@@ -70,7 +70,7 @@ export class DeadlineComponent implements OnInit {
       if (result) {
         this.daysSelected.push(result);
         calendar.updateTodaysDate();
-        this.snackBar.open('Deadline wurde erfolgreich erstellt.', 'Close' , {
+        this.snackBar.open('Deadline was created successfully.', 'Close' , {
           duration: 6000
         });
       }
