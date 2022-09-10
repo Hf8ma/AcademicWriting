@@ -1,5 +1,15 @@
 .mat-calendar-body-cell.selected
 {
-  background-color:#fff200!important;
+  background-color:#70bd00!important;
   border-radius: 50%
 }
+.mat-card {
+  background: #e1e5dd;
+}
+
+
+.mat-calendar-previous-button, .mat-calendar-next-button {
+    transform: rotate(0deg) !important;
+}
+
+

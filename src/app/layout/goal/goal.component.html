@@ -1,7 +1,31 @@
-<div class="goal">
-  <mat-form-field appearance="fill" style="width:95%; margin: auto">
-    <mat-label>Goals for today</mat-label>
-    <textarea matInput placeholder="description"></textarea>
-  </mat-form-field>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title fxLayout="row" fxLayoutAlign="space-between center">
+      <span>My Goals</span>
+      <button mat-mini-fab  class="add-goal" matTooltip="add new goal" (click)="addGoal()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-card-title>
 
-</div>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list role="list" *ngIf="goals && goals.length">
+      <mat-list-item role="listitem" *ngFor="let goal of goals; let i = index">
+        <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%">
+          <p fxFlex="80">{{goal.content}}</p>
+          <div fxFlex="20">
+            <mat-icon color="primary" matTooltip="edit goal"
+                      style="margin-right: 5px"
+                      (click)="editGoal(goal)">edit</mat-icon>
+            <mat-icon color="warn" matTooltip="delete goal"
+                      (click)="deleteGoal(goal)">delete</mat-icon>
+          </div>
+        </div>
+      </mat-list-item>
+    </mat-list>
+    <div *ngIf="!goals || !goals.length">
+      <strong style="color: red">You don't have any goals till now.</strong>
+    </div>
+  </mat-card-content>
+</mat-card>
+

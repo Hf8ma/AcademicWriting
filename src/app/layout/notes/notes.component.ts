@@ -73,7 +73,7 @@ export class NotesComponent implements OnInit{
       if (result) {
         const index = this.notes.findIndex(x => x.id === note.id);
         this.notes[index] = result;
-        this.snackBar.open('Note was created successfully.', 'Close' , {
+        this.snackBar.open('Note was updated successfully.', 'Close' , {
           duration: 6000
         });
       }
@@ -95,13 +95,5 @@ export class NotesComponent implements OnInit{
         });
       }
     });
-  }
-
-  public noteChanged(note: NoteModel): void{
-      if (note && note.content && note.content !== ''){
-        this.editNote(note);
-      }else{
-        this.deleteNote(note);
-      }
   }
 }

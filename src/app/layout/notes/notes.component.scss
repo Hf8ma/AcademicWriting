@@ -18,16 +18,23 @@
   }
   .carousel > button:first-of-type{
     left: 6px!important;
+    color: #70bd00;
   }
   .carousel > button:last-of-type{
     right: 6px!important;
+    color: #70bd00;
+  }
+  .mat-mini-fab.mat-accent {
+    background-color: #70bd00;
   }
 }
-.add-note, .edit-note, .delete-note {
+
+.add-note{
   width: 35px;
   height: 35px;
   line-height: 14px;
   font-size: 14px;
+  background: #70bd00;
 
   &::ng-deep .mat-button-wrapper{
     line-height: 14px;
@@ -43,20 +50,26 @@
 .content{
   width: 100%;
   p{
-    width: 75%!important;
+    width: 75% !important;
     min-height: 200px;
-    background: #f7ecf2;
+    background: #d1f0a4;
     padding: 10px;
     margin: auto;
+    line-height: 23px;
+    max-height: 220px;
+    overflow-y: auto;
   }
   .edit-note{
     position: absolute;
-    top: 5%;
-    right: 13px;
+    top: 7px;
+    right: 5px;
   }
   .delete-note{
     position: absolute;
-    top: 20%;
-    right: 13px;
+    top: 35px;
+    right: 5px;
   }
+}
+.mat-card{
+  background: #e1e5dd;
 }

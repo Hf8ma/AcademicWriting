@@ -49,6 +49,9 @@ def create_app(config_filename=None, static_folder=None, static_url_path=None):
     from .routes import notes_route
     app.register_blueprint(notes_route.bp)
 
+    from .routes import goal_route
+    app.register_blueprint(goal_route.bp)
+
     from .routes import convert_route
     app.register_blueprint(convert_route.bp)
 

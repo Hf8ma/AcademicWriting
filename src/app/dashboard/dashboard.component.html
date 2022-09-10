@@ -1,14 +1,19 @@
 <div fxLayout="column"  fxLayoutAlign="center" fxLayoutGap="30px" class="dashboard-container">
     <mat-card  fxFlex="100">
       <mat-card-header>
-        <mat-card-title>My Folders</mat-card-title>
+        <mat-card-title fxLayout="row" fxLayoutAlign="space-between center">
+          <span>My Folders</span>
+          <button mat-mini-fab  class="add-folder" matTooltip="add new folder" (click)="openAddCategoryDialog()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <app-folder></app-folder>
       </mat-card-content>
-      <mat-card-actions>
-        <button mat-flat-button class="btn-new-folder" (click)="openAddCategoryDialog()">Add new Folder</button>
-      </mat-card-actions>
+<!--      <mat-card-actions>-->
+<!--        <button mat-flat-button class="btn-new-folder" (click)="openAddCategoryDialog()">Add new Folder</button>-->
+<!--      </mat-card-actions>-->
     </mat-card>
   <mat-card fxFlex="100">
     <mat-card-header>
