@@ -28,6 +28,7 @@ import {FlexModule} from '@angular/flex-layout';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {DeletePaperDialogComponent} from './components/delete-paper-dialog/delete-paper-dialog.component';
 import { EditorUrlParamsService } from './editor.service';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 
@@ -57,7 +58,8 @@ import { EditorUrlParamsService } from './editor.service';
         MatSelectModule,
         MatSlideToggleModule,
         FlexModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        CKEditorModule
     ],
     providers: [
         EditorUrlParamsService
