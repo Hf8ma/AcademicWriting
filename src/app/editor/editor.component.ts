@@ -37,6 +37,7 @@ export class EditorComponent implements OnInit {
   @ViewChild( 'myEditor' ) editorComponent: CKEditorComponent;
   // public watchdog: any;
   // public ready = false;
+  editorData = '';
 
 
   constructor(public dialog: MatDialog,
@@ -87,9 +88,8 @@ export class EditorComponent implements OnInit {
   }
 
   public onChange({ editor }: ChangeEvent) {
-    const data = editor.getData();
-    this.updatePaper(data)
-    console.log(data);
+    this.editorData = editor.getData();
+    // this.updatePaper(data);
   }
 
   public goDashboard(): void {
@@ -113,35 +113,33 @@ export class EditorComponent implements OnInit {
         this.paper = response;
 
         if (this.paper) {
-          console.log(this.editorComponent.data);
-          this.editorComponent.data = this.paper.content;
+          this.editorData = this.paper.content;
           this.urlParamService.changeParam({
             category_id: this.categoryId,
             paper: this.paper
-          })
+          });
         }
       });
   }
 
-  public savePaper(myEditor: any): void {
+  public savePaper(): void {
     this.focusText = false;
     const dialogRef = this.dialog.open(PaperTitleDialogComponent, {
       width: '350px',
       data: this.paper ? { id: this.paper.id, title: this.paper.title } : {}
     });
 
-    const data = myEditor.getData();
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result !== '') {
         if (this.paper) {
           this.paper.title = result;
-          this.updatePaper(data);
+          this.updatePaper(this.editorData);
           this.focusText = true;
         } else {
           this.paper = {};
           this.paper.title = result;
-          this.addPaper(data);
+          this.addPaper(this.editorData);
           this.focusText = true;
         }
       }

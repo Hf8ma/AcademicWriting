@@ -2,7 +2,7 @@
   <mat-sidenav #sidenavLeft opened mode="side" class="side-nav" >
     <mat-toolbar class="paperName">
       <h2>{{paper && paper.title ? paper.title : 'New Document'}}</h2>
-     
+
       <span class="spacer"></span>
     </mat-toolbar>
     <mat-toolbar class="sidenav-toolbar">
@@ -10,7 +10,7 @@
       <span class="spacer"></span>
       <div class="sidenav-buttons">
         <button mat-icon-button matTooltip="save document">
-          <mat-icon (click)=savePaper(myEditor) class="icon-sidenav">save</mat-icon>
+          <mat-icon (click)=savePaper() class="icon-sidenav">save</mat-icon>
         </button>
       </div>
     </mat-toolbar>
@@ -35,11 +35,12 @@
     </mat-list>
     <mat-divider></mat-divider>
   </mat-sidenav>
-  
+
 <mat-sidenav-content >
-   
+
     <ckeditor [editor]="Editor" #myEditor
     (ready)="onReady($event)"
+              [(ngModel)]="editorData"
     [config]="{ toolbar: [ 'heading', 'bold', 'italic', '|', 'undo', 'redo',  'numberedList', 'bulletedList'  ] }"
     (change)="onChange($event)"></ckeditor>
 
