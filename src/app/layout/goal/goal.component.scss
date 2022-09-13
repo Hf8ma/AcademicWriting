@@ -1,5 +1,6 @@
 .mat-card{
   background: #e1e5dd;
+  padding: 8px 16px;
 }
 .add-goal{
   background: #70bd00;
@@ -23,14 +24,14 @@
 }
 .mat-list-base .mat-list-item{
   background: #d3d7cd;
-  margin: 9px 0px;
+  margin: 5px 0px;
   border: 1px solid #abbb92;
   box-shadow: 1px 5px 5px #c1c1c1b8;
   max-width: 97%;
-  height: auto!important;
-  padding: 10px 0px;
+  height: auto !important;
+  padding: 6px 0px;
 }
 .mat-list{
-  max-height: 250px;
+  max-height: 150px;
   overflow-y: auto;
 }

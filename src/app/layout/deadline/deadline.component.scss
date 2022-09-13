@@ -5,9 +5,20 @@
 }
 .mat-card {
   background: #e1e5dd;
+  padding: 8px 16px;
 }
 
 
+  .mat-calendar-header{
+    padding: 0px 8px !important;
+  }
+  .mat-calendar-controls {
+       margin: 0px calc(33% / 7 - 16px) !important;
+     }
+
+.mat-calendar-content {
+  padding: 0 8px 0px 8px !important;
+}
 .mat-calendar-previous-button, .mat-calendar-next-button {
     transform: rotate(0deg) !important;
 }
