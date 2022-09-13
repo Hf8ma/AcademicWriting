@@ -12,12 +12,14 @@ source venv/bin/activate
 
 # export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/12/bin/
 pip install -r requirements.txt
+#pip3 install -r requirements.txt
 ```
 
 2. Lokale Postgres Datenbank erstellen:
 
 ```bash
 psql postgres -U username
+#psql postgres postgres
 
 > postgres=# CREATE DATABASE academicwriting_db;
 ```
@@ -27,6 +29,7 @@ psql postgres -U username
 ```bash
 export SECRET_KEY=XXXX
 export DATABASE_URL=postgresql+psycopg2://username:password@localhost:5432/academicwriting_db
+# export DATABASE_URL=postgresql+psycopg2://postgres:test@localhost:5432/academicwriting_db
 export APP_SETTINGS=api.config.DevelopmentConfig
 ```
 
@@ -36,6 +39,8 @@ export APP_SETTINGS=api.config.DevelopmentConfig
 python manage.py db init
 python manage.py db migrate
 python manage.py db upgrade
+
+#if you deleted old migration folder then dont foreget to delete alembic table from databases in pgAdmin
 ```
 
 5. Pandoc
