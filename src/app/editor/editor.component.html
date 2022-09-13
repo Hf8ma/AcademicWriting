@@ -1,11 +1,16 @@
 <mat-sidenav-container class="container">
-  <mat-sidenav #sidenavLeft opened mode="side" class="side-nav">
+  <mat-sidenav #sidenavLeft opened mode="side" class="side-nav" >
+    <mat-toolbar class="paperName">
+      <h2>{{paper && paper.title ? paper.title : 'New Document'}}</h2>
+     
+      <span class="spacer"></span>
+    </mat-toolbar>
     <mat-toolbar class="sidenav-toolbar">
       <span class="file">save document</span>
       <span class="spacer"></span>
       <div class="sidenav-buttons">
         <button mat-icon-button matTooltip="save document">
-          <mat-icon (click)=savePaper() class="icon-sidenav">save</mat-icon>
+          <mat-icon (click)=savePaper(myEditor) class="icon-sidenav">save</mat-icon>
         </button>
       </div>
     </mat-toolbar>
@@ -14,9 +19,9 @@
       <span class="file">Statistics</span>
     </mat-toolbar>
     <mat-list>
-      <mat-list-item>
+      <!-- <mat-list-item>
         Pages number: {{pages.length}}
-      </mat-list-item>
+      </mat-list-item> -->
       <mat-list-item>
         <div>Words number: <span style="margin-right:1rem" id="wordCount">{{ wordcountlaenge }}</span></div>
       </mat-list-item>
@@ -30,43 +35,14 @@
     </mat-list>
     <mat-divider></mat-divider>
   </mat-sidenav>
+  
+<mat-sidenav-content >
+   
+    <ckeditor [editor]="Editor" #myEditor
+    (ready)="onReady($event)"
+    [config]="{ toolbar: [ 'heading', 'bold', 'italic', '|', 'undo', 'redo',  'numberedList', 'bulletedList'  ] }"
+    (change)="onChange($event)"></ckeditor>
 
+  </mat-sidenav-content>
 
-  <mat-grid-list cols="1" rowHeight="50px">
-    <mat-grid-tile class="menu" rowspan="1">
-      <h2>{{paper && paper.title ? paper.title : 'New Document'}}</h2>
-      <span class="spacer"></span>
-
-      <button mat-icon-button [matMenuTriggerFor]="colormenu"
-        matTooltip="Schriftfarbe: <font color='Hex Code'>Text</font>">
-        <mat-icon>format_color_text</mat-icon>
-      </button>
-      <mat-menu [hasBackdrop]="false" #colormenu="matMenu">
-        <div (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
-          <app-color-picker></app-color-picker>
-        </div>
-      </mat-menu>
-      <button mat-icon-button matTooltip="Fett: **Text**">
-        <mat-icon>format_bold</mat-icon>
-      </button>
-      <button mat-icon-button matTooltip="Kursiv: *Text*">
-        <mat-icon>format_italic</mat-icon>
-      </button>
-      <button mat-icon-button matTooltip="Schriftgröße: # H1, ## H2, ### H3...">
-        <mat-icon>format_size</mat-icon>
-      </button>
-
-    </mat-grid-tile>
-
-    <mat-grid-tile [rowspan]="14 * (currentPage+1)" >
-      <div class="page" *ngFor="let page of pages; index as i" [style.height]="sizePage.height + 'cm'"
-        [style.width]="sizePage.width + 'cm'" (click)="clickPage(i)">
-        <div class="editor" [style.paddingTop]="paddingPage.top + 'cm'" [style.paddingRight]="paddingPage.right + 'cm'"
-          [style.paddingBottom]="paddingPage.bottom + 'cm'" [style.paddingLeft]="paddingPage.left + 'cm'"
-          [id]="'editor-' + i" contenteditable="true" (input)="inputContent($event['data'], i); wordCounter(i)">
-        </div>
-      </div>
-    </mat-grid-tile>
-
-  </mat-grid-list>
 </mat-sidenav-container>

@@ -31,6 +31,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {DashboardModule} from './dashboard/dashboard.module';
 import { MatTableModule } from '@angular/material/table';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 @NgModule({
@@ -67,7 +68,9 @@ import { MatTableModule } from '@angular/material/table';
 
     FlexLayoutModule,
     MatTableModule,
-    DashboardModule
+    DashboardModule,
+
+    CKEditorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
