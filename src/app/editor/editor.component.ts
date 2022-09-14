@@ -1,6 +1,6 @@
 import { EditorUrlParamsService } from './editor.service';
 import { MatDialog } from '@angular/material/dialog';
-import { AfterViewChecked, Component, OnInit, ViewChild } from '@angular/core';
+import {AfterViewChecked, Component, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
 import { MarkdownService } from 'ngx-markdown';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent, CKEditorComponent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
+import {timeout} from 'rxjs/operators';
 
 
 // const Context = ClassicEditor.Context;
@@ -20,7 +21,7 @@ import { ChangeEvent, CKEditorComponent } from '@ckeditor/ckeditor5-angular/cked
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.scss']
 })
-export class EditorComponent implements OnInit {
+export class EditorComponent implements OnInit, OnDestroy {
 
   public focusText = true;
 
@@ -38,7 +39,9 @@ export class EditorComponent implements OnInit {
   // public watchdog: any;
   // public ready = false;
   editorData = '';
-
+  startTypingTime: Date;
+  endTypingTime: Date;
+  duration = 0;
 
   constructor(public dialog: MatDialog,
     private markdownService: MarkdownService,
@@ -89,7 +92,24 @@ export class EditorComponent implements OnInit {
 
   public onChange({ editor }: ChangeEvent) {
     this.editorData = editor.getData();
+    if (!this.startTypingTime){
+      this.startTypingTime = new Date();
+    }
     // this.updatePaper(data);
+  }
+  keyupEditor(event){
+    setTimeout(() => {
+      if (event.keyCode !== 13) {
+        if (this.startTypingTime) {
+          this.endTypingTime = new Date();
+          const hours = Math.abs(this.endTypingTime.getTime() - this.startTypingTime.getTime()) / 3600000;
+
+          this.duration = this.duration + hours;
+          console.log(this.duration);
+          this.startTypingTime = null;
+        }
+      }
+    },10000);
   }
 
   public goDashboard(): void {
@@ -212,8 +232,44 @@ export class EditorComponent implements OnInit {
         // });
       });
   }
+  @HostListener('window:unload', [ '$event' ])
+  unloadHandler(event) {
+    this.handelLeaveEditor();
+  }
+  ngOnDestroy(): void {
+    this.handelLeaveEditor();
+  }
 
+  handelLeaveEditor(): void{
+    if (this.paper && this.paper.id){
+      if (!this.duration){
+        if (this.startTypingTime) {
+          this.endTypingTime = new Date();
+          const hours = Math.abs(this.endTypingTime.getTime() - this.startTypingTime.getTime()) / 3600000;
 
+          this.duration = this.duration + hours;
+          this.startTypingTime = null;
+        }
+      }
+      const body = {
+        duration_time:  this.duration,
+        paper_id: this.paper.id
+      };
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `${localStorage.getItem('access_token')}`,
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+        })
+      };
+      this.http.post(`http://127.0.0.1:5000/api/duration`, body, httpOptions)
+        .subscribe(response => {});
+    }
+
+  }
 }
 
 

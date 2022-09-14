@@ -42,7 +42,7 @@
     (ready)="onReady($event)"
               [(ngModel)]="editorData"
     [config]="{ toolbar: [ 'heading', 'bold', 'italic', '|', 'undo', 'redo',  'numberedList', 'bulletedList'  ] }"
-    (change)="onChange($event)"></ckeditor>
+    (change)="onChange($event)" (keyup)="keyupEditor($event)"></ckeditor>
 
   </mat-sidenav-content>
 
