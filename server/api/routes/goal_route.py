@@ -49,6 +49,7 @@ def add_goal():
         return jsonify(message='Request did not contain valid JSON'), 400
 
     goal, errors = goal_schema.load(request.get_json())
+
     if errors:
         return jsonify(errors), 400
 
@@ -79,6 +80,7 @@ def goal_update():
 
     data = request.get_json()
     data.pop('id', None)
+
     errors = goal_schema.validate(data, partial=True)
 
     if errors:

@@ -34,6 +34,7 @@ import { MatCarouselModule } from '@ngmodule/material-carousel';
 import {MatListModule} from '@angular/material/list';
 import { GoalDialogComponent } from './goal-dialog/goal-dialog.component';
 import { GoalDeleteDialogComponent } from './goal-delete-dialog/goal-delete-dialog.component';
+import { UploadPdfDialogComponent } from './upload-pdf-dialog/upload-pdf-dialog.component';
 
 @NgModule({
     imports: [
@@ -62,7 +63,7 @@ import { GoalDeleteDialogComponent } from './goal-delete-dialog/goal-delete-dial
         MatListModule
     ],
   declarations: [MasterComponent, HeaderComponent, SidebarComponent, DeadlineDialogComponent, DeadlineShowDialogComponent,
-    GoalComponent, CountDownComponent, NotesComponent, CatgoriesListComponent, DeadlineComponent, NoteDialogComponent, NoteDeleteDialogComponent, GoalDialogComponent, GoalDeleteDialogComponent],
+    GoalComponent, CountDownComponent, NotesComponent, CatgoriesListComponent, DeadlineComponent, NoteDialogComponent, NoteDeleteDialogComponent, GoalDialogComponent, GoalDeleteDialogComponent, UploadPdfDialogComponent],
   exports: [ MasterComponent],
   providers: [
      MatTableModule

@@ -9,6 +9,7 @@ import {PaperModel} from '../../dashboard/model/paper-model';
 import {EditorUrlParamsService} from '../../editor/editor.service';
 import {DeletePaperDialogComponent} from '../../editor/components/delete-paper-dialog/delete-paper-dialog.component';
 import {Location} from '@angular/common';
+import {UploadPdfDialogComponent} from '../upload-pdf-dialog/upload-pdf-dialog.component';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -160,5 +161,18 @@ export class HeaderComponent implements OnInit{
       }
     });
 
+  }
+
+  uploadFile(): void{
+    const dialogRef = this.dialog.open(UploadPdfDialogComponent, {
+      width: '500px'
+    });
+    dialogRef.afterClosed().subscribe(response => {
+        if ( response && response.message ){
+          this.snackBar.open(response.message, 'Close', {
+            duration: 6000
+          });
+        }
+    });
   }
 }
