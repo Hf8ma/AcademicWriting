@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Upload File</h1>
+  <div mat-dialog-content>
+    <div fxLayout="column">
+      <mat-form-field class="example-full-width">
+        <mat-label>Upload PDF file</mat-label>
+        <button mat-icon-button matPrefix (click)="f_input.click()">
+          <mat-icon>attach_file</mat-icon>
+        </button>
+        <input type="text" readonly matInput [formControl]="file" />
+        <input
+          type="file"
+          hidden
+          #f_input
+          (change)="handleFileInputChange(f_input.files)"
+        />
+        <mat-error>this field is required</mat-error>
+      </mat-form-field>
+    </div>
+
+  </div>
+  <div mat-dialog-actions>
+    <button mat-flat-button color="primary" [mat-dialog-close]="">close</button>
+    <button mat-flat-button color="warn" type="submit" [disabled]="!file.valid" (click)="saveChanges()">Save</button>
+  </div>
