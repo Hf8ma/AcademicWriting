@@ -55,6 +55,9 @@ def create_app(config_filename=None, static_folder=None, static_url_path=None):
     from .routes import duration_route
     app.register_blueprint(duration_route.bp)
 
+    from .routes import file_route
+    app.register_blueprint(file_route.bp)
+
     from .routes import convert_route
     app.register_blueprint(convert_route.bp)
 
@@ -75,6 +78,6 @@ def create_manager():
 
     manager.add_command('db', MigrateCommand)
 
-    from .database import paper, user, goal
+    from .database import paper, user, goal, note, file, deadline, token, category, duration
 
     return manager
