@@ -1,5 +1,5 @@
 <mat-sidenav-container class="container">
-  <mat-sidenav #sidenavLeft opened mode="side" class="side-nav" >
+  <mat-sidenav #sidenavLeft opened mode="side" class="side-nav">
     <mat-toolbar class="paperName">
       <h2>{{paper && paper.title ? paper.title : 'New Document'}}</h2>
 
@@ -36,14 +36,19 @@
     <mat-divider></mat-divider>
   </mat-sidenav>
 
-<mat-sidenav-content >
+  <mat-sidenav-content class="container_row">
 
-    <ckeditor [editor]="Editor" #myEditor
-    (ready)="onReady($event)"
-              [(ngModel)]="editorData"
-    [config]="{ toolbar: [ 'heading', 'bold', 'italic', '|', 'undo', 'redo',  'numberedList', 'bulletedList'  ] }"
-    (change)="onChange($event)" (keyup)="keyupEditor($event)"></ckeditor>
+    <ckeditor class="layer1"
+    [editor]="Editor" #myEditor (ready)="onReady($event)" [(ngModel)]="editorData"
+      [config]="{ toolbar: [ 'heading', 'bold', 'italic', '|', 'undo', 'redo',  'numberedList', 'bulletedList'  ] }"
+      (change)="onChange($event)" (keyup)="keyupEditor($event)"></ckeditor>
 
+    <mat-form-field class="layer2">
+      <mat-label></mat-label>
+      <input matInput [(ngModel)]="searchTerm" 
+      (keydown.enter)="highlight()"/>
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
   </mat-sidenav-content>
 
 </mat-sidenav-container>

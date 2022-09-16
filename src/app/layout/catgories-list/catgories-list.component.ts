@@ -25,7 +25,7 @@ export class CatgoriesListComponent implements OnInit {
   dataSource = new MatTableDataSource<allCategories>([]);
   httpOptions = {};
   serverUrl = 'http://127.0.0.1:5000/api/';
-  displayedColumns: string[] = ['name','color','actions'];
+  displayedColumns: string[] = ['name','color'];
 
   constructor(public dialogRef: MatDialogRef<CatgoriesListComponent>,
               @Inject(MAT_DIALOG_DATA) public data: CategoryModel[],

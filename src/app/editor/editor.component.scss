@@ -5,7 +5,33 @@
 
 :host ::ng-deep .ck.ck-editor__editable {
 	min-height: 200px;
-  height: 15cm;
+  height: 16cm;
+}
+
+.highlightText {
+  background: yellow;
+}
+.layer1{
+  width: 100%;
+}
+.layer2{
+  width: 29%;
+  margin-left: -30%;
+  ::ng-deep .mat-form-field-wrapper,
+  .mat-form-field-wrapper {
+    ::ng-deep .mat-form-field-infix {
+      text-align: left;
+      direction: ltr;
+
+        ::placeholder {
+          text-align: right;
+        }
+    }
+  }
+}
+
+.container_row{
+  display: flex;
 }
 
 // .currentPaperHighlighter {

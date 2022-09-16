@@ -69,7 +69,6 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     FlexLayoutModule,
     MatTableModule,
     DashboardModule,
-
     CKEditorModule
   ],
   providers: [],

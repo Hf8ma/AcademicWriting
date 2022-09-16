@@ -13,6 +13,7 @@ import { ChangeEvent, CKEditorComponent } from '@ckeditor/ckeditor5-angular/cked
 import {timeout} from 'rxjs/operators';
 
 
+
 // const Context = ClassicEditor.Context;
 // const ContextWatchdog = ClassicEditor.ContextWatchdog;
 
@@ -33,6 +34,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   public selectedCategory: string;
   categoryId: number;
   id: number;
+  searchTerm:string;
 
   public Editor = ClassicEditor;
   @ViewChild( 'myEditor' ) editorComponent: CKEditorComponent;
@@ -89,6 +91,16 @@ export class EditorComponent implements OnInit, OnDestroy {
   public onReady(event){
     console.log(event);
   }
+
+  public highlight() {
+    if(!this.searchTerm) {
+        return this.editorData;
+    }
+    this.editorData = this.editorData.replace(new RegExp(this.searchTerm, "gi"), match => {
+      return '<strong><i>' + match + '</i></strong>';
+  });
+ 
+}
 
   public onChange({ editor }: ChangeEvent) {
     this.editorData = editor.getData();
