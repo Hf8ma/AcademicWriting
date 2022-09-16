@@ -1,7 +1,6 @@
 from api import db, ma
 from marshmallow import post_load
 from sqlalchemy import func
-from api.database.duration import Duration
 
 class Paper(db.Model):
     __tablename__ = 'papers'
@@ -11,7 +10,6 @@ class Paper(db.Model):
     content = db.Column(db.Text(), nullable=True)
     last_modified = db.Column(db.DateTime(timezone=True), nullable=False)
     created = db.Column(db.DateTime(timezone=True), server_default=func.now(), nullable=False)
-    durations = db.relationship(Duration, backref='paper', cascade='all,delete', lazy=True)
 
 
     def __init__(self, category_id, title, content, last_modified):

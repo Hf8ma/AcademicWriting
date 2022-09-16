@@ -28,6 +28,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {DeleteCategoryDialogComponent} from './delete-category-dialog/delete-category-dialog.component';
 import {CategoryPapersDialogComponent} from './category-papers-dialog/category-papers-dialog.component';
 import {MatTableModule} from '@angular/material/table';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {CustomDatepickerModule} from './statistics/custom-datepicker/custom-datepicker.module';
 
 @NgModule({
     declarations: [DashboardComponent, FolderComponent,
@@ -56,7 +59,10 @@ import {MatTableModule} from '@angular/material/table';
         MatSlideToggleModule,
         FlexLayoutModule,
         MatSnackBarModule,
-        MatTableModule
+        MatTableModule,
+        NgxChartsModule,
+        BrowserAnimationsModule,
+        CustomDatepickerModule
     ],
     providers: [
         MatSnackBarModule, MatTableModule
