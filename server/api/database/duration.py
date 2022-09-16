@@ -1,6 +1,10 @@
 from api import db, ma
 from marshmallow import post_load
 from sqlalchemy import func
+from api.database.paper import Paper
+from api.database.category import Category
+from sqlalchemy import extract
+
 
 class Duration(db.Model):
     __tablename__ = 'durations'
@@ -31,6 +35,12 @@ class Duration(db.Model):
     @staticmethod
     def get_all(paper_id):
         return Duration.query.filter_by(paper_id=paper_id).all()
+    @staticmethod
+    def get_statistics(user_id, date):
+        return db.session.query(
+                   extract('month',Duration.created).label('name'),
+                   func.sum(Duration.duration_time).label('value')
+               ).join(Paper).join(Category).filter(Category.author_id==user_id).filter(extract('year', Duration.created) == date).group_by(extract('month', Duration.created)).all()
 
     def __repr__(self):
         return 'Duration: {}'.format(self.duration_time)
@@ -49,3 +59,9 @@ class DurationSchema(ma.Schema):
 
 duration_schema = DurationSchema(many=False)
 durations_schema = DurationSchema(many=True)
+
+class StatisticSchema(ma.Schema):
+    name = ma.String(required=True)
+    value = ma.Float(required=True)
+
+statistics_schema = StatisticSchema(many=True)
