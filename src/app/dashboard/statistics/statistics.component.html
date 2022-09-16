@@ -1,1 +1,27 @@
-<p>statistics works!</p>
+<div style="padding: 1rem">
+  <div>
+    Choose a year:
+    <app-custom-date-picker
+      mode="YEAR"
+      label="Choose a year"
+      [(ngModel)]="chosenYearDate" (ngModelChange)="changeYear($event)"></app-custom-date-picker>
+  </div>
+</div>
+<div style="padding: 1rem">
+  <ngx-charts-bar-vertical
+    [view]="view"
+    [scheme]="colorScheme"
+    [results]="hoursPerMonth"
+    [gradient]="gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="showLegend"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel">
+  </ngx-charts-bar-vertical>
+</div>
+<div style="padding: 1rem; color: red">
+  <strong>Average writing hours for this year is {{this.average}} Hours per month.</strong>
+</div>

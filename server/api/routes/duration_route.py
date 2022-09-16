@@ -1,29 +1,46 @@
 from flask import Blueprint, jsonify, request
-from api.database.duration import Duration, duration_schema, durations_schema
+from api.database.duration import Duration, duration_schema, durations_schema, statistics_schema
 from flask_jwt_extended import decode_token
 from api.routes.auth import permission_needed
-
+from sqlalchemy import extract
+import calendar
 
 bp = Blueprint('duration', __name__, url_prefix='/api')
 
 
 @bp.route('/duration', methods=['GET'])
 @permission_needed
-def get_duration():
+def get_statistics():
     """
-    example: GET: host/api/duration
+    example: GET: host/api/statistics?date=2022
     """
 
-    id = request.args.get('id', default=None, type=int)
+    date = request.args.get('date', default=None, type=int)
+    print(date)
     access_token = request.headers.get('Authorization')
 
     decoded_token = decode_token(access_token)
     author_id = decoded_token['sub']
 
 
-    all_durations = Duration.get_all(user_id=author_id)
-    result = durations_schema.dump(all_durations)
+    all_durations = Duration.get_statistics(user_id=author_id, date= date)
+    all_months = []
+    for month in range(1, 13):
+        index = [i for i, v in enumerate(all_durations) if v[0] == month]
+        if(len(index)):
+           all_months.append({'name': calendar.month_name[month], 'value': all_durations[index[0]][1]})
+        else:
+           all_months.append({'name': calendar.month_name[month], 'value': 0})
+
+
+    result = statistics_schema.dump(all_months)
     return jsonify(result.data), 200
+
+
+#     all_durations = Duration.filter_by_user(user_id=author_id).all()
+#     result = durations_schema.dump(all_durations)
+#     return jsonify(result.data), 200
+
 
 
 
