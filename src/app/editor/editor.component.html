@@ -38,14 +38,17 @@
 
   <mat-sidenav-content class="container_row" [ngClass]="{'highlight': show}">
 
-    <ckeditor class="layer1"
-    [editor]="Editor" #myEditor (ready)="onReady($event)" [(ngModel)]="editorData"
-      [config]="{ toolbar: [ 'heading', 'bold', 'italic', '|', 'undo', 'redo',  'numberedList', 'bulletedList'  ] }"
-      (change)="onChange($event)" (keyup)="keyupEditor($event)"></ckeditor>
+<!--    <ckeditor class="layer1"-->
+<!--    [editor]="Editor" #myEditor (ready)="onReady($event)" [(ngModel)]="editorData"-->
+<!--      [config]="{ toolbar: [ 'heading', 'bold', 'italic', '|', 'undo', 'redo',  'numberedList', 'bulletedList', 'highlight'  ] }"-->
+<!--      (change)="onChange($event)" (keyup)="keyupEditor($event)"></ckeditor>-->
+    <ckeditor [data]="editorData" [config]="[]" (ready)="onReady($event)" [(ngModel)]="editorData"
+              (change)="onChange($event)"
+              class="layer1"></ckeditor>
 
     <mat-form-field class="layer2">
       <mat-label></mat-label>
-      <input matInput [(ngModel)]="searchTerm" 
+      <input matInput [(ngModel)]="searchTerm" (ngModelChange)="handleSearch()"
       (keydown.enter)="highlight()"/>
       <mat-icon matPrefix>search</mat-icon>
     </mat-form-field>
