@@ -121,18 +121,24 @@ export class EditorComponent implements OnInit, OnDestroy {
     if (!this.startTypingTime){
       this.startTypingTime = new Date();
     }
-    // this.updatePaper(data);
-  }
-  public keyupEditor(event){
-    console.log(event.data.$.keyCode);
     if (this.timeouts && this.timeouts.length){
-      for (var i=0 ; i < this.timeouts.length; i++) {
+      for (let i = 0 ; i < this.timeouts.length; i++) {
         clearTimeout(this.timeouts[i]);
       }
       this.timeouts = [];
     }
-      //timer every 1 minute
-      this.timeouts.push(setTimeout(() => {
+    // this.updatePaper(data);
+  }
+  // tslint:disable-next-line:typedef
+  public keyupEditor(event){
+    if (this.timeouts && this.timeouts.length){
+      for (let i = 0 ; i < this.timeouts.length; i++) {
+        clearTimeout(this.timeouts[i]);
+      }
+      this.timeouts = [];
+    }
+      // timer every 1 minute
+    this.timeouts.push(setTimeout(() => {
         console.log('timer for duration');
 
         if (this.startTypingTime) {
@@ -143,13 +149,13 @@ export class EditorComponent implements OnInit, OnDestroy {
           this.startTypingTime = null;
         }
       }, 60000));
-    //timer every 5 minutes
-     this.timeouts.push(setTimeout(() => {
+    // timer every 5 minutes
+    this.timeouts.push(setTimeout(() => {
         console.log('timer for stop writing');
-        this.snackBar.open('You have spent 5 minutes without writing', 'Close' , {
+        this.snackBar.open('You have spent more than 2 minutes without writing', 'Close' , {
           duration: 3000,
         });
-      },300000));
+      }, 120000));
   }
 
   public goDashboard(): void {
