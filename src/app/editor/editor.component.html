@@ -36,7 +36,7 @@
     <mat-divider></mat-divider>
   </mat-sidenav>
 
-  <mat-sidenav-content class="container_row">
+  <mat-sidenav-content class="container_row" [ngClass]="{'highlight': show}">
 
     <ckeditor class="layer1"
     [editor]="Editor" #myEditor (ready)="onReady($event)" [(ngModel)]="editorData"

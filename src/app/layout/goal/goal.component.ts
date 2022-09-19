@@ -5,6 +5,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {MatDialog} from '@angular/material/dialog';
 import {GoalDialogComponent} from '../goal-dialog/goal-dialog.component';
 import {GoalDeleteDialogComponent} from '../goal-delete-dialog/goal-delete-dialog.component';
+import { HighlightcomponentService } from '../services/highlightcomponent.service';
 
 @Component({
   selector: 'app-goal',
@@ -12,13 +13,14 @@ import {GoalDeleteDialogComponent} from '../goal-delete-dialog/goal-delete-dialo
   styleUrls: ['./goal.component.scss']
 })
 export class GoalComponent implements OnInit {
-
+  show= false;
   goals: GoalModel[] = [];
   httpOptions = {};
   serverUrl = 'http://127.0.0.1:5000/api/';
   constructor(private snackBar: MatSnackBar,
               private readonly http: HttpClient,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              private highlightService: HighlightcomponentService) { }
 
   ngOnInit(): void {
     this.httpOptions = {
@@ -87,6 +89,17 @@ export class GoalComponent implements OnInit {
         this.snackBar.open(result.message, 'Close', {
           duration: 6000
         });
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.highlightService.getChanges().subscribe(componentName => {
+      if (componentName.text == 'goals') {
+        this.show = true;
+        setTimeout(()=>{
+          this.show = false;
+        },2000)
       }
     });
   }

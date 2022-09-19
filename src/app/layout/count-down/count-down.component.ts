@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription, interval } from 'rxjs';
+import { HighlightcomponentService } from '../services/highlightcomponent.service';
 
 @Component({
   selector: 'app-count-down',
   templateUrl: './count-down.component.html',
   styleUrls: ['./count-down.component.scss']
 })
-export class CountDownComponent implements OnInit, OnDestroy {
+export class CountDownComponent  {
   @Input() countUporDown = '';
   @Input() stunden = 0;
   @Input() minuten = 0;
@@ -30,6 +31,10 @@ export class CountDownComponent implements OnInit, OnDestroy {
   public timerStarted = false;
 
   public timeStopped = false;
+  show= false;
+
+  constructor(private highlightService: HighlightcomponentService) {
+  }
 
 
   public stopTimer(): void {
@@ -125,13 +130,14 @@ export class CountDownComponent implements OnInit, OnDestroy {
     //this.daysToDday = Math.floor((timeDifference) / (this.milliSecondsInASecond * this.minutesInAnHour * this.SecondsInAMinute * this.hoursInADay));
   }
 
-
-  ngOnInit() {
-
+  ngAfterViewInit(): void {
+    this.highlightService.getChanges().subscribe(componentName => {
+      if (componentName.text == 'timer') {
+        this.show = true;
+        setTimeout(()=>{
+          this.show = false;
+        },2000)
+      }
+    });
   }
-
-  ngOnDestroy() {
-    //this.subscription.unsubscribe();
-  }
-
 }
