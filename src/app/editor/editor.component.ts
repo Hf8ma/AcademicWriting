@@ -1,6 +1,6 @@
 import { EditorUrlParamsService } from './editor.service';
 import { MatDialog } from '@angular/material/dialog';
-import {AfterViewChecked, Component, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewChecked, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
 import { MarkdownService } from 'ngx-markdown';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -8,11 +8,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PaperTitleDialogComponent } from './components/paper-title-dialog/paper-title-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 import { ChangeEvent, CKEditorComponent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
-import {timeout} from 'rxjs/operators';
-
-
+import {fromEvent, Subject} from 'rxjs';
+import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 
 // const Context = ClassicEditor.Context;
 // const ContextWatchdog = ClassicEditor.ContextWatchdog;
@@ -36,7 +35,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   id: number;
   searchTerm:string;
 
-  public Editor = ClassicEditor;
+  // public Editor = ClassicEditor;
   @ViewChild( 'myEditor' ) editorComponent: CKEditorComponent;
   // public watchdog: any;
   // public ready = false;
@@ -44,13 +43,15 @@ export class EditorComponent implements OnInit, OnDestroy {
   startTypingTime: Date;
   endTypingTime: Date;
   duration = 0;
+  textBeforeSearch: string;
+  txtQueryChanged: Subject<string> = new Subject<string>();
 
   constructor(public dialog: MatDialog,
     private markdownService: MarkdownService,
     private readonly http: HttpClient,
     private router: Router,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar, private elementRef: ElementRef,
     public urlParamService: EditorUrlParamsService) {
   }
 
@@ -85,33 +86,49 @@ export class EditorComponent implements OnInit, OnDestroy {
     //   .then(() => {
     //     this.ready = true;
     //   });
-
   }
 
-  public onReady(event){
-    console.log(event);
+  public onReady({editor}){
+    let self = this;
+    editor.document.on('keyup',function($event){
+      self.keyupEditor($event);
+    });
   }
+
 
   public highlight() {
-    if(!this.searchTerm) {
-        return this.editorData;
+    if (!this.searchTerm) {
+        this.editorData = this.textBeforeSearch;
     }
-    this.editorData = this.editorData.replace(new RegExp(this.searchTerm, "gi"), match => {
-      return '<strong><i>' + match + '</i></strong>';
-  });
- 
-}
+    else{
+      this.textBeforeSearch = this.editorData;
+      this.editorData = this.editorData.replace(new RegExp(this.searchTerm, "gi"), match => {
+        return '<strong><i><span class="marker">' + match + '</span></i></strong>';
+      });
+    }
+  }
 
-  public onChange({ editor }: ChangeEvent) {
+  handleSearch(): void{
+    // if (!this.searchTerm) {
+      this.editorData = this.textBeforeSearch;
+    // }
+  }
+
+  public onChange({ editor }: any) {
     this.editorData = editor.getData();
+
+
     if (!this.startTypingTime){
       this.startTypingTime = new Date();
     }
     // this.updatePaper(data);
   }
-  keyupEditor(event){
-    setTimeout(() => {
-      if (event.keyCode !== 13) {
+  public keyupEditor(event){
+    console.log(event.data.$.keyCode);
+    if(event.data.$.keyCode!==13) {
+      setTimeout(() => {
+        console.log('dd');
+
         if (this.startTypingTime) {
           this.endTypingTime = new Date();
           const hours = Math.abs(this.endTypingTime.getTime() - this.startTypingTime.getTime()) / 3600000;
@@ -120,8 +137,14 @@ export class EditorComponent implements OnInit, OnDestroy {
           console.log(this.duration);
           this.startTypingTime = null;
         }
-      }
-    },10000);
+      }, 10000);
+      setTimeout(() => {
+        console.log('f')
+        this.snackBar.open('You have spent 10 minutes without writing', 'Close' , {
+          duration: 500
+        });
+      },1000);
+    }
   }
 
   public goDashboard(): void {
@@ -146,6 +169,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 
         if (this.paper) {
           this.editorData = this.paper.content;
+          this.textBeforeSearch = this.paper.content;
           this.urlParamService.changeParam({
             category_id: this.categoryId,
             paper: this.paper

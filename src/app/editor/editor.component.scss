@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  height:20cm;
+  min-height: 100vh !important;
 }
 
 :host ::ng-deep .ck.ck-editor__editable {
@@ -8,15 +8,17 @@
   height: 16cm;
 }
 
-.highlightText {
-  background: yellow;
-}
+:host ::ng-deep .cke_contents{
+    height: 75vh !important;
+  }
+
 .layer1{
   width: 100%;
 }
 .layer2{
   width: 29%;
   margin-left: -30%;
+  height:77px;
   ::ng-deep .mat-form-field-wrapper,
   .mat-form-field-wrapper {
     ::ng-deep .mat-form-field-infix {
@@ -58,7 +60,7 @@
   align-items: center;
   justify-content: center;
   width: 200px;
-  
+
 }
 
 // .mat-list-base .mat-list-item,
@@ -77,7 +79,7 @@
 // }
 
 .sidenav-toolbar {
-  
+
   background: rgba(0, 0, 0, 0);
 }
 
@@ -167,6 +169,6 @@
 // /* .matMenu {
 //   ::ng-deep .matMenu{
 //     width: 100%;
-//     float: both; 
+//     float: both;
 //   }
 // } */
