@@ -44,7 +44,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   endTypingTime: Date;
   duration = 0;
   textBeforeSearch: string;
-  txtQueryChanged: Subject<string> = new Subject<string>();
+  timeouts = [];
 
   constructor(public dialog: MatDialog,
     private markdownService: MarkdownService,
@@ -125,26 +125,31 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
   public keyupEditor(event){
     console.log(event.data.$.keyCode);
-    if(event.data.$.keyCode!==13) {
-      setTimeout(() => {
-        console.log('dd');
+    if (this.timeouts && this.timeouts.length){
+      for (var i=0 ; i < this.timeouts.length; i++) {
+        clearTimeout(this.timeouts[i]);
+      }
+      this.timeouts = [];
+    }
+      //timer every 1 minute
+      this.timeouts.push(setTimeout(() => {
+        console.log('timer for duration');
 
         if (this.startTypingTime) {
           this.endTypingTime = new Date();
           const hours = Math.abs(this.endTypingTime.getTime() - this.startTypingTime.getTime()) / 3600000;
 
           this.duration = this.duration + hours;
-          console.log(this.duration);
           this.startTypingTime = null;
         }
-      }, 10000);
-      setTimeout(() => {
-        console.log('f')
-        this.snackBar.open('You have spent 10 minutes without writing', 'Close' , {
-          duration: 500
+      }, 60000));
+    //timer every 5 minutes
+     this.timeouts.push(setTimeout(() => {
+        console.log('timer for stop writing');
+        this.snackBar.open('You have spent 5 minutes without writing', 'Close' , {
+          duration: 3000,
         });
-      },1000);
-    }
+      },300000));
   }
 
   public goDashboard(): void {
