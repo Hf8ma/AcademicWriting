@@ -8,9 +8,19 @@
   height: 16cm;
 }
 
+
+.highlight{
+  border: 6px solid#FF0;
+}
+
+.highlightText {
+  background: yellow;
+}
+
 :host ::ng-deep .cke_contents{
     height: 75vh !important;
   }
+
 
 .layer1{
   width: 100%;

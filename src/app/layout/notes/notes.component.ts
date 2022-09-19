@@ -1,13 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatDialog} from '@angular/material/dialog';
-import {NoteDialogComponent} from '../note-dialog/note-dialog.component';
-import {NoteModel} from '../models/note-model';
-import {NoteDeleteDialogComponent} from '../note-delete-dialog/note-delete-dialog.component';
-
-import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel'; // -------- important
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { NoteDialogComponent } from '../note-dialog/note-dialog.component';
+import { NoteModel } from '../models/note-model';
+import { NoteDeleteDialogComponent } from '../note-delete-dialog/note-delete-dialog.component';
+import { HighlightcomponentService } from '../services/highlightcomponent.service';
 
 @Component({
   selector: 'app-notes',
@@ -15,15 +14,19 @@ import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
   styleUrls: ['./notes.component.scss'],
 })
 
-export class NotesComponent implements OnInit{
-  show: boolean;
+export class NotesComponent implements OnInit {
+  show= false;
   notes: NoteModel[] = [];
   httpOptions = {};
   serverUrl = 'http://127.0.0.1:5000/api/';
 
+  
+
   constructor(private snackBar: MatSnackBar,
-              private readonly http: HttpClient,
-              public dialog: MatDialog) {
+    private readonly http: HttpClient,
+    public dialog: MatDialog,
+    private highlightService: HighlightcomponentService) {
+
   }
 
   ngOnInit() {
@@ -47,7 +50,7 @@ export class NotesComponent implements OnInit{
       });
   }
 
-  addNote(): void{
+  addNote(): void {
     const dialogRef = this.dialog.open(NoteDialogComponent, {
       width: '500px',
       data: {}
@@ -56,24 +59,25 @@ export class NotesComponent implements OnInit{
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.notes.push(result);
-        this.snackBar.open('Note was created successfully.', 'Close' , {
+        this.snackBar.open('Note was created successfully.', 'Close', {
           duration: 6000
         });
       }
     });
   }
 
-  public editNote(note: NoteModel): void{
+  public editNote(note: NoteModel): void {
     const dialogRef = this.dialog.open(NoteDialogComponent, {
       width: '500px',
-      data: note }
+      data: note
+    }
     );
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const index = this.notes.findIndex(x => x.id === note.id);
         this.notes[index] = result;
-        this.snackBar.open('Note was updated successfully.', 'Close' , {
+        this.snackBar.open('Note was updated successfully.', 'Close', {
           duration: 6000
         });
       }
@@ -88,11 +92,23 @@ export class NotesComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.message) {
-        const index = this.notes.findIndex( x => x.id === note.id );
-        this.notes = this.notes.filter( x => x.id !== note.id);
+        const index = this.notes.findIndex(x => x.id === note.id);
+        this.notes = this.notes.filter(x => x.id !== note.id);
         this.snackBar.open(result.message, 'Close', {
           duration: 6000
         });
+      }
+    });
+  }
+
+  
+  ngAfterViewInit(): void {
+    this.highlightService.getChanges().subscribe(componentName => {
+      if (componentName.text == 'notes') {
+        this.show = true;
+        setTimeout(()=>{
+          this.show = false;
+        },2000)
       }
     });
   }

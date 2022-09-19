@@ -10,6 +10,7 @@ import {EditorUrlParamsService} from '../../editor/editor.service';
 import {DeletePaperDialogComponent} from '../../editor/components/delete-paper-dialog/delete-paper-dialog.component';
 import {Location} from '@angular/common';
 import {UploadPdfDialogComponent} from '../upload-pdf-dialog/upload-pdf-dialog.component';
+import { HighlightcomponentService } from '../services/highlightcomponent.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -26,12 +27,16 @@ export class HeaderComponent implements OnInit{
   catgColor: string;
   category_id: number;
   paper: PaperModel;
+  
+
+
   constructor(    private readonly http: HttpClient,
                   private router: Router,
                   private route: ActivatedRoute,
                   public dialog: MatDialog,
                   private snackBar: MatSnackBar,
                   private urlParamService: EditorUrlParamsService,
+                  private highlightService: HighlightcomponentService,
                   private location: Location) {
     this.username = localStorage.getItem('user_name');
     this.isDashboardRoute = this.router.url && this.router.url.includes('dashboard') ? true : false;
@@ -74,6 +79,10 @@ export class HeaderComponent implements OnInit{
         this.notificationsCounter = response.length;
       });
 
+  }
+
+  public highlightComponent(componentName: string){
+    this.highlightService.highlightComponent(componentName);
   }
 
 

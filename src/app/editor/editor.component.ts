@@ -9,6 +9,12 @@ import { PaperTitleDialogComponent } from './components/paper-title-dialog/paper
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { ChangeEvent, CKEditorComponent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
+import { HighlightcomponentService } from '../layout/services/highlightcomponent.service';
+
+
+
 import { ChangeEvent, CKEditorComponent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {fromEvent, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
@@ -22,10 +28,6 @@ import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
   styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit, OnDestroy {
-
-  public focusText = true;
-
-
   public wordcountlaenge = 0;
   public wordList: string[];
   public paper: any;
@@ -34,11 +36,10 @@ export class EditorComponent implements OnInit, OnDestroy {
   categoryId: number;
   id: number;
   searchTerm:string;
+  show= false;
 
   // public Editor = ClassicEditor;
   @ViewChild( 'myEditor' ) editorComponent: CKEditorComponent;
-  // public watchdog: any;
-  // public ready = false;
   editorData = '';
   startTypingTime: Date;
   endTypingTime: Date;
@@ -51,8 +52,11 @@ export class EditorComponent implements OnInit, OnDestroy {
     private readonly http: HttpClient,
     private router: Router,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar, private elementRef: ElementRef,
-    public urlParamService: EditorUrlParamsService) {
+
+    private snackBar: MatSnackBar,private elementRef: ElementRef,
+    public urlParamService: EditorUrlParamsService,
+    private highlightService: HighlightcomponentService) {
+
   }
 
   public ngOnInit(): void {
@@ -80,6 +84,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       }
     });
 
+
     // const contextConfig = {};
     // this.watchdog = new ContextWatchdog(Context);
     // this.watchdog.create(contextConfig)
@@ -93,6 +98,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     editor.document.on('keyup',function($event){
       self.keyupEditor($event);
     });
+
   }
 
 
@@ -184,7 +190,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   public savePaper(): void {
-    this.focusText = false;
+   // this.focusText = false;
     const dialogRef = this.dialog.open(PaperTitleDialogComponent, {
       width: '350px',
       data: this.paper ? { id: this.paper.id, title: this.paper.title } : {}
@@ -196,12 +202,12 @@ export class EditorComponent implements OnInit, OnDestroy {
         if (this.paper) {
           this.paper.title = result;
           this.updatePaper(this.editorData);
-          this.focusText = true;
+         // this.focusText = true;
         } else {
           this.paper = {};
           this.paper.title = result;
           this.addPaper(this.editorData);
-          this.focusText = true;
+         // this.focusText = true;
         }
       }
     });
@@ -310,6 +316,17 @@ export class EditorComponent implements OnInit, OnDestroy {
         .subscribe(response => {});
     }
 
+  }
+
+  ngAfterViewInit(): void {
+    this.highlightService.getChanges().subscribe(componentName => {
+      if (componentName.text == 'editor') {
+        this.show = true;
+        setTimeout(()=>{
+          this.show = false;
+        },2000)
+      }
+    });
   }
 }
 
