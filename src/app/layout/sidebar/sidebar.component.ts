@@ -49,13 +49,19 @@ export class SidebarComponent implements OnInit {
 
   }
 
-  changed() {
+  changed($event) {
     //post a request with the content of text editor.. 
     //text_to_be_tested
+  if($event.checked){
+    let without_html = this.paper.content.replace(/<(?:.|\n)*?>/gm, ' ');
+      // console.log(without_html);
+    let without_unuseful_chars = without_html.replace(/(?:\r\n|\r|\n|\t)/g, '');
+      // console.log(without_unuseful_chars);
+    let without_line_code = without_unuseful_chars.replace(/&nbsp;/g, '').replace(/\s+/g,' ').trim();
+
     let body = {
-      text: this.paper.content
+      text: without_line_code
     };
-  if(this.checked== false){
     this.http.post(`${this.serverUrl}plagiarism`, body, this.httpOptions)
       .subscribe(response => {
         console.log(response)

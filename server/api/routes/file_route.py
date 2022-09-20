@@ -43,9 +43,15 @@ def get_file():
     #get full path for the file using below
     #full path = os.path.join(current_app.config['UPLOAD_FOLDER'], file.name)
     # read file content
-    reader = PdfReader("E:\freelance\Projects\Working on\Text editor - Melissa\project2\server\api\files\pdf-sample.pdf")
-    page = reader.pages[0]
-    print(page.extract_text())
+    files_content = []
+    if all_files:
+        for file in all_files:
+            path = os.path.join(current_app.config['UPLOAD_FOLDER'], file.name)
+            reader = PdfReader(path)
+            files_content.extend([page.extract_text() for page in reader.pages])
+    
+    # files_content contain all content from all pages from all files as list of string
+    print(files_content)
 
     # detect plagiarism code here
     # after detecting return the result like below
