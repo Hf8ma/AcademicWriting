@@ -23,13 +23,13 @@
         Pages number: {{pages.length}}
       </mat-list-item> -->
       <mat-list-item>
-        <div>Words number: <span style="margin-right:1rem" id="wordCount">{{ wordcountlaenge }}</span></div>
+        <div>Words Count: <span style="margin-right:1rem"><strong>{{ wordsCount }}</strong></span></div>
       </mat-list-item>
       <mat-list-item>
         <!--         <div>Durchschnittliche Satzlänge: <span style="margin-right:1rem" id="wordCount">{{ averageWordsInSentence
             }}</span></div> -->
-        <div>Durchschnittliche Satzlänge: <span style="margin-right:1rem" id="wordCount">{{ averageSentenceLength
-            }}</span></div>
+        <div>Avarege Sentence Length: <span style="margin-right:1rem"><strong>{{ averageSentenceLength| number:'1.2-2'
+        }}</strong></span></div>
       </mat-list-item>
 
     </mat-list>

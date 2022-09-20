@@ -8,16 +8,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PaperTitleDialogComponent } from './components/paper-title-dialog/paper-title-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { ChangeEvent, CKEditorComponent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
+import {  CKEditorComponent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import { HighlightcomponentService } from '../layout/services/highlightcomponent.service';
 
 
 
-import { ChangeEvent, CKEditorComponent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
-import {fromEvent, Subject} from 'rxjs';
-import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 
 // const Context = ClassicEditor.Context;
 // const ContextWatchdog = ClassicEditor.ContextWatchdog;
@@ -28,7 +23,7 @@ import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
   styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit, OnDestroy {
-  public wordcountlaenge = 0;
+  public wordsCount = 0;
   public wordList: string[];
   public paper: any;
   public averageSentenceLength = 0;
@@ -120,10 +115,32 @@ export class EditorComponent implements OnInit, OnDestroy {
     // }
   }
 
+  get_text_statistics(){
+    if(this.editorData && this.editorData.length){
+      let without_html = this.editorData.replace(/<(?:.|\n)*?>/gm, ' ');
+      // console.log(without_html);
+      let without_unuseful_chars = without_html.replace(/(?:\r\n|\r|\n|\t)/g, '');
+      // console.log(without_unuseful_chars);
+      let without_line_code = without_unuseful_chars.replace(/&nbsp;/g, '');
+      console.log(without_line_code.trim().split(' ').filter(x=> x!=='' ));
+      this.wordsCount = without_line_code.trim().split(' ').filter(x=> x!=='' ).length;
+      let lines = without_html.split('\n');
+      // console.log(lines);
+      let lines_without_unused_chars = lines.map(x => x.replace(/(?:\r\n|\r|\n|\t)/g, '').replace(/&nbsp;/g, '').trim()).filter(x => x!=='');
+      let sentences = [];
+      // let sentences_length = 0;
+      lines_without_unused_chars.forEach(x => (x.split(/[.?!]/).forEach( y => {if(y!=='') sentences.push(y); })));
+      // console.log(sentences);
+      if(sentences && sentences.length){
+        this.averageSentenceLength = this.wordsCount / sentences.length;
+      }
+    }
+  }
+
   public onChange({ editor }: any) {
     this.editorData = editor.getData();
 
-
+    this.get_text_statistics();
     if (!this.startTypingTime){
       this.startTypingTime = new Date();
     }
@@ -186,6 +203,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 
         if (this.paper) {
           this.editorData = this.paper.content;
+          this.get_text_statistics();
           this.textBeforeSearch = this.paper.content;
           this.urlParamService.changeParam({
             category_id: this.categoryId,
