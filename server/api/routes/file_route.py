@@ -1,3 +1,4 @@
+from subprocess import CREATE_NEW_CONSOLE
 from flask import Blueprint, jsonify, request
 from api.database.file import PdfFile, file_schema, files_schema
 from flask_jwt_extended import decode_token
@@ -5,35 +6,52 @@ from api.routes.auth import permission_needed
 from flask import current_app
 import os
 from werkzeug.utils import secure_filename
+from PyPDF2 import PdfReader
+
+
 
 bp = Blueprint('file', __name__, url_prefix='/api')
 
 
-@bp.route('/file', methods=['GET'])
+@bp.route('/plagiarism', methods=['POST'])
 @permission_needed
-def get_file():
+def get_file(): 
     """
-    example: GET: host/api/file?text=text_to_be_tested
+    example: POST: host/api/plagiarism
     """
-
-    text_to_be_tested = request.args.get('text', default='', type=str)
     access_token = request.headers.get('Authorization')
 
+    if not request.is_json:
+        return jsonify(message='Request did not contain valid JSON'), 400
+
+    editor_content = request.get_json()
+   
+
+    if editor_content:
+        if 'text' in editor_content: 
+            content = editor_content['text']
+    print('editor_content:')
+    print(content)
+    print('#####################################')
     decoded_token = decode_token(access_token)
     author_id = decoded_token['sub']
 
-
-
+#---------------------------------------------------------------------------------
+   
     all_files = PdfFile.get_all(user_id=author_id)
     #for each file from all files
     #get full path for the file using below
     #full path = os.path.join(current_app.config['UPLOAD_FOLDER'], file.name)
     # read file content
+    reader = PdfReader("E:\freelance\Projects\Working on\Text editor - Melissa\project2\server\api\files\pdf-sample.pdf")
+    page = reader.pages[0]
+    print(page.extract_text())
+
     # detect plagiarism code here
     # after detecting return the result like below
     # jsonify(plagiarism = result), 200
     # result is true or false or message
-    return 'done', 200
+    return 'test done', 200
 
 
 

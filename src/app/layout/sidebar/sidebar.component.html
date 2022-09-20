@@ -1,4 +1,6 @@
 <div fxLayout="column"  fxLayoutAlign="center" fxLayoutGap="15px" class="sidebar-container">
+  <mat-slide-toggle  (change)="changed()"> Plagiarism
+  </mat-slide-toggle>
   <div *ngIf="!isDashboardRoute"><app-count-down #appCounteDown></app-count-down></div>
 
 

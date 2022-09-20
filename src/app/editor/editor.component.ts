@@ -9,8 +9,6 @@ import { PaperTitleDialogComponent } from './components/paper-title-dialog/paper
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { ChangeEvent, CKEditorComponent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import { HighlightcomponentService } from '../layout/services/highlightcomponent.service';
 
 
