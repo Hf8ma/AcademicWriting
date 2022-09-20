@@ -6,6 +6,7 @@ import {DeadlineDialogComponent} from '../deadline-dialog/deadline-dialog.compon
 import {DatePipe} from '@angular/common';
 import {MatCalendar} from '@angular/material/datepicker';
 import {DeadlineShowDialogComponent} from '../deadline-show-dialog/deadline-show-dialog.component';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-deadline',
@@ -23,6 +24,7 @@ export class DeadlineComponent implements OnInit {
 
   constructor(private snackBar: MatSnackBar,
               private readonly http: HttpClient,
+              private notificationService: NotificationService,
               public dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -70,6 +72,7 @@ export class DeadlineComponent implements OnInit {
       if (result) {
         this.daysSelected.push(result);
         calendar.updateTodaysDate();
+        this.notificationService.update('update');
         this.snackBar.open('Deadline was created successfully.', 'Close' , {
           duration: 6000
         });

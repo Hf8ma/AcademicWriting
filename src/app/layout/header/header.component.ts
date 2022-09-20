@@ -11,6 +11,7 @@ import {DeletePaperDialogComponent} from '../../editor/components/delete-paper-d
 import {Location} from '@angular/common';
 import {UploadPdfDialogComponent} from '../upload-pdf-dialog/upload-pdf-dialog.component';
 import { HighlightcomponentService } from '../services/highlightcomponent.service';
+import { NotificationService } from '../services/notification.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -36,7 +37,8 @@ export class HeaderComponent implements OnInit{
                   public dialog: MatDialog,
                   private snackBar: MatSnackBar,
                   private urlParamService: EditorUrlParamsService,
-                  private highlightService: HighlightcomponentService,
+                  private highlightService: HighlightcomponentService,               
+                  private notificationService: NotificationService,
                   private location: Location) {
     this.username = localStorage.getItem('user_name');
     this.isDashboardRoute = this.router.url && this.router.url.includes('dashboard') ? true : false;
@@ -73,19 +75,25 @@ export class HeaderComponent implements OnInit{
         'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
       })
     };
-    this.http.get(`${this.serverUrl}deadline?date=1`, this.httpOptions)
-      .subscribe((response: any) => {
-        this.notificationsList = response;
-        this.notificationsCounter = response.length;
-      });
-
+    this.getNotification();
+    this.notificationService.getChanges().subscribe(text => {
+      this.getNotification();
+    });
+    
   }
 
   public highlightComponent(componentName: string){
     this.highlightService.highlightComponent(componentName);
   }
 
+getNotification(){
+  this.http.get(`${this.serverUrl}deadline?date=1`, this.httpOptions)
+      .subscribe((response: any) => {
+        this.notificationsList = response;
+        this.notificationsCounter = response.length;
+      });
 
+}
   public deletePaper(): void {
     if (this.paper) {// if the paper is stored in the database then you can delete it
 
