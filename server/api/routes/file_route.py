@@ -39,6 +39,7 @@ def get_file():
 #---------------------------------------------------------------------------------
    
     all_files = PdfFile.get_all(user_id=author_id)
+    print(all_files)
     #for each file from all files
     #get full path for the file using below
     #full path = os.path.join(current_app.config['UPLOAD_FOLDER'], file.name)
@@ -47,6 +48,7 @@ def get_file():
     if all_files:
         for file in all_files:
             path = os.path.join(current_app.config['UPLOAD_FOLDER'], file.name)
+            print(path)
             reader = PdfReader(path)
             files_content.extend([page.extract_text() for page in reader.pages])
     
@@ -57,7 +59,7 @@ def get_file():
     # after detecting return the result like below
     # jsonify(plagiarism = result), 200
     # result is true or false or message
-    return 'test done', 200
+    return jsonify(message= 'test done'), 200
 
 
 

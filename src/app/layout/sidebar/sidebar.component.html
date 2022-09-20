@@ -1,7 +1,10 @@
 <div fxLayout="column"  fxLayoutAlign="center" fxLayoutGap="15px" class="sidebar-container">
-  <mat-slide-toggle  [checked]="checked" (change)="changed($event)" > Plagiarism
-  </mat-slide-toggle>
-  <div *ngIf="!isDashboardRoute"><app-count-down #appCounteDown></app-count-down></div>
+  
+  <div *ngIf="!isDashboardRoute">
+    <mat-slide-toggle  [checked]="checked" (change)="changed($event)" > Plagiarism
+    </mat-slide-toggle>
+    <app-count-down #appCounteDown></app-count-down>
+  </div>
 
 
   <app-goal #appGoal></app-goal>

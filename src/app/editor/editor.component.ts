@@ -172,13 +172,14 @@ export class EditorComponent implements OnInit, OnDestroy {
           this.startTypingTime = null;
         }
       }, 60000));
-    // timer every 5 minutes
+    // timer every xOfmin minutes
+    let xOfmin = 1
     this.timeouts.push(setTimeout(() => {
         console.log('timer for stop writing');
-        this.snackBar.open('You have spent more than 2 minutes without writing', 'Close' , {
-          duration: 3000,
+        this.snackBar.open("Hey I have noticed that you haven’t been active for over " + xOfmin + " minutes. Maybe you need a break, you should go for a walk or take some time to relax.  ", 'Close' , {
+          duration: 10000,
         });
-      }, 120000));
+      }, xOfmin *60000));
   }
 
   public goDashboard(): void {
