@@ -60,7 +60,8 @@ export class SidebarComponent implements OnInit {
     let without_line_code = without_unuseful_chars.replace(/&nbsp;/g, '').replace(/\s+/g,' ').trim();
 
     let body = {
-      text: without_line_code
+      text: without_line_code,
+      ngram: 3
     };
     this.http.post(`${this.serverUrl}plagiarism`, body, this.httpOptions)
       .subscribe(response => {

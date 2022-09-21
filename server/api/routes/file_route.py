@@ -7,8 +7,19 @@ from flask import current_app
 import os
 from werkzeug.utils import secure_filename
 from PyPDF2 import PdfReader
+from nltk.util import ngrams
 
 
+
+def compare_ngrams(trigrams1, trigrams2):
+    trigrams1 = list(trigrams1)
+    trigrams2 = list(trigrams2)
+    common=[]
+    # gram is a list of one tuple [(,,...)]
+    for gram in trigrams1:
+        if gram in trigrams2:
+            common.append(gram)
+    return common
 
 bp = Blueprint('file', __name__, url_prefix='/api')
 
@@ -30,6 +41,8 @@ def get_file():
     if editor_content:
         if 'text' in editor_content: 
             content = editor_content['text']
+        if 'ngram' in editor_content: 
+            ngram = editor_content['ngram']
     print('editor_content:')
     print(content)
     print('#####################################')
@@ -39,7 +52,6 @@ def get_file():
 #---------------------------------------------------------------------------------
    
     all_files = PdfFile.get_all(user_id=author_id)
-    print(all_files)
     #for each file from all files
     #get full path for the file using below
     #full path = os.path.join(current_app.config['UPLOAD_FOLDER'], file.name)
@@ -48,18 +60,27 @@ def get_file():
     if all_files:
         for file in all_files:
             path = os.path.join(current_app.config['UPLOAD_FOLDER'], file.name)
-            print(path)
             reader = PdfReader(path)
-            files_content.extend([page.extract_text() for page in reader.pages])
+            files_content.append({
+                'fileName': file.name,
+                'content' : ''.join([page.extract_text() for page in reader.pages])
+            })
     
     # files_content contain all content from all pages from all files as list of string
     print(files_content)
-
+  
     # detect plagiarism code here
-    # after detecting return the result like below
-    # jsonify(plagiarism = result), 200
-    # result is true or false or message
-    return jsonify(message= 'test done'), 200
+    common = []
+    for item in files_content: 
+        trigrams1 = ngrams(content.lower().split(), ngram)
+        trigrams2 = ngrams(item['content'].lower().split(), ngram)
+        match = compare_ngrams(trigrams1, trigrams2)
+        common.append({
+            'match': match,
+            'fileName': item['fileName']
+        })
+    
+    return jsonify(plagiarism = common), 200
 
 
 
