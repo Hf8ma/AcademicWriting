@@ -74,11 +74,12 @@ def get_file():
     for item in files_content: 
         trigrams1 = ngrams(content.lower().split(), ngram)
         trigrams2 = ngrams(item['content'].lower().split(), ngram)
-        match = compare_ngrams(trigrams1, trigrams2)
-        common.append({
-            'match': match,
+        match_list = compare_ngrams(trigrams1, trigrams2)
+        for match in match_list: 
+            common.append({
+            'match': ' '.join(match),
             'fileName': item['fileName']
-        })
+            })
     
     return jsonify(plagiarism = common), 200
 

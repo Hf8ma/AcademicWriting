@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EditorUrlParamsService } from 'src/app/editor/editor.service';
+import { PlagiarismMatchesComponent } from '../plagiarism-matches/plagiarism-matches.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -17,6 +19,7 @@ export class SidebarComponent implements OnInit {
   checked = false;
 
   constructor(private router: Router,
+                      public dialog: MatDialog,
     public urlParamService: EditorUrlParamsService,
     private readonly http: HttpClient) {
     this.isDashboardRoute = this.router.url && this.router.url.includes('dashboard') ? true : false;
@@ -65,7 +68,13 @@ export class SidebarComponent implements OnInit {
     };
     this.http.post(`${this.serverUrl}plagiarism`, body, this.httpOptions)
       .subscribe(response => {
-        console.log(response)
+        console.log(response['plagiarism'])
+        const dialogRef = this.dialog.open(PlagiarismMatchesComponent, {
+          width: '800px',
+          data: response['plagiarism'] // array of two objects, each object is a dictionary of the filename and list of matches
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {});
       });
   }
     
