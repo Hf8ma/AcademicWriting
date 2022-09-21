@@ -8,7 +8,93 @@
   height: 16cm;
 }
 
+:host::not(.linkactive) ::ng-deep .cke_button__link{
+  background-color: #e5e5e5;
+}
+:host::not(.cutactive) ::ng-deep .cke_button__cut{
+  background-color: #e5e5e5;
+}
+:host::not(.copyactive) ::ng-deep .cke_button__copy{
+  background-color: #e5e5e5;
+}
 
+:host::not(.pasteactive) ::ng-deep .cke_button__paste{
+  background-color: #e5e5e5;
+}
+
+:host::not(.pastetextactive) ::ng-deep .cke_button__pastetext{
+  background-color: #e5e5e5;
+}
+:host::not(.pastefromwordactive) ::ng-deep .cke_button__pastefromword{
+  background-color: #e5e5e5;
+}
+:host::not(.undoactive) ::ng-deep .cke_button__undo{
+  background-color: #e5e5e5;
+}
+:host::not(.redoactive) ::ng-deep .cke_button__redo{
+  background-color: #e5e5e5;
+}
+// scayt
+:host::not(.scaytactive) ::ng-deep .cke_button__scayt{
+  background-color: #e5e5e5;
+}
+:host::not(.linkactive) ::ng-deep .cke_button__link{
+  background-color: #e5e5e5;
+}
+:host::not(.unlinkactive) ::ng-deep .cke_button__unlink{
+  background-color: #e5e5e5;
+}
+
+:host::not(.anchoractive) ::ng-deep .cke_button__anchor{
+  background-color: #e5e5e5;
+}
+:host::not(.imageactive) ::ng-deep .cke_button__image{
+  background-color: #e5e5e5;
+}
+:host::not(.tableactive) ::ng-deep .cke_button__table{
+  background-color: #e5e5e5;
+}
+:host::not(.horizontalruleactive) ::ng-deep .cke_button__horizontalrule{
+  background-color: #e5e5e5;
+}
+//specialchar
+:host::not(.specialcharactive) ::ng-deep .cke_button__specialchar{
+  background-color: #e5e5e5;
+}
+:host::not(.maximizeactive) ::ng-deep .cke_button__maximize{
+  background-color: #e5e5e5;
+}
+:host::not(.sourceactive) ::ng-deep .cke_button__source{
+  background-color: #e5e5e5;
+}
+:host::not(.boldactive) ::ng-deep .cke_button__bold{
+  background-color: #e5e5e5;
+}
+:host::not(.italicactive) ::ng-deep .cke_button__italic{
+  background-color: #e5e5e5;
+}
+:host::not(.strikeactive) ::ng-deep .cke_button__strike{
+  background-color: #e5e5e5;
+}
+:host::not(.removeformatactive) ::ng-deep .cke_button__removeformat{
+  background-color: #e5e5e5;
+}
+//blockquote
+:host::not(.blockquoteactive) ::ng-deep .cke_button__blockquote{
+  background-color: #e5e5e5;
+}
+:host::not(.numberedlistactive) ::ng-deep .cke_button__numberedlist{
+  background-color: #e5e5e5;
+}
+:host::not(.bulletedlistactive) ::ng-deep .cke_button__bulletedlist{
+  background-color: #e5e5e5;
+}
+:host::not(.outdentactive) ::ng-deep .cke_button__outdent{
+  background-color: #e5e5e5;
+}
+:host::not(.indentactive) ::ng-deep .cke_button__indent{
+  background-color: #e5e5e5;
+}
 .highlight{
   border: 6px solid#FF0;
 }

@@ -1,0 +1,165 @@
+:host.linkactive ::ng-deep .cke_button__link{
+  background-color: #FF0;
+}
+
+:host.cutactive ::ng-deep .cke_button__cut{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+
+}
+
+:host.copyactive ::ng-deep .cke_button__copy{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+
+}
+
+:host.pasteactive ::ng-deep .cke_button__paste{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+
+}
+
+
+:host.pastetextactive ::ng-deep .cke_button__pastetext{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+
+:host.pastefromwordactive ::ng-deep .cke_button__pastefromword{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+
+:host.undoactive ::ng-deep .cke_button__undo{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+
+:host.redoactive ::ng-deep .cke_button__redo{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+// scayt
+:host.scaytactive ::ng-deep .cke_button__scayt{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+:host.linkactive ::ng-deep .cke_button__link{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+:host.unlinkactive ::ng-deep .cke_button__unlink{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+//horizontalruleactive
+:host.anchoractive ::ng-deep .cke_button__anchor{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+:host.imageactive ::ng-deep .cke_button__image{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+:host.tableactive ::ng-deep .cke_button__table{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+:host.horizontalruleactive ::ng-deep .cke_button__horizontalrule{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+//specialchar
+:host.specialcharactive ::ng-deep .cke_button__specialchar{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+:host.maximizeactive ::ng-deep .cke_button__maximize{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+:host.sourceactive ::ng-deep .cke_button__source{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+
+:host.boldactive ::ng-deep .cke_button__bold{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+:host.italicactive ::ng-deep .cke_button__italic{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+:host.strikeactive ::ng-deep .cke_button__strike{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+:host.removeformatactive ::ng-deep .cke_button__removeformat{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+// blockquote
+:host.blockquoteactive ::ng-deep .cke_button__blockquote{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+:host.numberedlistactive ::ng-deep .cke_button__numberedlist{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+:host.bulletedlistactive ::ng-deep .cke_button__bulletedlist{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+:host.outdentactive ::ng-deep .cke_button__outdent{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+:host.indentactive ::ng-deep .cke_button__indent{
+  background-color: #FF0;
+  animation: zoomout 5s ease-in-out infinite alternate;
+  -webkit-animation: zoomout 5s ease-in-out infinite alternate;
+}
+
+
+
+@keyframes zoomout {
+  0% {
+      transform: scale(1.0);
+      -webkit-transform: scale(1.0);
+      -moz-transform: scale(1.0);
+      -ms-transform: scale(1.0);
+      -o-transform: scale(1.0);
+}
+  100% {
+      transform: scale(1.35);
+      -webkit-transform: scale(1.35);
+      -moz-transform: scale(1.35);
+      -ms-transform: scale(1.35);
+      -o-transform: scale(1.35);
+}
+}
