@@ -36,6 +36,7 @@ import { GoalDialogComponent } from './goal-dialog/goal-dialog.component';
 import { GoalDeleteDialogComponent } from './goal-delete-dialog/goal-delete-dialog.component';
 import { UploadPdfDialogComponent } from './upload-pdf-dialog/upload-pdf-dialog.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { PlagiarismMatchesComponent } from './plagiarism-matches/plagiarism-matches.component';
 
 @NgModule({
     imports: [
@@ -65,7 +66,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
         MatSlideToggleModule
     ],
   declarations: [MasterComponent, HeaderComponent, SidebarComponent, DeadlineDialogComponent, DeadlineShowDialogComponent,
-    GoalComponent, CountDownComponent, NotesComponent, CatgoriesListComponent, DeadlineComponent, NoteDialogComponent, NoteDeleteDialogComponent, GoalDialogComponent, GoalDeleteDialogComponent, UploadPdfDialogComponent],
+    GoalComponent, CountDownComponent, NotesComponent, CatgoriesListComponent, DeadlineComponent, NoteDialogComponent, NoteDeleteDialogComponent, GoalDialogComponent, GoalDeleteDialogComponent, UploadPdfDialogComponent, PlagiarismMatchesComponent],
   exports: [ MasterComponent],
   providers: [
      MatTableModule

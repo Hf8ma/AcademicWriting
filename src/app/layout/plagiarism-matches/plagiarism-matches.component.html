@@ -1,19 +1,19 @@
-<h1 mat-dialog-title>Change Category</h1>
+<h1 mat-dialog-title>Plagiarism Detection</h1>
 <div mat-dialog-content>
   <table mat-table [dataSource]="dataSource.data" class="mat-elevation-z8"
     *ngIf="dataSource && dataSource.data && dataSource.data.length">
 
     <!-- title Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Title </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    <ng-container matColumnDef="fileName" >
+      <th mat-header-cell *matHeaderCellDef > File Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.fileName}} </td>
     </ng-container>
 
     <!-- created date Column -->
-    <ng-container matColumnDef="color">
-      <th mat-header-cell *matHeaderCellDef> Color </th>
-      <td mat-cell *matCellDef="let element" style="background:{{element.color}} " matTooltip="Select catecory"
-        (click)="selectCategory(element)"> </td>
+    <ng-container matColumnDef="Match">
+      <th mat-header-cell *matHeaderCellDef> Match </th>
+      <td mat-cell *matCellDef="let element" 
+    > {{element.match}}</td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -25,3 +25,4 @@
   <button mat-flat-button color="warn" [mat-dialog-close]="">close</button>
 
 </div>
+
