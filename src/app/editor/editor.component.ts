@@ -1,6 +1,6 @@
 import { EditorUrlParamsService } from './editor.service';
 import { MatDialog } from '@angular/material/dialog';
-import {AfterViewChecked, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, Component, ElementRef, HostBinding, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
 import { MarkdownService } from 'ngx-markdown';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -20,9 +20,9 @@ import { HighlightcomponentService } from '../layout/services/highlightcomponent
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
-  styleUrls: ['./editor.component.scss']
+  styleUrls: ['./editor.component.scss', './toolbar-buttons.component.scss']
 })
-export class EditorComponent implements OnInit, OnDestroy {
+export class EditorComponent implements OnInit, OnDestroy, AfterViewInit {
   public wordsCount = 0;
   public wordList: string[];
   public paper: any;
@@ -41,13 +41,14 @@ export class EditorComponent implements OnInit, OnDestroy {
   duration = 0;
   textBeforeSearch: string;
   timeouts = [];
+  @HostBinding('class') toolbarButtonStyle: string = undefined; 
 
   constructor(public dialog: MatDialog,
     private markdownService: MarkdownService,
     private readonly http: HttpClient,
     private router: Router,
     private route: ActivatedRoute,
-
+    private elem: ElementRef,
     private snackBar: MatSnackBar,private elementRef: ElementRef,
     public urlParamService: EditorUrlParamsService,
     private highlightService: HighlightcomponentService) {
@@ -71,6 +72,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       })
     }
 
+   
     const changes = this.urlParamService.getChanges().subscribe(updatedPaper => {
       console.log('ngoninit editor, before if updatedpaper');
       if (updatedPaper.paper && updatedPaper.category_id) {
@@ -87,13 +89,176 @@ export class EditorComponent implements OnInit, OnDestroy {
     //     this.ready = true;
     //   });
   }
-
+  
+  
   public onReady({editor}){
     let self = this;
     editor.document.on('keyup',function($event){
       self.keyupEditor($event);
     });
+    this.highlightService.getChanges().subscribe(componentName => {
+      this.toolbarButtonStyle = undefined;
+      if (componentName.text == 'cke_button__cut') {
+        this.toolbarButtonStyle = 'cutactive';
+        setTimeout(()=>{
+          this.toolbarButtonStyle = undefined;
+        },5000)
+      }
+      if (componentName.text == 'cke_button__copy') {
+        this.toolbarButtonStyle = 'copyactive';
+        setTimeout(()=>{
+          this.toolbarButtonStyle = undefined;
+        },5000)
+      }
+      if (componentName.text == 'cke_button__paste') {
+        this.toolbarButtonStyle = 'pasteactive';
+        setTimeout(()=>{
+          this.toolbarButtonStyle = undefined;
+        },5000)
+      }
+      if (componentName.text == 'cke_button__pastetext') {
+        this.toolbarButtonStyle = 'pastetextactive';
+        setTimeout(()=>{
+          this.toolbarButtonStyle = undefined;
+        },5000)
+      }
+      if (componentName.text == 'cke_button__pastefromword') {
+        this.toolbarButtonStyle = 'pastefromwordactive';
+        setTimeout(()=>{
+          this.toolbarButtonStyle = undefined;
+        },5000)
+      }
+      if (componentName.text == 'cke_button__undo') {
+        this.toolbarButtonStyle = 'undoactive';
+        setTimeout(()=>{
+          this.toolbarButtonStyle = undefined;
+        },5000)
+      }
+      if (componentName.text == 'cke_button__redo') {
+        this.toolbarButtonStyle = 'redoactive';
+        setTimeout(()=>{
+          this.toolbarButtonStyle = undefined;
+        },5000)
+      }
+      // scayt
+      if (componentName.text == 'cke_button__scayt') {
+        this.toolbarButtonStyle = 'scaytactive';
+        setTimeout(()=>{
+          this.toolbarButtonStyle = undefined;
+        },5000)
+      }
+      if (componentName.text == 'cke_button__link') {
+        this.toolbarButtonStyle = 'linkactive';
+        setTimeout(()=>{
+          this.toolbarButtonStyle = undefined;
+        },5000)
+      }
+      if (componentName.text == 'cke_button__unlink') {
+        this.toolbarButtonStyle = 'unlinkactive';
+        setTimeout(()=>{
+          this.toolbarButtonStyle = undefined;
+        },5000)
+      }
+      if (componentName.text == 'cke_button__anchor') {
+        this.toolbarButtonStyle = 'anchoractive';
+        setTimeout(()=>{
+          this.toolbarButtonStyle = undefined;
+        },5000)
+      }
+      if (componentName.text == 'cke_button__image') {
+        this.toolbarButtonStyle = 'imageactive';
+        setTimeout(()=>{
+          this.toolbarButtonStyle = undefined;
+        },5000)
+      }
+      if (componentName.text == 'cke_button__table') {
+        this.toolbarButtonStyle = 'tableactive';
+        setTimeout(()=>{
+          this.toolbarButtonStyle = undefined;
+        },5000)
+      }
+      if (componentName.text == 'cke_button__horizontalrule') {
+        this.toolbarButtonStyle = 'horizontalruleactive';
+        setTimeout(()=>{
+          this.toolbarButtonStyle = undefined;
+        },5000)
+      }
+     //specialchar
+     if (componentName.text == 'cke_button__specialchar') {
+      this.toolbarButtonStyle = 'specialcharactive';
+      setTimeout(()=>{
+        this.toolbarButtonStyle = undefined;
+      },5000)
+    }
+    if (componentName.text == 'cke_button__maximize') {
+      this.toolbarButtonStyle = 'maximizeactive';
+      setTimeout(()=>{
+        this.toolbarButtonStyle = undefined;
+      },5000)
+    }
+    if (componentName.text == 'cke_button__source') {
+      this.toolbarButtonStyle = 'sourceactive';
+      setTimeout(()=>{
+        this.toolbarButtonStyle = undefined;
+      },5000)
+    }
+    if (componentName.text == 'cke_button__bold') {
+      this.toolbarButtonStyle = 'boldactive';
+      setTimeout(()=>{
+        this.toolbarButtonStyle = undefined;
+      },5000)
+    }
+    if (componentName.text == 'cke_button__italic') {
+      this.toolbarButtonStyle = 'italicactive';
+      setTimeout(()=>{
+        this.toolbarButtonStyle = undefined;
+      },5000)
+    }
+    if (componentName.text == 'cke_button__strike') {
+      this.toolbarButtonStyle = 'strikeactive';
+      setTimeout(()=>{
+        this.toolbarButtonStyle = undefined;
+      },5000)
+    }
+    if (componentName.text == 'cke_button__removeformat') {
+      this.toolbarButtonStyle = 'removeformatactive';
+      setTimeout(()=>{
+        this.toolbarButtonStyle = undefined;
+      },5000)
+    }
+    //blockquote
+    if (componentName.text == 'cke_button__numberedlist') {
+      this.toolbarButtonStyle = 'numberedlistactive';
+      setTimeout(()=>{
+        this.toolbarButtonStyle = undefined;
+      },5000)
+    }
+    if (componentName.text == 'cke_button__bulletedlist') {
+      this.toolbarButtonStyle = 'bulletedlistactive';
+      setTimeout(()=>{
+        this.toolbarButtonStyle = undefined;
+      },5000)
+    }
+    if (componentName.text == 'cke_button__outdent') {
+      this.toolbarButtonStyle = 'outdentactive';
+      setTimeout(()=>{
+        this.toolbarButtonStyle = undefined;
+      },5000)
+    }
+    if (componentName.text == 'cke_button__indent') {
+      this.toolbarButtonStyle = 'indentactive';
+      setTimeout(()=>{
+        this.toolbarButtonStyle = undefined;
+      },5000)
+    }
+    if (componentName.text == 'cke_button__blockquote') {
+      this.toolbarButtonStyle = 'blockquoteactive';
+      setTimeout(()=>{
+        this.toolbarButtonStyle = undefined;
+      },5000)
+    }
 
+    });
   }
 
 
@@ -352,6 +517,7 @@ export class EditorComponent implements OnInit, OnDestroy {
         },2000)
       }
     });
+    
   }
 }
 
